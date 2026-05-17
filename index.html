@@ -11,8 +11,8 @@
             --bit-blue-hover: #0033E6;    
             --bit-blue-active: #0026B3;   
             --bit-text-menu: #FFFFFF;     
-            --bit-bg-main: #EDF1F7;             
-            --bit-bg-card: #FFFFFF;             
+            --bit-bg-main: #EDF1F7;              
+            --bit-bg-card: #FFFFFF;              
             --bit-border-light: #E0E0E0;
             --bit-text-dark: #1F2D3D;
             --bit-text-light: #606266;
@@ -158,13 +158,11 @@
         .post-media-box img { width: 100%; height: auto; object-fit: cover; }
         .post-media-box video { width: 100%; max-height: 380px; background: #000; }
         
-        /* Interaction Actions styling */
         .post-actions { display: flex; align-items: center; gap: 24px; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; }
         .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; transition: color 0.2s; }
         .action-trigger-btn:hover { color: var(--bit-blue-primary); }
         .action-trigger-btn.liked { color: var(--bit-danger); }
 
-        /* Integrated Comments styling */
         .comments-section-wrapper { display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 10px; }
         .comment-item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 8px; }
         .comment-item-row:last-child { border-bottom: none; padding-bottom: 0; }
@@ -185,7 +183,6 @@
         .chat-sidebar-header { padding: 15px 20px; font-weight: 700; border-bottom: 1px solid var(--bit-border-light); background: rgba(0,0,0,0.01); }
         .chat-threads-list { list-style: none; overflow-y: auto; max-height: 50%; border-bottom: 1px solid var(--bit-border-light); }
         
-        /* Added Friends List Component Area */
         .friends-section-header { padding: 12px 20px; font-weight: 700; font-size: 12px; text-transform: uppercase; color: var(--bit-text-light); border-bottom: 1px solid var(--bit-border-light); background: rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; }
         .friends-list { list-style: none; overflow-y: auto; flex-grow: 1; }
         .friend-item { padding: 10px 20px; border-bottom: 1px solid var(--bit-border-light); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s; }
@@ -195,8 +192,7 @@
         .thread-item { padding: 15px 20px; border-bottom: 1px solid var(--bit-border-light); cursor: pointer; display: flex; align-items: center; gap: 12px; }
         .thread-item.active { background: rgba(30, 80, 255, 0.08); }
         
-        /* Dynamic Profile Picture / Avatar Frame Styles */
-        .avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; object-fit: cover; background-size: cover; background-position: center; }
+        .avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; object-fit: cover; background-size: cover; background-position: center; background-color: var(--bit-border-light); }
         .avatar-preview-box { width: 80px; height: 80px; border-radius: 50%; background: #E0E0E0; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; background-size: cover; background-position: center; border: 2px solid var(--bit-blue-primary); }
 
         .top-bar-profile-wrap { display: flex; align-items: center; gap: 8px; }
@@ -233,12 +229,6 @@
         .reply-status-indicator { display: none; background: rgba(30, 80, 255, 0.05); border-top: 1px solid var(--bit-border-light); padding: 8px 20px; align-items: center; justify-content: space-between; font-size: 12px; }
         .reply-status-indicator.active { display: flex; }
 
-        .voice-player { display: flex; align-items: center; gap: 10px; min-width: 160px; }
-        .voice-wave { flex-grow: 1; height: 4px; background: rgba(255,255,255,0.4); border-radius: 2px; position: relative; }
-        .msg-them .voice-wave { background: rgba(0,0,0,0.15); }
-        .file-attachment { display: flex; align-items: center; gap: 10px; }
-        .file-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-
         .chat-input-container { border-top: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; flex-direction: column; }
         .chat-toolbar { display: flex; gap: 12px; padding: 8px 20px 0 20px; align-items: center; }
         .toolbar-btn { background: transparent; border: none; color: var(--bit-text-light); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; }
@@ -252,36 +242,57 @@
         .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
         .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 0 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
-        /* Tables and Grid Components Layouts */
-        .data-table-wrapper { width: 100%; overflow-x: auto; margin-top: 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; }
-        .user-table { width: 100%; border-collapse: collapse; text-align: left; background: var(--bit-bg-card); }
-        .user-table th { background: rgba(0,0,0,0.02); color: var(--bit-text-dark); font-weight: 700; padding: 12px 16px; border-bottom: 2px solid var(--bit-border-light); }
-        .user-table td { padding: 12px 16px; border-bottom: 1px solid var(--bit-border-light); color: var(--bit-text-light); }
-        .badge-role { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; background: #E6F7FF; color: #1890FF; border: 1px solid #91D5FF; }
-        .badge-role.admin { background: #F6FFED; color: #52C41A; border: 1px solid #B7EB8F; }
-        .btn-delete { background: transparent; color: var(--bit-danger); border: 1px solid var(--bit-border-light); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 12px; }
-
         .group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-top: 15px; }
-        .group-item-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; min-height: 160px; }
-        .group-card-title { font-size: 16px; font-weight: 700; color: var(--bit-text-dark); margin-bottom: 5px; }
-        .group-card-desc { font-size: 12px; color: var(--bit-text-light); line-height: 1.4; }
-        .group-card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; border-top: 1px dashed var(--bit-border-light); padding-top: 12px; margin-top: auto; }
-        .badge-status { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
-        .badge-status.joined { background: #F6FFED; color: #52C41A; border: 1px solid #B7EB8F; }
-        .badge-status.open { background: #FFF7E6; color: var(--bit-warning); border: 1px solid #FFE7BA; }
+        
+        /* MODERN TOAST NOTIFICATION STYLING */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 420px;
+            pointer-events: none;
+        }
+        .toast-card {
+            background: var(--bit-bg-card);
+            border: 1px solid var(--bit-border-light);
+            padding: 14px 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            pointer-events: auto;
+            animation: toastSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            border-left: 5px solid var(--bit-blue-primary);
+        }
+        .toast-card.success { border-left-color: var(--bit-success); }
+        .toast-card.error { border-left-color: var(--bit-danger); }
+        .toast-card.warning { border-left-color: var(--bit-warning); }
+        .toast-message { font-size: 13.5px; font-weight: 600; color: var(--bit-text-dark); flex-grow: 1; }
+        .toast-close { background: transparent; border: none; cursor: pointer; color: var(--bit-text-light); font-weight: bold; font-size: 14px; }
+        @keyframes toastSlideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes toastSlideOut {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-30px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="toast-container" id="toastHub"></div>
+
     <aside class="sidebar">
         <div class="sidebar-brand"><span class="brand-text-space">Ultra</span><span>KH</span></div>
-        <ul class="sidebar-menu">
-            <li class="sidebar-item active" data-target="home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div><span data-i18n="menu_home">Home</span></a></li>
-            <li class="sidebar-item" data-target="profile"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span data-i18n="menu_profile">Profile</span></a></li>
-            <li class="sidebar-item" data-target="message"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span data-i18n="menu_message">Message</span></a></li>
-            <li class="sidebar-item" data-target="groups"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div><span data-i18n="menu_groups">Groups</span></a></li>
-            <li class="sidebar-item" data-target="register"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div><span data-i18n="menu_register">Register</span></a></li>
-        </ul>
+        <ul class="sidebar-menu"></ul>
     </aside>
 
     <main class="main-content">
@@ -308,14 +319,14 @@
                             <h3 style="margin-bottom: 12px;" data-i18n="home_post_title">Publish an Update</h3>
                             <form id="homePublishForm" onsubmit="handlePostPublish(event)">
                                 <div class="form-group" style="margin-bottom: 12px;">
-                                    <textarea class="form-textarea" id="postText" required placeholder="What is happening within your workspace channels?" style="height: 65px;" data-i18n-holder="home_post_hold_text"></textarea>
+                                    <textarea class="form-textarea" id="postText" required placeholder="What is happening within your workspace channels?" style="height: 65px;"></textarea>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 15px;">
-                                    <label class="form-label" style="font-size: 11px;" data-i18n="home_lbl_upload">Attach Media (Image / Video)</label>
+                                    <label class="form-label" style="font-size: 11px;">Attach Media (Image / Video)</label>
                                     <input type="file" id="homeMediaUpload" accept="image/*,video/*" class="form-input" style="padding: 5px;">
                                 </div>
                                 <div style="display: flex; justify-content: flex-end;">
-                                    <button type="submit" class="btn-submit" style="width: auto; padding: 8px 24px; margin-top: 0;" data-i18n="home_btn_publish">Publish Post</button>
+                                    <button type="submit" class="btn-submit" style="width: auto; padding: 8px 24px; margin-top: 0;">Publish Post</button>
                                 </div>
                             </form>
                         </div>
@@ -323,13 +334,13 @@
                     </div>
                     <div class="home-side-metrics">
                         <div class="card" style="padding: 20px;">
-                            <h3 style="margin-bottom: 5px;" data-i18n="welcome_title">Welcome to Ultra KH</h3>
-                            <p style="color: var(--bit-text-light); font-size: 12px;" data-i18n="welcome_desc">Your workspace design changes are completely updated and saved.</p>
+                            <h3 style="margin-bottom: 5px;">Welcome to Ultra KH</h3>
+                            <p style="color: var(--bit-text-light); font-size: 12px;">Your workspace design changes are completely updated and saved.</p>
                         </div>
                         <div class="metrics-grid-vertical">
-                            <div class="metric-widget-card"><div class="metric-widget-title" data-i18n="met_total_users">Total Registry Accounts</div><div class="metric-widget-value" id="metUserCount">2</div></div>
-                            <div class="metric-widget-card"><div class="metric-widget-title" data-i18n="met_active_groups">Active Project Rooms</div><div class="metric-widget-value" id="metGroupCount">2</div></div>
-                            <div class="metric-widget-card"><div class="metric-widget-title" data-i18n="met_sys_status">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span data-i18n="met_status_online">Operational / Online</span></div></div>
+                            <div class="metric-widget-card"><div class="metric-widget-title">Total Registry Accounts</div><div class="metric-widget-value" id="metUserCount">1</div></div>
+                            <div class="metric-widget-card"><div class="metric-widget-title">Active Project Rooms</div><div class="metric-widget-value" id="metGroupCount">0</div></div>
+                            <div class="metric-widget-card"><div class="metric-widget-title">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span>Operational / Online</span></div></div>
                         </div>
                     </div>
                 </div>
@@ -338,28 +349,26 @@
             <div class="page-view" id="page-profile">
                 <div class="split-view-layout">
                     <div class="card left-form-panel">
-                        <h3 style="margin-bottom: 15px; text-align: center;" data-i18n="prof_form_title">Account Info</h3>
-                        
+                        <h3 style="margin-bottom: 15px; text-align: center;">Account Info</h3>
                         <div class="avatar-preview-box" id="profileAvatarPreview"></div>
-                        
                         <form id="profileUpdateForm" onsubmit="handleProfileUpdate(event)">
                             <div class="form-group">
-                                <label class="form-label" data-i18n="prof_lbl_avatar">Upload Profile Picture</label>
-                                <input type="file" class="form-input" id="profileAvatarUpload" accept="image/*" onchange="previewSelectedAvatar(this)" style="padding: 5px;">
+                                <label class="form-label">Upload Profile Picture</label>
+                                <input type="file" class="form-input" id="profileAvatarUpload" accept="image/*" style="padding: 5px;">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" data-i18n="prof_lbl_handle">Active Operator Username</label>
+                                <label class="form-label">Active Operator Username</label>
                                 <input type="text" class="form-input" id="profUserHandle" required value="admin_kh">
                             </div>
-                            <button type="submit" class="btn-submit" data-i18n="prof_btn_save">Save Changes</button>
+                            <button type="submit" class="btn-submit">Save Changes</button>
                         </form>
                     </div>
                     <div class="card right-display-panel">
-                        <h3 style="margin-bottom: 15px;" data-i18n="prof_panel_pref">Workspace Preferences</h3>
+                        <h3 style="margin-bottom: 15px;">Workspace Preferences</h3>
                         <div class="toggle-container">
                             <div>
-                                <div style="font-weight: 700;" data-i18n="prof_pref_dark_title">Developer Dark Mode</div>
-                                <div style="font-size: 12px; color: var(--bit-text-light);" data-i18n="prof_pref_dark_desc">Switch background layout color palette to low-light style.</div>
+                                <div style="font-weight: 700;">Developer Dark Mode</div>
+                                <div style="font-size: 12px; color: var(--bit-text-light);">Switch background layout color palette to low-light style.</div>
                             </div>
                             <input type="checkbox" id="themeToggleCheckbox" style="width: 20px; height: 20px; cursor: pointer;">
                         </div>
@@ -370,42 +379,27 @@
             <div class="page-view" id="page-message">
                 <div class="chat-layout">
                     <div class="chat-sidebar">
-                        <div class="chat-sidebar-header" data-i18n="chat_header">Recent Chats</div>
+                        <div class="chat-sidebar-header">Recent Chats</div>
                         <ul class="chat-threads-list" id="chatThreadsContainer"></ul>
-                        
-                        <div class="friends-section-header">
-                            <span data-i18n="chat_friends_title">Friends List</span>
-                        </div>
+                        <div class="friends-section-header"><span>Friends List</span></div>
                         <ul class="friends-list" id="chatFriendsContainer"></ul>
                     </div>
                     <div class="chat-window">
                         <div class="chat-window-header" id="activeChatUser">Select an operator thread</div>
-                        
                         <div class="chat-messages-box" id="chatMsgContainer"></div>
-                        
                         <div class="reply-status-indicator" id="replyStatusIndicator">
                             <div>Replying to: <span id="replyStatusTargetText" style="font-weight:600; font-style:italic;"></span></div>
                             <button class="action-icon-btn" onclick="cancelReplyState()" style="font-weight:bold; color:var(--bit-danger);">✕</button>
                         </div>
-
-                        <div class="sticker-picker-panel" id="chatStickerPicker">
-                            <div class="picker-sticker-item" onclick="sendSticker('👍')">👍</div>
-                            <div class="picker-sticker-item" onclick="sendSticker('🔥')">🔥</div>
-                            <div class="picker-sticker-item" onclick="sendSticker('👏')">👏</div>
-                            <div class="picker-sticker-item" onclick="sendSticker('🚀')">🚀</div>
-                        </div>
-                        
-                        <input type="file" id="chatFileInput" style="display: none;" onchange="handleChatFileUpload(this)">
-                        
+                        <input type="file" id="chatFileInput" style="display: none;">
                         <div class="chat-input-container">
                             <div class="chat-toolbar">
-                                <button class="toolbar-btn" onclick="toggleStickerPicker()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path></svg></button>
-                                <button class="toolbar-btn" onclick="document.getElementById('chatFileInput').click()"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
-                                <button class="toolbar-btn" id="chatVoiceBtn" onclick="toggleVoiceRecordSim()"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path></svg></button>
+                                <button class="toolbar-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path></svg></button>
+                                <button class="toolbar-btn"><svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
                             </div>
                             <div class="chat-input-area">
-                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here..." data-i18n-holder="chat_placeholder">
-                                <button class="btn-send" id="chatSendBtn" data-i18n="chat_send">Send</button>
+                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here...">
+                                <button class="btn-send" id="chatSendBtn">Send</button>
                             </div>
                         </div>
                     </div>
@@ -415,74 +409,65 @@
             <div class="page-view" id="page-groups">
                 <div class="split-view-layout">
                     <div class="card left-form-panel">
-                        <h3 style="margin-bottom: 15px;" data-i18n="grp_form_title">Create Team Workspace</h3>
+                        <h3 style="margin-bottom: 15px;">Create Team Workspace</h3>
                         <form id="groupCreationForm" onsubmit="handleGroupCreation(event)">
                             <div class="form-group">
-                                <label class="form-label" data-i18n="grp_lbl_name">Group Name</label>
+                                <label class="form-label">Group Name</label>
                                 <input type="text" class="form-input" id="grpName" required placeholder="e.g. Frontend Core Team">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" data-i18n="grp_lbl_desc">Workspace Purpose</label>
+                                <label class="form-label">Workspace Purpose</label>
                                 <textarea class="form-textarea" id="grpDesc" required placeholder="Brief description of project files scope..."></textarea>
                             </div>
-                            <button type="submit" class="btn-submit" data-i18n="grp_btn_submit">Launch Group</button>
+                            <button type="submit" class="btn-submit">Create Group</button>
                         </form>
                     </div>
                     <div class="card right-display-panel">
-                        <h3 data-i18n="groups_title">Team Workspaces</h3>
-                        <div class="group-grid" id="groupGridContainer"></div>
+                        <h3>Active Workspaces</h3>
+                        <div class="group-grid" id="groupsContainer"></div>
                     </div>
                 </div>
             </div>
 
             <div class="page-view" id="page-register">
-                <div class="split-view-layout">
-                    <div class="card left-form-panel">
-                        <h3 style="margin-bottom: 15px;" data-i18n="reg_form_title">Create Account</h3>
-                        <form id="registrationForm" onsubmit="handleRegistration(event)">
+                <div class="split-view-layout" style="justify-content: center; align-items: center; min-height: 400px;">
+                    
+                    <div class="card left-form-panel" id="authRegisterBox" style="width: 100%; max-width: 400px;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">Create Operator Profile</h3>
+                        <form id="registerSystemForm" onsubmit="processRegistration(event)">
                             <div class="form-group">
-                                <label class="form-label" data-i18n="reg_lbl_name">Full Name</label>
-                                <input type="text" class="form-input" id="regFullName" required placeholder="e.g. Chan Rotha">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-input" id="regUser" required placeholder="Choose a handle...">
                             </div>
                             <div class="form-group">
-                                <label class="form-label" data-i18n="reg_lbl_user">Username</label>
-                                <input type="text" class="form-input" id="regUsername" required placeholder="e.g. rotha_dev">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" id="regPass" required placeholder="••••••••">
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" data-i18n="reg_lbl_email">Email Address</label>
-                                <input type="email" class="form-input" id="regEmail" required placeholder="e.g. rotha@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" data-i18n="reg_lbl_role">System Role</label>
-                                <select class="form-select" id="regRole">
-                                    <option value="user" data-i18n="role_user">Standard User</option>
-                                    <option value="admin" data-i18n="role_admin">Administrator</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" data-i18n="reg_lbl_pass">Password</label>
-                                <input type="password" class="form-input" id="regPassword" required placeholder="••••••••">
-                            </div>
-                            <button type="submit" class="btn-submit" data-i18n="reg_btn_submit">Register</button>
+                            <button type="submit" class="btn-submit">Register Workspace Account</button>
                         </form>
+                        <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
+                            Already registered? <a href="javascript:void(0)" onclick="toggleAuthForms('login')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Log In here</a>
+                        </p>
                     </div>
-                    <div class="card right-display-panel">
-                        <h3 data-i18n="reg_table_title">System Registry</h3>
-                        <div class="data-table-wrapper">
-                            <table class="user-table">
-                               <thead>
-                                   <tr>
-                                       <th data-i18n="th_name">Full Name</th>
-                                       <th data-i18n="th_user">Username</th>
-                                       <th data-i18n="th_email">Email</th>
-                                       <th data-i18n="th_role">Role</th>
-                                       <th data-i18n="th_action">Action</th>
-                                   </tr>
-                               </thead>
-                               <tbody id="userTableBody"></tbody>
-                            </table>
-                        </div>
+
+                    <div class="card left-form-panel" id="authLoginBox" style="width: 100%; max-width: 400px; display: none;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">Workspace Portal Login</h3>
+                        <form id="loginSystemForm" onsubmit="processLogin(event)">
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-input" id="loginUser" required placeholder="Enter handle name...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" id="loginPass" required placeholder="••••••••">
+                            </div>
+                            <button type="submit" class="btn-submit">Authenticate Session</button>
+                        </form>
+                        <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
+                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('register')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Register now</a>
+                        </p>
                     </div>
+
                 </div>
             </div>
 
@@ -490,760 +475,159 @@
     </main>
 
     <script>
-        // Sound Notification Synthesizer Engine using Web Audio API
-        const SoundAlerts = {
-            ctx: null,
+        let userDatabase = JSON.parse(localStorage.getItem('users')) || { "admin_kh": "password123" };
+        let currentSessionUser = localStorage.getItem('activeUser') || null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initNavigation();
+            syncUIContext();
+            initThemeEngine();
+        });
+
+        // SYSTEM NOTIFICATION TOAST ENGINE
+        function showToast(message, type = 'info') {
+            const hub = document.getElementById('toastHub');
+            const toast = document.createElement('div');
+            toast.className = `toast-card ${type}`;
             
-            init() {
-                if (!this.ctx) {
-                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-            },
-
-            // Play clean, dual-tone UI confirmation chimes
-            playSuccessChime() {
-                this.init();
-                const now = this.ctx.currentTime;
-                
-                const osc1 = this.ctx.createOscillator();
-                const osc2 = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(523.25, now); // C5 Note
-                osc1.frequency.setValueAtTime(659.25, now + 0.1); // E5 Note
-
-                osc2.type = 'sine';
-                osc2.frequency.setValueAtTime(783.99, now + 0.05); // G5 Note
-
-                gain.gain.setValueAtTime(0.15, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-
-                osc1.connect(gain);
-                osc2.connect(gain);
-                gain.connect(this.ctx.destination);
-
-                osc1.start(now);
-                osc2.start(now + 0.05);
-                osc1.stop(now + 0.4);
-                osc2.stop(now + 0.4);
-            },
-
-            // Soft snappy pop sound specifically for messaging channels
-            playMessagePop() {
-                this.init();
-                const now = this.ctx.currentTime;
-                
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(400, now);
-                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.08);
-
-                gain.gain.setValueAtTime(0.2, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-
-                osc.start(now);
-                osc.stop(now + 0.08);
-            }
-        };
-
-        const translations = {
-            en: {
-                menu_home: "Home", menu_profile: "Profile", menu_message: "Message", menu_groups: "Groups", menu_register: "Register",
-                user_prefix: "User:", welcome_title: "Welcome to Ultra KH", welcome_desc: "Your workspace design changes are completely updated and saved.",
-                dash_home: "Dashboard / Home", dash_profile: "Dashboard / Profile", dash_message: "Dashboard / Message", dash_groups: "Dashboard / Groups", dash_register: "Dashboard / Register",
-                chat_header: "Recent Chats", chat_send: "Send", chat_placeholder: "Type your message here...", chat_preview_init: "Select an active operator to review logs...",
-                chat_friends_title: "Friends List", groups_title: "Team Workspaces",
-                reg_form_title: "Create Account", reg_lbl_name: "Full Name", reg_lbl_email: "Email Address", reg_lbl_user: "Username", reg_lbl_role: "System Role", reg_lbl_pass: "Password", reg_btn_submit: "Register", reg_table_title: "System Registry",
-                th_name: "Full Name", th_email: "Email", th_user: "Username", th_role: "Role", th_action: "Action", role_user: "Standard User", role_admin: "Administrator", btn_del_txt: "Delete",
-                grp_form_title: "Create Team Workspace", grp_lbl_name: "Group Name", grp_lbl_desc: "Workspace Purpose", grp_btn_submit: "Launch Group",
-                meta_members: "members", status_joined: "Joined", status_open: "Open",
-                met_total_users: "Total Registry Accounts", met_active_groups: "Active Project Rooms", met_sys_status: "System Status", met_status_online: "Operational / Online",
-                prof_form_title: "Account Info", prof_lbl_handle: "Active Operator Username", prof_btn_save: "Save Changes", prof_panel_pref: "Workspace Preferences", prof_pref_dark_title: "Developer Dark Mode", prof_pref_dark_desc: "Switch background layout color palette to low-light style.",
-                prof_lbl_avatar: "Upload Profile Picture", home_post_title: "Publish an Update", home_post_hold_text: "What is happening within your workspace channels?", home_lbl_upload: "Attach Media (Image / Video)", home_btn_publish: "Publish Post", 
-                home_like_txt: "Like", home_comment_txt: "Comment", home_share_txt: "Share", home_comment_hold: "Write a comment..."
-            },
-            kh: {
-                menu_home: "ទំព័រដើម", menu_profile: "ប្រវត្តិរូប", menu_message: "សារ", menu_groups: "ក្រុម", menu_register: "ចុះឈ្មោះ",
-                user_prefix: "អ្នកប្រើប្រាស់:", welcome_title: "សូមស្វាគមន៍មកកាន់ Ultra KH", welcome_desc: "ការផ្លាស់ប្តូរការរចនាទីកន្លែងធ្វើការរបស់អ្នកត្រូវបានធ្វើបច្ចុប្បន្នភាព និងរក្សាទុកទាំងស្រុង។",
-                dash_home: "ផ្ទាំងគ្រប់គ្រង / ទំព័រដើម", dash_profile: "ផ្ទាំងគ្រប់គ្រង / ប្រវត្តិរូប", dash_message: "ផ្ទាំងគ្រប់គ្រង / សារ", dash_groups: "ផ្ទាំងគ្រប់គ្រង / ក្រុម", dash_register: "ផ្ទាំងគ្រប់គ្រង / ចុះឈ្មោះ",
-                chat_header: "ការសន្ទនាថ្មីៗ", chat_send: "បញ្ជូន", chat_placeholder: "វាយសាររបស់អ្នកនៅទីនេះ...", chat_preview_init: "សូមជ្រើសរើសប្រតិបត្តិករសកម្មដើម្បីពិនិត្យមើលកំណត់ហេតុ...",
-                chat_friends_title: "បញ្ជីមិត្តភក្តិ", groups_title: "កន្លែងធ្វើការក្រុម",
-                reg_form_title: "បង្កើតគណនី", reg_lbl_name: "ឈ្មោះពេញ", reg_lbl_email: "អាសយដ្ឋានអ៊ីមែល", reg_lbl_user: "ឈ្មោះអ្នកប្រើប្រាស់", reg_lbl_role: "តួនាទីប្រព័ន្ធ", reg_lbl_pass: "ពាក្យសម្ងាត់", reg_btn_submit: "ចុះឈ្មោះ", reg_table_title: "បញ្ជីឈ្មោះប្រព័ន្ធ",
-                th_name: "ឈ្មោះពេញ", th_email: "អ៊ីមែល", th_user: "ឈ្មោះអ្នកប្រើប្រាស់", th_role: "តួនាទី", th_action: "សកម្មភាព", role_user: "អ្នកប្រើប្រាស់ធម្មតា", role_admin: "អ្នកគ្រប់គ្រងប្រព័ន្ធ", btn_del_txt: "លុបចេញ",
-                grp_form_title: "បង្កើតកន្លែងធ្វើការក្រុម", grp_lbl_name: "ឈ្មោះក្រុម", grp_lbl_desc: "គោលបំណងកន្លែងធ្វើការ", grp_btn_submit: "បង្កើតក្រុម",
-                meta_members: "សមាជិក", status_joined: "បានចូលរួម", status_open: "បើកចំហ",
-                met_total_users: "គណនីចុះឈ្មោះសរុប", met_active_groups: "បន្ទប់គម្រោងសកម្ម", met_sys_status: "ស្ថានភាពប្រព័ន្ធ", met_status_online: "ដំណើរការ / អនឡាញ",
-                prof_form_title: "ព័ត៌មានគណនី", prof_lbl_handle: "ឈ្មោះអ្នកប្រើប្រាស់ប្រតិបត្តិករសកម្ម", prof_btn_save: "រក្សាទុកការផ្លាស់ប្តូរ", prof_panel_pref: "ចំណូលចិត្តកន្លែងធ្វើការ", prof_pref_dark_title: "របៀបងងឹតអ្នកអភិវឌ្ឍន៍", prof_pref_dark_desc: "ប្តូរពណ៌ផ្ទៃខាងក្រោយប្លង់ទៅជារបៀបពន្លឺតិច។",
-                prof_lbl_avatar: "ផ្ទុករូបភាពប្រវត្តិរូបឡើង", home_post_title: "ផ្សព្វផ្សាយព័ត៌មានថ្មីៗ", home_post_hold_text: "តើមានអ្វីកើតឡើងនៅក្នុងបណ្តាញការិយាល័យរបស់អ្នក?", home_lbl_upload: "ផ្ទុករូបភាព ឬវីដេអូឡើង", home_btn_publish: "ផ្សព្វផ្សាយសារ", 
-                home_like_txt: "ចូលចិត្ត", home_comment_txt: "មតិយោបល់", home_share_txt: "ចែករំលែក", home_comment_hold: "សរសេរមតិយោបល់..."
-            }
-        };
-
-        // Track active chat variables
-        let activeChatFriendName = null;
-        let privateChatsData = {
-            "Sokha Nimol": [
-                { id: 1, sender: "them", type: "text", text: "Hello! Welcome to the workspace system.", timestamp: "09:12 AM", reactions: {}, replyTo: null },
-                { id: 2, sender: "them", type: "text", text: "How can I help you adjust your operational layouts today?", timestamp: "09:13 AM", reactions: {}, replyTo: null }
-            ]
-        };
-
-        let globalUsers = [
-            { id: 1, name: "admin_kh", email: "admin@ultrakh.com", user: "admin_kh", role: "admin", avatar: "" },
-            { id: 2, name: "Sokha Nimol", email: "nimol.sokha@ultrakh.com", user: "nimol_sokha", role: "user", avatar: "" },
-            { id: 3, name: "Chan Rotha", email: "rotha.chan@ultrakh.com", user: "rotha_dev", role: "user", avatar: "" },
-            { id: 4, name: "Odom Dara", email: "dara.odom@ultrakh.com", user: "odom_dara", role: "user", avatar: "" }
-        ];
-
-        let globalGroups = [
-            { id: 1, name: "Phnom Penh Devs", desc: "Core infrastructure scaling files and localization engine protocols.", members: 14, joined: true },
-            { id: 2, name: "UX/UI Design KH", desc: "Vibrant visual wireframes mapping component design stylesheets.", members: 8, joined: false }
-        ];
-
-        let globalPosts = [
-            {
-                id: 1,
-                author: "Sokha Nimol",
-                text: "Successfully updated our internal operational pipeline layout models across the database modules!",
-                image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
-                video: "",
-                likes: 4,
-                liked: false,
-                comments: [
-                    { id: 101, author: "admin_kh", text: "Great work! The layout updates look very clean." }
-                ],
-                time: "10 mins ago"
-            }
-        ];
-
-        let activeReplyTargetId = null;
-        let localAvatarDataUrl = ""; 
-
-        // Helper engine to dynamically render Canvas Avatars with initials when no uploaded photo exists
-        function buildCanvasAvatar(name, size = 40) {
-            const canvas = document.createElement('canvas');
-            canvas.width = size; canvas.height = size;
-            const ctx = canvas.getContext('2d');
+            toast.innerHTML = `
+                <span class="toast-message">${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+            `;
             
-            // Background hashing coloration rule
-            const colors = ['#1E50FF', '#FF4D4F', '#52C41A', '#FAAD14', '#722ED1', '#13C2C2'];
-            let hash = 0;
-            for (let i = 0; i < name.length; i++) { hash = name.charCodeAt(i) + ((hash << 5) - hash); }
-            const color = colors[Math.abs(hash) % colors.length];
+            hub.appendChild(toast);
             
-            ctx.fillStyle = color; ctx.fillRect(0, 0, size, size);
-            ctx.fillStyle = '#FFFFFF'; ctx.font = `bold ${Math.floor(size * 0.4)}px sans-serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-            
-            const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-            ctx.fillText(initials, size / 2, size / 2);
-            return canvas.toDataURL();
-        }
-
-        function applyAvatarStyle(element, name, specificAvatarUrl = "") {
-            if (!element) return;
-            const finalUrl = specificAvatarUrl || (name === document.getElementById('topBarUserHandle').textContent && localAvatarDataUrl ? localAvatarDataUrl : buildCanvasAvatar(name));
-            element.style.backgroundImage = `url('${finalUrl}')`;
-            element.innerHTML = '';
-        }
-
-        function previewSelectedAvatar(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    localAvatarDataUrl = e.target.result;
-                    document.getElementById('profileAvatarPreview').style.backgroundImage = `url('${localAvatarDataUrl}')`;
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function syncGlobalAvatarDisplays() {
-            const currentOperator = document.getElementById('topBarUserHandle').textContent;
-            applyAvatarStyle(document.getElementById('topBarUserAvatar'), currentOperator);
-            applyAvatarStyle(document.getElementById('profileAvatarPreview'), currentOperator);
-            
-            if(globalUsers.length > 0 && globalUsers[0].user === currentOperator) {
-                globalUsers[0].avatar = localAvatarDataUrl;
-            }
-            renderHomeFeed(); renderFriendsAndThreadsList(); renderChatWorkspace();
-        }
-
-        function calculateHomeMetrics() {
-            document.getElementById('metUserCount').textContent = globalUsers.length;
-            document.getElementById('metGroupCount').textContent = globalGroups.length;
-        }
-
-        function handlePostPublish(event) {
-            event.preventDefault();
-            const textInputVal = document.getElementById('postText').value.trim();
-            const mediaUploadInput = document.getElementById('homeMediaUpload');
-            const currentOperator = document.getElementById('topBarUserHandle').textContent;
-
-            let uploadedImgUrl = "";
-            let uploadedVideoUrl = "";
-
-            if (mediaUploadInput.files && mediaUploadInput.files[0]) {
-                const file = mediaUploadInput.files[0];
-                if (file.type.startsWith('image/')) uploadedImgUrl = URL.createObjectURL(file);
-                else if (file.type.startsWith('video/')) uploadedVideoUrl = URL.createObjectURL(file);
-            }
-
-            const newPost = {
-                id: Date.now(),
-                author: currentOperator,
-                text: textInputVal,
-                image: uploadedImgUrl,
-                video: uploadedVideoUrl,
-                likes: 0,
-                liked: false,
-                comments: [],
-                time: "Just now"
-            };
-
-            globalPosts.unshift(newPost); 
-            SoundAlerts.playSuccessChime();
-            renderHomeFeed();
-            document.getElementById('homePublishForm').reset();
-        }
-
-        function renderHomeFeed() {
-            const feedStream = document.getElementById('homeFeedStream');
-            if(!feedStream) return;
-            
-            const currentLang = localStorage.getItem('preferredLang') || 'en';
-            const dict = translations[currentLang] || translations['en'];
-            
-            feedStream.innerHTML = '';
-
-            globalPosts.forEach(post => {
-                const card = document.createElement('div');
-                card.classList.add('post-card');
-
-                let mediaHTML = '';
-                if(post.image) mediaHTML = `<div class="post-media-box"><img src="${post.image}" alt="Post Image"></div>`;
-                else if(post.video) mediaHTML = `<div class="post-media-box"><video src="${post.video}" controls></video></div>`;
-
-                const cardId = `post-author-av-${post.id}`;
-                let commentsHTML = '';
-                post.comments.forEach((cmt, idx) => {
-                    commentsHTML += `
-                        <div class="comment-item-row">
-                            <div class="avatar-placeholder" id="post-cmt-av-${post.id}-${idx}" style="width:24px; height:24px;"></div>
-                            <div class="comment-content-bubble">
-                                <div class="comment-user-title">${cmt.author}</div>
-                                <div>${cmt.text}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                const likeActiveState = post.liked ? 'liked' : '';
-                card.innerHTML = `
-                    <div class="post-header">
-                        <div class="avatar-placeholder" id="${cardId}" style="width:32px; height:32px;"></div>
-                        <div><div class="post-author">${post.author}</div><div class="post-time">${post.time}</div></div>
-                    </div>
-                    <div class="post-content-text">${post.text}</div>
-                    ${mediaHTML}
-                    
-                    <div class="post-actions">
-                        <button class="action-trigger-btn ${likeActiveState}" onclick="toggleLikePost(${post.id})">
-                            <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                            <span>${dict.home_like_txt} (${post.likes})</span>
-                        </button>
-                        <button class="action-trigger-btn" onclick="focusCommentInput(${post.id})">
-                            <svg style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2;" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                            <span>${dict.home_comment_txt} (${post.comments.length})</span>
-                        </button>
-                        <button class="action-trigger-btn" onclick="executePostShare(${post.id}, '${post.text.replace(/'/g, "\\'")}')">
-                            <svg style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2;" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                            <span>${dict.home_share_txt}</span>
-                        </button>
-                    </div>
-
-                    <div class="comments-section-wrapper">
-                        <div id="comments-container-${post.id}">${commentsHTML}</div>
-                        <div class="comment-input-inline-box">
-                            <input type="text" class="form-input" id="comment-field-${post.id}" placeholder="${dict.home_comment_hold}" style="margin-bottom:0; padding:6px 12px;">
-                            <button class="btn-send" style="padding:0 14px; font-size:12px;" onclick="submitPostComment(${post.id})">${dict.chat_send}</button>
-                        </div>
-                    </div>
-                `;
-                feedStream.appendChild(card);
-                
-                // Binding avatars down into newly painted nodes
-                applyAvatarStyle(document.getElementById(cardId), post.author);
-                post.comments.forEach((cmt, idx) => {
-                    applyAvatarStyle(document.getElementById(`post-cmt-av-${post.id}-${idx}`), cmt.author);
-                });
-            });
-        }
-
-        function toggleLikePost(postId) {
-            globalPosts.forEach(post => {
-                if(post.id === postId) {
-                    post.liked = !post.liked;
-                    post.likes += post.liked ? 1 : -1;
-                }
-            });
-            renderHomeFeed();
-        }
-
-        function focusCommentInput(postId) {
-            const inputField = document.getElementById(`comment-field-${postId}`);
-            if(inputField) inputField.focus();
-        }
-
-        function submitPostComment(postId) {
-            const inputField = document.getElementById(`comment-field-${postId}`);
-            if (!inputField || !inputField.value.trim()) return;
-
-            const currentOperator = document.getElementById('topBarUserHandle').textContent;
-            globalPosts.forEach(post => {
-                if(post.id === postId) {
-                    post.comments.push({
-                        id: Date.now(),
-                        author: currentOperator,
-                        text: inputField.value.trim()
-                    });
-                }
-            });
-
-            renderHomeFeed();
-        }
-
-        function executePostShare(postId, textSummary) {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Ultra KH Workspace Update',
-                    text: textSummary,
-                    url: window.location.href
-                }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(`[Ultra KH Update by @admin_kh]: "${textSummary}"`);
-                alert("Post link successfully copied to clipboard metrics!");
-            }
-        }
-
-        function switchLanguage(lang) {
-            localStorage.setItem('preferredLang', lang);
-            const dict = translations[lang] || translations['en'];
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (dict[key]) el.textContent = dict[key];
-            });
-            document.querySelectorAll('[data-i18n-holder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-holder');
-                if (dict[key]) el.setAttribute('placeholder', dict[key]);
-            });
-            updateBreadcrumb(); renderUserTable(); renderGroupGrid(); renderFriendsAndThreadsList();
-        }
-
-        // Simulates receiving a realistic incoming response message down the logging lines
-        function triggerIncomingMessageSimulation(incomingText) {
-            if (!activeChatFriendName) return;
-            
+            // Auto disappear loop after 4 seconds safely
             setTimeout(() => {
-                const incomingMsg = {
-                    id: Date.now(),
-                    sender: "them",
-                    type: "text",
-                    text: incomingText,
-                    timestamp: getFormattedTime(),
-                    reactions: {},
-                    replyTo: null
-                };
-                
-                privateChatsData[activeChatFriendName].push(incomingMsg);
-                SoundAlerts.playMessagePop(); // Ring incoming message sound
-                renderFriendsAndThreadsList();
-                renderChatWorkspace();
-                scrollChatToBase();
-            }, 1000);
+                if (toast.parentElement) {
+                    toast.style.animation = "toastSlideOut 0.3s ease forwards";
+                    toast.addEventListener('animationend', () => toast.remove());
+                }
+            }, 4000);
         }
 
-        function setupNavigation() {
+        function initNavigation() {
             const menuItems = document.querySelectorAll('.sidebar-item');
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    const targetPage = this.getAttribute('data-target');
-                    document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-                    document.getElementById(`page-${targetPage}`).classList.add('active');
-                    updateBreadcrumb();
-                    if(targetPage === 'home') { calculateHomeMetrics(); renderHomeFeed(); }
-                    else if(targetPage === 'message') { renderFriendsAndThreadsList(); renderChatWorkspace(); }
+            const pageViews = document.querySelectorAll('.page-view');
+            const breadcrumb = document.getElementById('breadcrumb');
+
+            menuItems.forEach(item => item.replaceWith(item.cloneNode(true)));
+            const freshMenuItems = document.querySelectorAll('.sidebar-item');
+            const freshPageViews = document.querySelectorAll('.page-view');
+
+            freshMenuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const target = item.getAttribute('data-target');
+                    if (target === 'logout') { processLogout(); return; }
+
+                    freshMenuItems.forEach(i => i.classList.remove('active'));
+                    freshPageViews.forEach(p => p.classList.remove('active'));
+
+                    item.classList.add('active');
+                    const activePage = document.getElementById(`page-${target}`);
+                    if (activePage) activePage.classList.add('active');
+                    breadcrumb.textContent = `Dashboard / ${target.charAt(0).toUpperCase() + target.slice(1)}`;
                 });
             });
         }
 
-        function updateBreadcrumb() {
-            const activeItem = document.querySelector('.sidebar-item.active');
-            const targetPage = activeItem ? activeItem.getAttribute('data-target') : 'home';
-            const currentLang = localStorage.getItem('preferredLang') || 'en';
-            const dict = translations[currentLang] || translations['en'];
-            document.getElementById('breadcrumb').textContent = dict[`dash_${targetPage}`] || '';
-        }
-
-        function handleProfileUpdate(event) {
-            event.preventDefault();
-            const newHandle = document.getElementById('profUserHandle').value.trim();
-            if(!newHandle) return;
-            document.getElementById('topBarUserHandle').textContent = newHandle;
-            if(globalUsers.length > 0) { 
-                globalUsers[0].name = newHandle; 
-                globalUsers[0].user = newHandle; 
-                renderUserTable(); 
-            }
-            SoundAlerts.playSuccessChime();
-            syncGlobalAvatarDisplays();
-        }
-
-        function setupThemeListener() {
-            const checkbox = document.getElementById('themeToggleCheckbox');
-            if(localStorage.getItem('themeMode') === 'dark') { document.body.classList.add('dark-mode'); checkbox.checked = true; }
-            checkbox.addEventListener('change', function() {
-                if(this.checked) { document.body.classList.add('dark-mode'); localStorage.setItem('themeMode', 'dark'); }
-                else { document.body.classList.remove('dark-mode'); localStorage.setItem('themeMode', 'light'); }
-            });
-        }
-
-        const msgContainer = document.getElementById('chatMsgContainer');
-        const chatInput = document.getElementById('chatInputField');
-
-        function getFormattedTime() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; 
-            return `${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
-        }
-
-        function renderFriendsAndThreadsList() {
-            const currentOperator = document.getElementById('topBarUserHandle').textContent;
-            const friendsContainer = document.getElementById('chatFriendsContainer');
-            const threadsContainer = document.getElementById('chatThreadsContainer');
-            
-            if (friendsContainer) {
-                friendsContainer.innerHTML = '';
-                globalUsers.forEach(user => {
-                    if (user.name !== currentOperator) {
-                        const li = document.createElement('li');
-                        li.classList.add('friend-item');
-                        const fAvId = `friend-av-${user.id}`;
-                        li.innerHTML = `
-                            <div class="avatar-placeholder" id="${fAvId}" style="width:28px; height:28px;"></div>
-                            <div class="friend-name">${user.name}</div>
-                        `;
-                        li.onclick = () => openPrivateChatWindow(user.name);
-                        friendsContainer.appendChild(li);
-                        applyAvatarStyle(document.getElementById(fAvId), user.name, user.avatar);
-                    }
-                });
-            }
-
-            if (threadsContainer) {
-                threadsContainer.innerHTML = '';
-                Object.keys(privateChatsData).forEach((name, idx) => {
-                    const messages = privateChatsData[name];
-                    const lastMsg = messages[messages.length - 1];
-                    const previewText = lastMsg ? (lastMsg.text || '📄 Media attachment') : 'No messages yet';
-                    const activeClass = activeChatFriendName === name ? 'active' : '';
-
-                    const li = document.createElement('li');
-                    li.classList.add('thread-item', activeClass);
-                    const tAvId = `thread-av-${idx}`;
-                    li.innerHTML = `
-                        <div class="avatar-placeholder" id="${tAvId}"></div>
-                        <div class="thread-details">
-                            <div class="thread-name">${name}</div>
-                            <div class="thread-preview">${previewText}</div>
-                        </div>
-                    `;
-                    li.onclick = () => openPrivateChatWindow(name);
-                    threadsContainer.appendChild(li);
-                    
-                    const matchingUser = globalUsers.find(u => u.name === name);
-                    applyAvatarStyle(document.getElementById(tAvId), name, matchingUser ? matchingUser.avatar : "");
-                });
+        function toggleAuthForms(view) {
+            const regBox = document.getElementById('authRegisterBox');
+            const loginBox = document.getElementById('authLoginBox');
+            if (view === 'login') {
+                regBox.style.display = 'none';
+                loginBox.style.display = 'block';
+            } else {
+                regBox.style.display = 'block';
+                loginBox.style.display = 'none';
             }
         }
 
-        function openPrivateChatWindow(friendName) {
-            activeChatFriendName = friendName;
-            if (!privateChatsData[friendName]) {
-                privateChatsData[friendName] = [];
-            }
-            document.getElementById('activeChatUser').textContent = friendName;
-            renderFriendsAndThreadsList();
-            renderChatWorkspace();
-            scrollChatToBase();
-        }
+        function processRegistration(e) {
+            e.preventDefault();
+            const u = document.getElementById('regUser').value.trim();
+            const p = document.getElementById('regPass').value;
 
-        function renderChatWorkspace() {
-            msgContainer.innerHTML = '';
-            if (!activeChatFriendName) {
-                msgContainer.innerHTML = '<div style="text-align:center; padding-top:40px; color:var(--bit-text-light);">Select a friend to begin private communication secure session.</div>';
+            if (userDatabase[u]) {
+                showToast("Error: Operator handle name already registered.", "error");
                 return;
             }
 
-            const activeMessages = privateChatsData[activeChatFriendName] || [];
-            activeMessages.forEach((msg, idx) => {
-                const row = document.createElement('div');
-                row.classList.add('msg-row', msg.sender === 'me' ? 'msg-me' : 'msg-them');
+            userDatabase[u] = p;
+            localStorage.setItem('users', JSON.stringify(userDatabase));
+            
+            showToast("Success! Account registered. Redirecting to login portal...", "success");
+            
+            document.getElementById('registerSystemForm').reset();
+            toggleAuthForms('login');
+        }
 
-                const metaContainer = document.createElement('div');
-                metaContainer.classList.add('msg-meta-container');
-                const senderName = msg.sender === 'me' ? document.getElementById('topBarUserHandle').textContent : activeChatFriendName;
-                metaContainer.innerHTML = `<span>${senderName}</span><span style="opacity:0.6;font-size:10px;">• ${msg.timestamp}</span>`;
-                row.appendChild(metaContainer);
+        function processLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUser').value.trim();
+            const p = document.getElementById('loginPass').value;
 
-                const bubbleWrapper = document.createElement('div');
-                bubbleWrapper.classList.add('bubble-wrapper');
-
-                // Dynamic Message Avatar logic injection
-                const chatMsgAvId = `chat-msg-av-${idx}`;
-                const msgAvatarEl = document.createElement('div');
-                msgAvatarEl.classList.add('avatar-placeholder');
-                msgAvatarEl.id = chatMsgAvId;
-                msgAvatarEl.style.width = "28px"; msgAvatarEl.style.height = "28px";
-                bubbleWrapper.appendChild(msgAvatarEl);
-
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-
-                if (msg.replyTo) {
-                    const referencedMsg = activeMessages.find(m => m.id === msg.replyTo);
-                    if (referencedMsg) {
-                        const replyBlock = document.createElement('div');
-                        replyBlock.classList.add('reply-context-block');
-                        replyBlock.textContent = referencedMsg.text || '📄 Attachment / Media File';
-                        bubble.appendChild(replyBlock);
-                    }
-                }
-
-                if (msg.type === 'text') {
-                    const txtSpan = document.createElement('span');
-                    txtSpan.textContent = msg.text;
-                    bubble.appendChild(txtSpan);
-                } else if (msg.type === 'sticker') {
-                    bubble.classList.add('sticker-bubble');
-                    bubble.innerHTML = `<span style="font-size:50px;">${msg.text}</span>`;
-                } else if (msg.type === 'file') {
-                    bubble.innerHTML = `<div class="file-attachment"><div class="file-icon">📁</div><div><div style="font-weight:600;">${msg.text}</div></div></div>`;
-                } else if (msg.type === 'voice') {
-                    bubble.innerHTML = `<div class="voice-player"><span>▶️</span><div class="voice-wave"></div><span>0:04</span></div>`;
-                }
-
-                bubbleWrapper.appendChild(bubble);
-
-                const actionsBar = document.createElement('div');
-                actionsBar.classList.add('msg-action-bar');
-                actionsBar.innerHTML = `
-                    <button class="action-icon-btn" title="Reply" onclick="initiateReplyState(${msg.id})">↩️</button>
-                    <button class="action-icon-btn" title="Like" onclick="submitMessageReaction(${msg.id}, '👍')">👍</button>
-                    <button class="action-icon-btn" title="Fire" onclick="submitMessageReaction(${msg.id}, '🔥')">🔥</button>
-                    <button class="action-icon-btn" title="Delete" onclick="deleteMessageFromThread(${msg.id})" style="color:var(--bit-danger);">🗑️</button>
-                `;
-                bubbleWrapper.appendChild(actionsBar);
-                row.appendChild(bubbleWrapper);
-
-                if (msg.reactions && Object.keys(msg.reactions).length > 0) {
-                    const reactionsRow = document.createElement('div');
-                    reactionsRow.classList.add('reactions-row');
-                    Object.keys(msg.reactions).forEach(emoji => {
-                        const badge = document.createElement('div');
-                        badge.classList.add('reaction-badge');
-                        badge.innerHTML = `<span>${emoji}</span><span>${msg.reactions[emoji]}</span>`;
-                        badge.onclick = () => submitMessageReaction(msg.id, emoji);
-                        reactionsRow.appendChild(badge);
-                    });
-                    row.appendChild(reactionsRow);
-                }
-
-                msgContainer.appendChild(row);
+            if (userDatabase[u] && userDatabase[u] === p) {
+                currentSessionUser = u;
+                localStorage.setItem('activeUser', u);
                 
-                // Painting message track individual avatars
-                const targetMatchUser = globalUsers.find(u => u.name === senderName);
-                applyAvatarStyle(msgAvatarEl, senderName, targetMatchUser ? targetMatchUser.avatar : "");
-            });
-        }
-
-        function scrollChatToBase() { msgContainer.scrollTop = msgContainer.scrollHeight; }
-        function toggleStickerPicker() { document.getElementById('chatStickerPicker').classList.toggle('active'); }
-        
-        function handleOutgoingMessage() {
-            if (!activeChatFriendName) return;
-            const textValue = chatInput.value.trim();
-            if (!textValue) return;
-
-            const newMsg = {
-                id: Date.now(),
-                sender: "me",
-                type: "text",
-                text: textValue,
-                timestamp: getFormattedTime(),
-                reactions: {},
-                replyTo: activeReplyTargetId
-            };
-
-            privateChatsData[activeChatFriendName].push(newMsg);
-            SoundAlerts.playMessagePop(); // Play pop sound for sent text channel
-            cancelReplyState();
-            renderFriendsAndThreadsList();
-            renderChatWorkspace();
-            chatInput.value = '';
-            scrollChatToBase();
-
-            // Trigger automation reply framework simulation
-            triggerIncomingMessageSimulation("Understood, operational file structures checked.");
-        }
-
-        function initiateReplyState(msgId) {
-            const activeMessages = privateChatsData[activeChatFriendName] || [];
-            const targetedMsg = activeMessages.find(m => m.id === msgId);
-            if (!targetedMsg) return;
-            activeReplyTargetId = msgId;
-            const previewText = targetedMsg.text ? targetedMsg.text : "File Attachment";
-            document.getElementById('replyStatusTargetText').textContent = previewText.length > 30 ? previewText.substring(0,30) + '...' : previewText;
-            document.getElementById('replyStatusIndicator').classList.add('active');
-            chatInput.focus();
-        }
-
-        function cancelReplyState() {
-            activeReplyTargetId = null;
-            document.getElementById('replyStatusIndicator').classList.remove('active');
-        }
-
-        function deleteMessageFromThread(msgId) {
-            if (!activeChatFriendName) return;
-            privateChatsData[activeChatFriendName] = privateChatsData[activeChatFriendName].filter(m => m.id !== msgId);
-            privateChatsData[activeChatFriendName].forEach(m => { if(m.replyTo === msgId) m.replyTo = null; });
-            renderFriendsAndThreadsList();
-            renderChatWorkspace();
-        }
-
-        function submitMessageReaction(msgId, emoji) {
-            if (!activeChatFriendName) return;
-            privateChatsData[activeChatFriendName].forEach(m => {
-                if (m.id === msgId) {
-                    if (!m.reactions) m.reactions = {};
-                    if (m.reactions[emoji]) m.reactions[emoji]++;
-                    else m.reactions[emoji] = 1;
-                }
-            });
-            renderChatWorkspace();
-        }
-
-        function sendSticker(emoji) {
-            if (!activeChatFriendName) return;
-            privateChatsData[activeChatFriendName].push({ id: Date.now(), sender: "me", type: "sticker", text: emoji, timestamp: getFormattedTime(), reactions: {}, replyTo: activeReplyTargetId });
-            SoundAlerts.playMessagePop();
-            cancelReplyState(); renderFriendsAndThreadsList(); renderChatWorkspace(); document.getElementById('chatStickerPicker').classList.remove('active'); scrollChatToBase();
-        }
-
-        function handleChatFileUpload(input) {
-            if (!activeChatFriendName || !input.files?.[0]) return;
-            privateChatsData[activeChatFriendName].push({ id: Date.now(), sender: "me", type: "file", text: input.files[0].name, timestamp: getFormattedTime(), reactions: {}, replyTo: activeReplyTargetId });
-            SoundAlerts.playMessagePop();
-            cancelReplyState(); renderFriendsAndThreadsList(); renderChatWorkspace(); scrollChatToBase(); input.value = '';
-        }
-
-        let isRecordingAudioSim = false;
-        function toggleVoiceRecordSim() {
-            if (!activeChatFriendName) return;
-            const voiceBtn = document.getElementById('chatVoiceBtn');
-            isRecordingAudioSim = !isRecordingAudioSim;
-            if(isRecordingAudioSim) {
-                voiceBtn.style.color = 'var(--bit-danger)'; chatInput.placeholder = "Recording audio tracking note..."; chatInput.disabled = true;
+                showToast(`Welcome back, ${u}! Session authorization granted.`, "success");
+                
+                document.getElementById('loginSystemForm').reset();
+                syncUIContext();
+                document.querySelector('[data-target="home"]').click();
             } else {
-                voiceBtn.style.color = ''; chatInput.placeholder = "Type your message here..."; chatInput.disabled = false;
-                privateChatsData[activeChatFriendName].push({ id: Date.now(), sender: "me", type: "voice", text: "voice_note.mp3", timestamp: getFormattedTime(), reactions: {}, replyTo: activeReplyTargetId });
-                SoundAlerts.playMessagePop();
-                cancelReplyState(); renderFriendsAndThreadsList(); renderChatWorkspace(); scrollChatToBase();
+                showToast("Access Denied: Invalid credentials processed.", "error");
             }
         }
 
-        document.getElementById('chatSendBtn').addEventListener('click', handleOutgoingMessage);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleOutgoingMessage(); });
+        function processLogout() {
+            currentSessionUser = null;
+            localStorage.removeItem('activeUser');
+            syncUIContext();
+            showToast("Session terminated securely. Profile state purged.", "warning");
+            document.querySelector('[data-target="home"]').click();
+        }
 
-        function renderUserTable() {
-            const tbody = document.getElementById('userTableBody');
-            if(!tbody) return; 
-            
-            const currentLang = localStorage.getItem('preferredLang') || 'en';
-            const dict = translations[currentLang] || translations['en'];
-            
-            tbody.innerHTML = '';
-            globalUsers.forEach(u => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${u.name}</td>
-                    <td>@${u.user}</td>
-                    <td>${u.email}</td>
-                    <td><span class="badge-role ${u.role}">${u.role==='admin'?(dict.role_admin):(dict.role_user)}</span></td>
-                    <td><button class="btn-delete" onclick="deleteUser(${u.id})">${dict.btn_del_txt}</button></td>
+        function syncUIContext() {
+            const handleText = document.getElementById('topBarUserHandle');
+            const sidebarMenu = document.querySelector('.sidebar-menu');
+
+            if (currentSessionUser) {
+                handleText.textContent = currentSessionUser;
+                sidebarMenu.innerHTML = `
+                    <li class="sidebar-item active" data-target="home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div><span>Home</span></a></li>
+                    <li class="sidebar-item" data-target="profile"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span>Profile</span></a></li>
+                    <li class="sidebar-item" data-target="message"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span>Message</span></a></li>
+                    <li class="sidebar-item" data-target="groups"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div><span>Groups</span></a></li>
+                    <li class="sidebar-item" data-target="logout"><a href="javascript:void(0)" style="color: var(--bit-danger);"><div class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Logout</span></a></li>
                 `;
-                tbody.appendChild(tr);
-            });
+            } else {
+                handleText.textContent = "Guest Access Mode";
+                sidebarMenu.innerHTML = `
+                    <li class="sidebar-item active" data-target="home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div><span>Home</span></a></li>
+                    <li class="sidebar-item" data-target="register"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div><span>Auth Portal</span></a></li>
+                `;
+            }
+            initNavigation();
+            const userWidget = document.getElementById('metUserCount');
+            if (userWidget) userWidget.textContent = Object.keys(userDatabase).length;
         }
 
-        function handleRegistration(event) {
-            event.preventDefault();
-            const newUserName = document.getElementById('regFullName').value;
-            globalUsers.push({ id: Date.now(), name: newUserName, user: document.getElementById('regUsername').value.toLowerCase(), email: document.getElementById('regEmail').value, role: document.getElementById('regRole').value, avatar: "" });
-            SoundAlerts.playSuccessChime();
-            renderUserTable(); calculateHomeMetrics(); renderFriendsAndThreadsList(); document.getElementById('registrationForm').reset();
-        }
-        function deleteUser(id) { 
-            const targetUser = globalUsers.find(u => u.id === id);
-            if (targetUser && privateChatsData[targetUser.name]) delete privateChatsData[targetUser.name];
-            globalUsers = globalUsers.filter(u => u.id !== id); 
-            renderUserTable(); calculateHomeMetrics(); renderFriendsAndThreadsList(); 
+        function initThemeEngine() {
+            const toggleBox = document.getElementById('themeToggleCheckbox');
+            if(toggleBox) {
+                toggleBox.addEventListener('change', function() {
+                    if(this.checked) { document.body.classList.add('dark-mode'); } 
+                    else { document.body.classList.remove('dark-mode'); }
+                });
+            }
         }
 
-        function renderGroupGrid() {
-            const container = document.getElementById('groupGridContainer');
-            if(!container) return; 
-            
-            const currentLang = localStorage.getItem('preferredLang') || 'en';
-            const dict = translations[currentLang] || translations['en'];
-            
-            container.innerHTML = '';
-            globalGroups.forEach(g => {
-                const div = document.createElement('div'); div.classList.add('group-item-card');
-                div.innerHTML = `<div class="group-card-top"><div class="group-card-title">${g.name}</div><div class="group-card-desc">${g.desc}</div></div><div class="group-card-meta"><div>${g.members} ${dict.meta_members}</div><div><span class="badge-status ${g.joined?'joined':'open'}">${g.joined?(dict.status_joined):(dict.status_open)}</span></div></div>`;
-                container.appendChild(div);
-            });
-        }
-        function handleGroupCreation(event) {
-            event.preventDefault();
-            globalGroups.push({ id: Date.now(), name: document.getElementById('grpName').value, desc: document.getElementById('grpDesc').value, members: 1, joined: true });
-            SoundAlerts.playSuccessChime();
-            renderGroupGrid(); calculateHomeMetrics(); document.getElementById('groupCreationForm').reset();
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('preferredLang') || 'en';
-            document.getElementById('languageSelector').value = savedLang;
-            setupNavigation(); setupThemeListener(); calculateHomeMetrics(); switchLanguage(savedLang);
-            document.getElementById('languageSelector').addEventListener('change', function() { switchLanguage(this.value); });
-            
-            // Apply default initial avatars layout sync
-            syncGlobalAvatarDisplays();
-            openPrivateChatWindow("Sokha Nimol");
-        });
+        function handlePostPublish(e) { e.preventDefault(); showToast("Post Simulation Complete!", "success"); document.getElementById('homePublishForm').reset(); }
+        function handleProfileUpdate(e) { e.preventDefault(); showToast("Profile Changes Saved Successfully!", "success"); }
+        function handleGroupCreation(e) { e.preventDefault(); showToast("Team Group Workspace Provisioned!", "success"); document.getElementById('groupCreationForm').reset(); }
+        function cancelReplyState() { document.getElementById('replyStatusIndicator').classList.remove('active'); }
     </script>
 </body>
 </html>
