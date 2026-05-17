@@ -1,17 +1,19 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra KHsite - Interactive Production Engine</title>
+    <title>Ultra KHsite - Enhanced Interface Production</title>
     <style>
         :root {
-            --bit-blue-primary: #1E50FF;                          
-            --bit-blue-hover: #0033E6;                            
-            --bit-blue-active: #0026B3;                           
-            --bit-text-menu: #FFFFFF;                             
-            --bit-bg-main: #EDF1F7;                                       
-            --bit-bg-card: #FFFFFF;                                       
+            --bit-blue-primary: #1E50FF;              
+            --bit-blue-hover: #0033E6;                
+            --bit-blue-active: #0026B3;               
+            --bit-text-menu: #FFFFFF;                 
+            --bit-bg-main: #EDF1F7;                          
+            --bit-bg-card: #FFFFFF;                          
             --bit-border-light: #E0E0E0;
             --bit-text-dark: #1F2D3D;
             --bit-text-light: #606266;
@@ -22,6 +24,7 @@
             --bit-success: #52C41A;
             --bit-warning: #FAAD14;
         }
+
         body.dark-mode {
             --bit-bg-main: #141E30;
             --bit-bg-card: #1F2A44;
@@ -31,12 +34,14 @@
             --chat-bubble-them: #2D3D5A;
             --chat-text-them: #FFFFFF;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Khmer OS Battambang', sans-serif;
         }
+
         body {
             background-color: var(--bit-bg-main);
             color: var(--bit-text-dark);
@@ -46,6 +51,7 @@
             font-size: 14px;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .sidebar {
             width: 250px;
             background-color: var(--bit-blue-primary);
@@ -55,19 +61,21 @@
             flex-shrink: 0;
             z-index: 100;
         }
+
         .sidebar-brand {
             background-color: var(--bit-blue-primary);
             padding: 24px 20px;
             font-size: 24px;
             font-weight: 800; 
-            color: #FFFFFF;                            
+            color: #FFFFFF;                
             display: flex;
             align-items: center;
             letter-spacing: 0.5px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);         }
+
         .brand-text-space { margin-right: 8px; }
-        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }                
+        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
+        
         .sidebar-item a {
             display: flex;
             align-items: center;
@@ -78,9 +86,11 @@
             font-weight: 700; 
             font-size: 14px;
         }
+
         .sidebar-item a:hover { background-color: var(--bit-blue-hover); }
         .sidebar-item.active { background-color: var(--bit-blue-active); position: relative; }
         .sidebar-item.active::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background-color: white; }
+
         .sidebar-icon {
             width: 18px;
             height: 18px;
@@ -90,37 +100,47 @@
             justify-content: center;
             flex-shrink: 0;
         }
+
         .sidebar-icon svg {
             width: 100%; height: 100%; fill: none; stroke: currentColor;
             stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
         }
-        .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }                
+
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+        
         .top-bar {
             background-color: var(--bit-bg-card);
             height: 60px; display: flex; align-items: center; justify-content: space-between;
             padding: 0 25px; border-bottom: 1px solid var(--bit-border-light); flex-shrink: 0;
         }
+
         .top-bar-right { display: flex; align-items: center; gap: 15px; color: var(--bit-text-light); }
         .lang-select { padding: 4px 8px; border: 1px solid var(--bit-border-light); border-radius: 4px; background-color: var(--bit-bg-card); color: var(--bit-text-dark); font-weight: 600; cursor: pointer; font-size: 13px; }
         .top-bar-profile-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+
         .container { padding: 25px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
         .card { background: var(--bit-bg-card); border-radius: 8px; border: 1px solid var(--bit-border-light); padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .page-view { display: none; height: 100%; }
         .page-view.active { display: block; }
+
         .split-view-layout { display: flex; gap: 25px; height: 100%; align-items: flex-start; }
         .left-form-panel { width: 350px; flex-shrink: 0; }
         .right-display-panel { flex-grow: 1; }
+
         .form-group { margin-bottom: 18px; }
         .form-label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--bit-text-dark); }
         .form-input, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
-        .form-textarea { resize: none; height: 70px; }                
+        .form-textarea { resize: none; height: 70px; }
+        
         .btn-submit { width: 100%; background: var(--bit-blue-primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
         .btn-submit:hover { background: var(--bit-blue-hover); }
         .toggle-container { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--bit-border-light); }
+
         .home-layout { display: flex; gap: 25px; align-items: flex-start; }
         .home-main-feed { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; }
         .home-side-metrics { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
-        .feed-container { display: flex; flex-direction: column; gap: 20px; margin-top: 10px; }                
+        .feed-container { display: flex; flex-direction: column; gap: 20px; margin-top: 10px; }
+        
         .post-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; }
         .post-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .post-author { font-weight: 700; color: var(--bit-text-dark); }
@@ -130,19 +150,23 @@
         .post-file-link { display: inline-flex; align-items: center; gap: 6px; color: var(--bit-blue-primary); text-decoration: none; font-weight: 600; margin-bottom: 12px; background: rgba(30, 80, 255, 0.05); padding: 6px 12px; border-radius: 6px; font-size: 13px; }
         .post-file-link:hover { text-decoration: underline; }
         .tag-badge { display: inline-block; background: rgba(30, 80, 255, 0.1); color: var(--bit-blue-primary); padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 5px; font-weight: 600; }
+
         .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; gap: 15px; }
-        .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; transition: color 0.2s; }
+        .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; }
         .action-trigger-btn:hover { color: var(--bit-blue-primary); }
+
         .comments-section-wrapper { display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 10px; }
         .comment-item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 8px; }
-        .comment-content-bubble { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 8px 12px; flex-grow: 1; color: var(--bit-text-dark); }
+        .comment-content-bubble { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 8px 12px; flex-grow: 1; }
         .comment-user-title { font-weight: 700; color: var(--bit-text-dark); }
         .comment-input-inline-box { display: flex; gap: 10px; margin-top: 10px; }
+
         .notification-stream-list { display: flex; flex-direction: column; gap: 10px; }
         .notification-card-item { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; align-items: center; justify-content: space-between; }
         .notification-card-item.unread { border-left: 4px solid var(--bit-blue-primary); background: rgba(30, 80, 255, 0.02); }
         .notif-text { font-size: 13px; color: var(--bit-text-dark); }
         .notif-time { font-size: 11px; color: var(--bit-text-light); }
+
         .chat-layout { display: flex; background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; height: 100%; overflow: hidden; min-height: 450px; }
         .chat-sidebar { width: 280px; border-right: 1px solid var(--bit-border-light); display: flex; flex-direction: column; }
         .chat-sidebar-header { padding: 15px 20px; font-weight: 700; border-bottom: 1px solid var(--bit-border-light); background: rgba(0,0,0,0.01); }
@@ -150,41 +174,53 @@
         .friend-item { padding: 15px 20px; border-bottom: 1px solid var(--bit-border-light); cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .friend-item.active { background: rgba(30, 80, 255, 0.08); }
         .friend-name { font-weight: 600; color: var(--bit-text-dark); font-size: 13px; }
+
         .chat-window { flex-grow: 1; display: flex; flex-direction: column; background: var(--bit-bg-card); position: relative; min-width: 0; }
         .chat-window-header { height: 50px; padding: 0 20px; border-bottom: 1px solid var(--bit-border-light); display: flex; align-items: center; font-weight: 600; }
-        .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: rgba(0, 0, 0, 0.02); }                
+        .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: rgba(0, 0, 0, 0.02); }
+        
         .msg-row { display: flex; flex-direction: column; width: 100%; position: relative; }
         .msg-row.msg-me { align-items: flex-end; }
         .msg-row.msg-them { align-items: flex-start; }
-        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }                
+        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }
+        
         .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; }
         .bubble { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; position: relative; }
         .msg-me .bubble { background: var(--chat-bubble-me); color: #FFFFFF; border-bottom-right-radius: 2px; }
-        .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }                
+        .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }
+        
         .msg-interact-bar { display: flex; gap: 8px; font-size: 11px; margin-top: 4px; color: var(--bit-text-light); visibility: hidden; opacity: 0; transition: opacity 0.15s, visibility 0.15s; }
         .msg-row:hover .msg-interact-bar { visibility: visible; opacity: 1; }
         .msg-interact-btn { cursor: pointer; background: none; border: none; color: var(--bit-text-light); font-size: 11px; font-weight: 600; }
         .msg-interact-btn:hover { color: var(--bit-blue-primary); }
         .msg-delete-btn:hover { color: var(--bit-danger) !important; }
+
         .chat-input-container { border-top: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; flex-direction: column; }
         .chat-input-area { padding: 15px 20px; display: flex; gap: 10px; align-items: center; }
-        .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }                
+        .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
+        
         .chat-utility-row { display: flex; gap: 10px; padding: 0 20px 10px; align-items: center; }
         .emoji-picker-inline { display: flex; gap: 6px; }
         .emoji-select-btn { background: rgba(0,0,0,0.04); border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
-        .emoji-select-btn:hover { background: rgba(30,80,255,0.1); }                
+        .emoji-select-btn:hover { background: rgba(30,80,255,0.1); }
+        
         .file-attach-label { cursor: pointer; display: flex; align-items: center; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--bit-text-dark); transition: background 0.2s; }
         .file-attach-label:hover { background: rgba(30,80,255,0.1); }
+        .attachment-preview-tag { display: inline-flex; align-items: center; background: var(--bit-warning); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-top: 4px; }
+
         .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
         .metrics-grid-vertical { display: flex; flex-direction: column; gap: 15px; }
         .metric-widget-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; min-height: 100px; }
         .metric-widget-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--bit-text-light); letter-spacing: 0.5px; margin-bottom: 8px; }
         .metric-widget-value { font-size: 28px; font-weight: 800; color: var(--bit-blue-primary); }
         .metric-widget-status { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; margin-top: 8px; }
         .dot-pulse { width: 8px; height: 8px; background-color: var(--bit-success); border-radius: 50%; margin-right: 6px; display: inline-block; }
+
         .user-directory-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
         .user-directory-table th { padding: 8px 5px; color: var(--bit-text-light); border-bottom: 2px solid var(--bit-border-light); }
         .user-directory-table td { padding: 10px 5px; border-bottom: 1px solid var(--bit-border-light); }
+
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 420px; pointer-events: none; }
         .toast-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); padding: 14px 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); display: flex; align-items: center; gap: 12px; pointer-events: auto; border-left: 5px solid var(--bit-blue-primary); animation: toastSlideIn 0.3s forwards; }
         .toast-card.success { border-left-color: var(--bit-success); }
@@ -192,12 +228,14 @@
         .toast-message { font-size: 13.5px; font-weight: 600; color: var(--bit-text-dark); flex-grow: 1; }
         .toast-close { background: transparent; border: none; cursor: pointer; color: var(--bit-text-light); font-weight: bold; }
         @keyframes toastSlideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
         .welcome-content-box h4 { margin-top: 12px; font-weight: 700; font-size: 13px; color: var(--bit-text-dark); }
         .welcome-content-box ul { list-style: none; margin: 8px 0; padding-left: 0; }
         .welcome-content-box ul li { font-size: 13px; color: var(--bit-text-light); position: relative; padding-left: 14px; margin-bottom: 4px; }
         .welcome-content-box ul li::before { content: "•"; color: var(--bit-blue-primary); position: absolute; left: 0; font-weight: bold; }
         .welcome-content-box p { font-size: 13px; color: var(--bit-text-light); line-height: 1.4; margin-bottom: 10px; }
         .welcome-hashtags { font-size: 12px; font-weight: 600; color: var(--bit-blue-primary); margin-top: 10px; }
+
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; }
@@ -227,19 +265,22 @@
             <li class="sidebar-item" style="margin-top:auto;" onclick="triggerSignOut()"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Sign Out</span></a></li>
         </ul>
     </aside>
+
     <main class="main-content">
         <header class="top-bar">
             <div id="breadcrumb" style="font-weight: 600; color: var(--bit-text-light);">Dashboard / Home</div>
             <div class="top-bar-right">
                 <select class="lang-select">
                     <option value="en">English</option>
-                    <option value="kh">ភាសាខ្មែរ</option>                </select>
+                    <option value="kh">ភាសាខ្មែរ</option>
+                </select>
                 <div class="top-bar-profile-wrap">
                     <div style="width:24px; height:24px; background: #E0E0E0; border-radius:50%;"></div>
                     <div><span id="topBarUserHandle">Admin</span></div>
                 </div>
             </div>
         </header>
+
         <div class="container" id="mainContainer">
             <div class="page-view active" id="page-home">
                 <div class="home-layout">
@@ -251,8 +292,7 @@
                                     <textarea class="form-textarea" id="postText" required placeholder="What is happening within your workspace channels?"></textarea>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 12px;">
-                                    <label class="form-label">Add Tags (comma separated)</label>
-                                    <input type="text" id="postTags" class="form-input" placeholder="e.g. general, announcement, urgent">
+                                    <label class="form-label">Add Tags (comma separated)</label>                                    <input type="text" id="postTags" class="form-input" placeholder="e.g. general, announcement, urgent">
                                 </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <label class="file-attach-label" for="homeFileInput">
@@ -266,6 +306,7 @@
                         </div>
                         <div class="feed-container" id="homeFeedStream"></div>
                     </div>
+
                     <div class="home-side-metrics">
                         <div class="card" style="padding: 20px;">
                             <h3 style="margin-bottom: 10px; color: var(--bit-blue-primary);">Welcome to Ultra KH 🚀</h3>
@@ -283,9 +324,10 @@
                                 <strong style="color: var(--bit-text-dark); display:block; margin-top:8px;">The future starts here. 🔥</strong>
                                 <div class="welcome-hashtags">#UltraKH #Community #Welcome #StayConnected</div>
                             </div>
-                        </div>                                                                                                
+                        </div>
+                                                
                         <div class="card" style="padding: 20px;">
-                            <h3 style="margin-bottom: 12px;">Active System Operators (<span id="metUserCount">1</span>)</h3>
+                            <h3 style="margin-bottom: 12px;">Active System Operators (<span id="metUserCount">2</span>)</h3>
                             <table class="user-directory-table">
                                 <thead>
                                     <tr>
@@ -296,6 +338,7 @@
                                 <tbody id="systemUserTableBody"></tbody>
                             </table>
                         </div>
+
                         <div class="metrics-grid-vertical">
                             <div class="metric-widget-card"><div class="metric-widget-title">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span>Operational / Online</span></div></div>
                         </div>
@@ -363,7 +406,7 @@
                                 <span id="fileAttachmentPreview" style="font-size:12px; color:var(--bit-text-light);"></span>
                             </div>
                             <div class="chat-input-area">
-                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here..." onkeydown="if(event.key === 'Enter') submitChatMessage()">
+                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here...">
                                 <button class="btn-send" onclick="submitChatMessage()">Send</button>
                             </div>
                         </div>
@@ -379,10 +422,6 @@
                             <div class="form-group">
                                 <label class="form-label">Username</label>
                                 <input type="text" class="form-input" id="signUpUser" required placeholder="Choose operator handle...">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" class="form-input" id="signUpEmail" required placeholder="name@company.com">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Password</label>
@@ -409,7 +448,7 @@
                             <button type="submit" class="btn-submit">Sign In</button>
                         </form>
                         <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Create an account</a>
+                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Sign Up now</a>
                         </p>
                     </div>
                 </div>
@@ -417,397 +456,457 @@
         </div>
     </main>
 
-    <!-- COMPLETE JAVASCRIPT CORE LOGIC ENGINE -->
     <script>
-        // Data Structures Initialization using localStorage
-        let users = JSON.parse(localStorage.getItem('ultra_users')) || [
-            { username: 'Admin', email: 'admin@ultrakh.com', active: true }
-        ];
-        let currentUser = localStorage.getItem('ultra_current_user') || 'Admin';
-        let posts = JSON.parse(localStorage.getItem('ultra_posts')) || [];
-        let notifications = JSON.parse(localStorage.getItem('ultra_notifications')) || [];
-        let temporaryAttachedFile = null;
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-        // Document Ready Entry Point
-        document.addEventListener("DOMContentLoaded", () => {
-            initNavigationListeners();
-            initThemeEngine();
-            syncUserDataUI();
-            renderPosts();
-            renderNotifications();
-        });
-
-        // Toast Alert System Engine
-        function showToastNotification(message, type = 'success') {
-            const container = document.getElementById('toastHub');
-            const toast = document.createElement('div');
-            toast.className = `toast-card ${type}`;
-            toast.innerHTML = `
-                <span class="toast-message">${message}</span>
-                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
-            `;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
+        function playSystemSound(frequency, type, duration) {
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.type = type;
+                oscillator.frequency.value = frequency;
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch (e) {
+                console.log("Audio contextual playback initialization ignored.");
+            }
         }
 
-        // Navigation Layout Controller Engine
-        function initNavigationListeners() {
-            document.querySelectorAll('.sidebar-item[data-target]').forEach(item => {
-                item.addEventListener('click', () => {
-                    const targetPage = item.getAttribute('data-target');
-                    
-                    // Toggle Active Sidebar Class
-                    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
+        function triggerSuccessAudio() { playSystemSound(587.33, 'sine', 0.15); setTimeout(() => playSystemSound(880, 'sine', 0.2), 100); }
+        function triggerMessageAudio() { playSystemSound(659.25, 'triangle', 0.1); }
+        function triggerErrorAudio() { playSystemSound(220, 'sawtooth', 0.3); }
 
-                    // Show active panel view
-                    document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
-                    document.getElementById(`page-${targetPage}`).classList.add('active');
+        let memoryDatabase = { "Admin": "123456", "Operator_Alpha": "123456" };
+        let memoryActiveUser = "Admin"; 
+        let currentTargetChatUser = "Operator_Alpha";
+        let homeUploadedFileData = null;
+        let chatUploadedFileData = null;
 
-                    // Breadcrumb label modifier
-                    document.getElementById('breadcrumb').innerText = `Dashboard / ${targetPage.charAt(0).toUpperCase() + targetPage.slice(1)}`;
-                    
-                    if(targetPage === 'message') loadChatOperatorEngine();
+        let memoryPosts = [
+            { id: 1, author: "Admin", text: "Deposit channels are running normally.", tags: ["deposit", "reconciliation"], likes: 4, comments: [], shares: 1, file: null },
+            { id: 2, author: "Operator_Alpha", text: "Third-party gateway channel updated successfully.", tags: ["channels"], likes: 2, comments: [], shares: 0, file: null }
+        ];
+        
+        let memoryChats = [
+            { id: 1, from: "Admin", to: "Operator_Alpha", text: "Please monitor the pending withdrawal requests.", time: "08:30 AM", reactions: {}, file: null },
+            { id: 2, from: "Operator_Alpha", to: "Admin", text: "Acknowledged. All systems clear.", time: "08:32 AM", reactions: {}, file: null }
+        ];
+
+        let memoryNotifications = [
+            { id: 1, text: "System maintenance scheduled for midnight Sunday.", time: "2 hours ago", unread: true },
+            { id: 2, text: "Operator_Alpha shared a new asset log file.", time: "5 hours ago", unread: false }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initAppRoutes();
+            renderFeedPosts();
+            renderActiveOperators();
+            renderNotifications();
+            renderChatFriends();
+            renderChatHistory();
+            setupThemeToggle();
+            updateGlobalUIState();
+        });
+
+        function showToast(message, type = 'success') {
+            const hub = document.getElementById("toastHub");
+            const card = document.createElement("div");
+            card.className = `toast-card ${type}`;
+            card.innerHTML = `
+                <div class="toast-message">${message}</div>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            hub.appendChild(card);
+            if(type === 'success') triggerSuccessAudio(); else triggerErrorAudio();
+            setTimeout(() => card.remove(), 4000);
+        }
+
+        function initAppRoutes() {
+            document.querySelectorAll(".sidebar-item[data-target]").forEach(item => {
+                item.addEventListener("click", () => {
+                    const viewId = item.getAttribute("data-target");
+                    if (viewId === "auth" && memoryActiveUser) {
+                        showToast("You are already authenticated.", "error");
+                        return;
+                    }
+                    switchView(viewId);
                 });
             });
         }
 
-        // Authentication State Engine (Sign Up Code logic)
-        function processSignUp(event) {
-            event.preventDefault();
-            const usernameInput = document.getElementById('signUpUser').value.trim();
-            const emailInput = document.getElementById('signUpEmail').value.trim();
-            const passwordInput = document.getElementById('signUpPass').value;
-
-            if (users.some(u => u.username.toLowerCase() === usernameInput.toLowerCase())) {
-                showToastNotification("This username is already taken!", "error");
-                return;
-            }
-
-            const newUser = { username: usernameInput, email: emailInput };
-            users.push(newUser);
-            localStorage.setItem('ultra_users', JSON.stringify(users));
-
-            currentUser = usernameInput;
-            localStorage.setItem('ultra_current_user', currentUser);
-
-            showToastNotification(`Welcome to Ultra KH, ${currentUser}!`);
-            document.getElementById('signUpSystemForm').reset();
+        function switchView(viewId) {
+            document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("active"));
+            document.querySelectorAll(".page-view").forEach(v => v.classList.remove("active"));
             
-            syncUserDataUI();
-            document.getElementById('nav-home').click(); // Navigate home
-        }
-
-        function processSignIn(event) {
-            event.preventDefault();
-            const usernameInput = document.getElementById('signInUser').value.trim();
+            const selectedNav = document.getElementById(`nav-${viewId}`);
+            if(selectedNav) selectedNav.classList.add("active");
             
-            const matchedUser = users.find(u => u.username.toLowerCase() === usernameInput.toLowerCase());
-            if (!matchedUser) {
-                showToastNotification("Account Operator handle not found!", "error");
-                return;
-            }
-
-            currentUser = matchedUser.username;
-            localStorage.setItem('ultra_current_user', currentUser);
-
-            showToastNotification(`Logged in successfully as ${currentUser}`);
-            document.getElementById('signInSystemForm').reset();
+            const selectedPage = document.getElementById(`page-${viewId}`);
+            if(selectedPage) selectedPage.classList.add("active");
             
-            syncUserDataUI();
-            document.getElementById('nav-home').click();
+            document.getElementById("breadcrumb").innerText = `Dashboard / ${viewId.charAt(0).toUpperCase() + viewId.slice(1)}`;
         }
 
-        function triggerSignOut() {
-            currentUser = 'Guest';
-            localStorage.setItem('ultra_current_user', currentUser);
-            syncUserDataUI();
-            showToastNotification("You have signed out from session terminal.", "error");
-            document.getElementById('nav-auth').click();
+        function updateGlobalUIState() {
+            document.getElementById("topBarUserHandle").innerText = memoryActiveUser || "Guest";
+            document.getElementById("profUserHandle").value = memoryActiveUser || "";
+            const badge = document.getElementById("notifBadgeCount");
+            const unreadCount = memoryNotifications.filter(n => n.unread).length;
+            badge.innerText = unreadCount;
         }
 
-        function toggleAuthForms(formType) {
-            if(formType === 'signin') {
-                document.getElementById('authSignUpBox').style.display = 'none';
-                document.getElementById('authSignInBox').style.display = 'block';
-            } else {
-                document.getElementById('authSignUpBox').style.display = 'block';
-                document.getElementById('authSignInBox').style.display = 'none';
-            }
-        }
-
-        // Profile Management Update Engine
-        function handleProfileUpdate(event) {
-            event.preventDefault();
-            const updatedName = document.getElementById('profUserHandle').value.trim();
-            if(!updatedName) return;
-
-            // Map and update users matching previous current user
-            users = users.map(u => u.username === currentUser ? { ...u, username: updatedName } : u);
-            localStorage.setItem('ultra_users', JSON.stringify(users));
-
-            currentUser = updatedName;
-            localStorage.setItem('ultra_current_user', currentUser);
-
-            syncUserDataUI();
-            showToastNotification("Operator profile data successfully saved.");
-        }
-
-        // Synchronize Global Data elements directly with UI layout 
-        function syncUserDataUI() {
-            document.getElementById('topBarUserHandle').innerText = currentUser;
-            document.getElementById('profUserHandle').value = currentUser !== 'Guest' ? currentUser : '';
-            
-            // Re-render System operator list tables
-            const userTable = document.getElementById('systemUserTableBody');
-            userTable.innerHTML = '';
-            users.forEach(u => {
-                userTable.innerHTML += `
-                    <tr>
-                        <td><strong>${u.username}</strong></td>
-                        <td><span class="dot-pulse"></span> Active Online</td>
-                    </tr>
-                `;
-            });
-            document.getElementById('metUserCount').innerText = users.length;
-        }
-
-        // Post Publishing & Feed System Engine
         function handleHomeFileSelected(input) {
-            if(input.files && input.files[0]) {
-                const file = input.files[0];
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    temporaryAttachedFile = { name: file.name, data: e.target.result, type: file.type };
-                    document.getElementById('homeFilePreview').innerText = `📎 ${file.name}`;
-                }
-                reader.readAsDataURL(file);
-            }
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                homeUploadedFileData = {
+                    name: file.name,
+                    type: file.type,
+                    dataUrl: e.target.result
+                };
+                document.getElementById("homeFilePreview").innerText = `📄 ${file.name}`;
+            };
+            reader.readAsDataURL(file);
         }
 
-        function handlePostPublish(event) {
-            event.preventDefault();
-            const text = document.getElementById('postText').value;
-            const tagsRaw = document.getElementById('postTags').value;
-            const processedTags = tagsRaw.split(',').map(t => t.trim()).filter(t => t.length > 0);
+        function handlePostPublish(e) {
+            e.preventDefault();
+            const text = document.getElementById("postText").value;
+            const tagsInput = document.getElementById("postTags").value;
+            const tags = tagsInput ? tagsInput.split(",").map(t => t.trim()) : [];
 
             const newPost = {
-                id: Date.now(),
-                author: currentUser,
-                time: "Just Now",
-                content: text,
-                tags: processedTags,
-                attachment: temporaryAttachedFile,
+                id: memoryPosts.length + 1,
+                author: memoryActiveUser || "Anonymous",
+                text: text,
+                tags: tags,
                 likes: 0,
-                comments: []
+                comments: [],
+                shares: 0,
+                file: homeUploadedFileData
             };
 
-            posts.unshift(newPost);
-            localStorage.setItem('ultra_posts', JSON.stringify(posts));
+            memoryPosts.unshift(newPost);
+            document.getElementById("homePublishForm").reset();
+            document.getElementById("homeFilePreview").innerText = "";
+            homeUploadedFileData = null;
             
-            // Add automated log activity to notifications panel
-            addSystemNotification(`User ${currentUser} published an update to workspace streams.`);
-
-            // Reset Form fields
-            document.getElementById('homePublishForm').reset();
-            temporaryAttachedFile = null;
-            document.getElementById('homeFilePreview').innerText = '';
-            
-            renderPosts();
-            showToastNotification("Workspace broadcast update posted successfully!");
+            renderFeedPosts();
+            showToast("Update shared on system stream!");
         }
 
-        function renderPosts() {
-            const feed = document.getElementById('homeFeedStream');
-            feed.innerHTML = '';
-
-            if(posts.length === 0) {
-                feed.innerHTML = `<div class="card" style="text-align:center;color:var(--bit-text-light)">No feed activity shared yet inside this system workspace.</div>`;
-                return;
-            }
-
-            posts.forEach(post => {
-                let tagsHtml = post.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('');
-                let mediaHtml = '';
-                if(post.attachment) {
-                    if(post.attachment.type.startsWith('image/')) {
-                        mediaHtml = `<img src="${post.attachment.data}" class="post-media-attachment" alt="Upload">`;
+        function renderFeedPosts() {
+            const container = document.getElementById("homeFeedStream");
+            container.innerHTML = "";
+            memoryPosts.forEach(post => {
+                let mediaMarkup = "";
+                if (post.file) {
+                    if (post.file.type.startsWith("image/")) {
+                        mediaMarkup = `<img src="${post.file.dataUrl}" class="post-media-attachment" alt="Uploaded Attachment">`;
                     } else {
-                        mediaHtml = `<a href="${post.attachment.data}" download="${post.attachment.name}" class="post-file-link">📁 Download File: ${post.attachment.name}</a>`;
+                        mediaMarkup = `<a href="${post.file.dataUrl}" download="${post.file.name}" class="post-file-link">📁 Download ${post.file.name}</a>`;
                     }
                 }
 
-                let commentsHtml = post.comments.map(c => `
-                    <div class="comment-item-row">
-                        <div class="comment-content-bubble">
-                            <span class="comment-user-title">${c.user}:</span> ${c.text}
-                        </div>
+                const card = document.createElement("div");
+                card.className = "post-card";
+                card.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-author">@${post.author}</span>
+                        <span class="post-time">Just Now</span>
                     </div>
-                `).join('');
-
-                feed.innerHTML += `
-                    <div class="post-card">
-                        <div class="post-header">
-                            <span class="post-author">${post.author}</span>
-                            <span class="post-time">${post.time}</span>
+                    <div class="post-content-text">${post.text}</div>
+                    ${mediaMarkup}
+                    <div style="margin-bottom: 12px;">
+                        ${post.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('')}
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Like (${post.likes})</button>
+                        <button class="action-trigger-btn" onclick="focusCommentBox(${post.id})">💬 Comment (${post.comments.length})</button>
+                    </div>
+                    <div class="comments-section-wrapper">
+                        <div id="comments-box-${post.id}">
+                            ${post.comments.map(c => `
+                                <div class="comment-item-row">
+                                    <div class="comment-content-bubble">
+                                        <span class="comment-user-title">@${c.user}:</span> ${c.text}
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
-                        <div class="post-content-text">${post.content}</div>
-                        <div>${tagsHtml}</div>
-                        ${mediaHtml}
-                        <div class="post-actions">
-                            <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Like (${post.likes})</button>
-                        </div>
-                        <div class="comments-section-wrapper">
-                            ${commentsHtml}
-                            <div class="comment-input-inline-box">
-                                <input type="text" class="form-input" placeholder="Write a workspace comment..." id="cmt-input-${post.id}" onkeydown="if(event.key === 'Enter') submitComment(${post.id})">
-                            </div>
+                        <div class="comment-input-inline-box">
+                            <input type="text" class="form-input" id="com-in-${post.id}" placeholder="Write system response comment...">
+                            <button class="btn-send" style="padding: 6px 14px;" onclick="addComment(${post.id})">Post</button>
                         </div>
                     </div>
                 `;
+                container.appendChild(card);
             });
         }
 
         function likePost(id) {
-            posts = posts.map(p => p.id === id ? { ...p, likes: p.likes + 1 } : p);
-            localStorage.setItem('ultra_posts', JSON.stringify(posts));
-            renderPosts();
+            const post = memoryPosts.find(p => p.id === id);
+            if (post) { post.likes++; renderFeedPosts(); }
         }
 
-        function submitComment(id) {
-            const input = document.getElementById(`cmt-input-${id}`);
-            if(!input.value.trim()) return;
+        function focusCommentBox(id) {
+            document.getElementById(`com-in-${id}`).focus();
+        }
 
-            posts = posts.map(p => {
-                if(p.id === id) {
-                    p.comments.push({ user: currentUser, text: input.value.trim() });
-                }
-                return p;
+        function addComment(id) {
+            const input = document.getElementById(`com-in-${id}`);
+            if (!input.value.trim()) return;
+            const post = memoryPosts.find(p => p.id === id);
+            if (post) {
+                post.comments.push({ user: memoryActiveUser || "Guest", text: input.value.trim() });
+                input.value = "";
+                renderFeedPosts();
+                showToast("Response comment cataloged.");
+            }
+        }
+
+        function renderActiveOperators() {
+            const tbody = document.getElementById("systemUserTableBody");
+            tbody.innerHTML = "";
+            Object.keys(memoryDatabase).forEach(user => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="font-weight:600;">@${user}</td>
+                    <td><span class="dot-pulse"></span> Active Now</td>
+                `;
+                tbody.appendChild(tr);
             });
-            localStorage.setItem('ultra_posts', JSON.stringify(posts));
-            renderPosts();
-        }
-
-        // Notification Stream Engine
-        function addSystemNotification(text) {
-            notifications.unshift({ id: Date.now(), text: text, time: "Just Now", unread: true });
-            localStorage.setItem('ultra_notifications', JSON.stringify(notifications));
-            renderNotifications();
+            document.getElementById("metUserCount").innerText = Object.keys(memoryDatabase).length;
         }
 
         function renderNotifications() {
-            const box = document.getElementById('notificationStreamBox');
-            const countBadge = document.getElementById('notifBadgeCount');
-            box.innerHTML = '';
-
-            let unreadCount = notifications.filter(n => n.unread).length;
-            countBadge.innerText = unreadCount;
-
-            if(notifications.length === 0) {
-                box.innerHTML = `<div style="text-align:center;color:var(--bit-text-light);padding:20px;">No system alert triggers logged.</div>`;
-                return;
-            }
-
-            notifications.forEach(n => {
-                box.innerHTML += `
-                    <div class="notification-card-item ${n.unread ? 'unread' : ''}">
-                        <span class="notif-text">${n.text}</span>
-                        <span class="notif-time">${n.time}</span>
+            const container = document.getElementById("notificationStreamBox");
+            container.innerHTML = "";
+            memoryNotifications.forEach(n => {
+                const item = document.createElement("div");
+                item.className = `notification-card-item ${n.unread ? 'unread' : ''}`;
+                item.innerHTML = `
+                    <div>
+                        <div class="notif-text">${n.text}</div>
+                        <div class="notif-time">${n.time}</div>
                     </div>
+                    ${n.unread ? `<button class="btn-send" style="padding:3px 8px; font-size:11px;" onclick="markNotifRead(${n.id})">Dismiss</button>` : ''}
                 `;
+                container.appendChild(item);
             });
+        }
 
-            // Mark read once viewed
-            notifications = notifications.map(n => ({ ...n, unread: false }));
-            localStorage.setItem('ultra_notifications', JSON.stringify(notifications));
+        function markNotifRead(id) {
+            const n = memoryNotifications.find(notif => notif.id === id);
+            if(n) { n.unread = false; renderNotifications(); updateGlobalUIState(); }
         }
 
         function clearAllNotifications() {
-            notifications = [];
-            localStorage.setItem('ultra_notifications', JSON.stringify(notifications));
+            memoryNotifications = [];
             renderNotifications();
+            updateGlobalUIState();
+            showToast("Notification stream cleared.");
         }
 
-        // Chat System Engine Implementation
-        function loadChatOperatorEngine() {
-            const container = document.getElementById('chatFriendsContainer');
-            container.innerHTML = '';
-            
-            // Loop all registered application workers except currently logged account
-            let filteredOps = users.filter(u => u.username !== currentUser);
-            if(filteredOps.length === 0) {
-                container.innerHTML = `<div style="padding:15px; font-size:12px; color:var(--bit-text-light)">No other workspace accounts registered.</div>`;
+        function handleProfileUpdate(e) {
+            e.preventDefault();
+            const newHandle = document.getElementById("profUserHandle").value.trim();
+            if(!newHandle) return;
+            if(newHandle !== memoryActiveUser) {
+                const oldPass = memoryDatabase[memoryActiveUser];
+                delete memoryDatabase[memoryActiveUser];
+                memoryActiveUser = newHandle;
+                memoryDatabase[newHandle] = oldPass;
+                updateGlobalUIState();
+                renderActiveOperators();
+                showToast("Username context updated.");
+            }
+        }
+
+        function setupThemeToggle() {
+            const checkbox = document.getElementById("themeToggleCheckbox");
+            checkbox.addEventListener("change", () => {
+                if(checkbox.checked) document.body.classList.add("dark-mode");
+                else document.body.classList.remove("dark-mode");
+            });
+        }
+
+        function renderChatFriends() {
+            const container = document.getElementById("chatFriendsContainer");
+            container.innerHTML = "";
+            Object.keys(memoryDatabase).forEach(user => {
+                if(user === memoryActiveUser) return;
+                const li = document.createElement("li");
+                li.className = `friend-item ${user === currentTargetChatUser ? 'active' : ''}`;
+                li.innerText = `@${user}`;
+                li.onclick = () => {
+                    currentTargetChatUser = user;
+                    renderChatFriends();
+                    renderChatHistory();
+                };
+                container.appendChild(li);
+            });
+        }
+
+        function renderChatHistory() {
+            const container = document.getElementById("chatMsgContainer");
+            const header = document.getElementById("activeChatUser");
+            if (!currentTargetChatUser) {
+                header.innerText = "Select an operator thread to view history";
+                container.innerHTML = "";
                 return;
             }
+            header.innerText = `Secure Operator Chat Connection: @${currentTargetChatUser}`;
+            container.innerHTML = "";
 
-            filteredOps.forEach((op, index) => {
-                container.innerHTML += `
-                    <li class="friend-item ${index === 0 ? 'active' : ''}" onclick="selectChatOperator(this, '${op.username}')">
-                        <div style="width:8px;height:8px;background:var(--bit-success);border-radius:50%"></div>
-                        <span class="friend-name">${op.username}</span>
-                    </li>
-                `;
-            });
+            const filteredChats = memoryChats.filter(c => 
+                (c.from === memoryActiveUser && c.to === currentTargetChatUser) ||
+                (c.from === currentTargetChatUser && c.to === memoryActiveUser)
+            );
 
-            if(filteredOps.length > 0) {
-                document.getElementById('activeChatUser').innerText = `Active Session Channel with: ${filteredOps[0].username}`;
-            }
-        }
+            filteredChats.forEach(chat => {
+                const isMe = chat.from === memoryActiveUser;
+                const row = document.createElement("div");
+                row.className = `msg-row ${isMe ? 'msg-me' : 'msg-them'}`;
+                
+                let mediaContent = "";
+                if (chat.file) {
+                    if (chat.file.type.startsWith("image/")) {
+                        mediaContent = `<br><img src="${chat.file.dataUrl}" style="max-width:200px; border-radius:6px; margin-top:5px; display:block;">`;
+                    } else {
+                        mediaContent = `<br><a href="${chat.file.dataUrl}" download="${chat.file.name}" style="color:inherit; font-weight:bold; font-size:12px; display:inline-block; margin-top:5px;">📁 File: ${chat.file.name}</a>`;
+                    }
+                }
 
-        function selectChatOperator(element, username) {
-            document.querySelectorAll('.friend-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('activeChatUser').innerText = `Active Session Channel with: ${username}`;
-            document.getElementById('chatMsgContainer').innerHTML = `<div style="text-align:center;color:var(--bit-text-light);font-size:12px;margin-top:20px;">Secure channel established. Ready to transfer packages.</div>`;
-        }
+                let interactMarkup = "";
+                if (isMe) {
+                    interactMarkup = `
+                        <div class="msg-interact-bar">
+                            <button class="msg-interact-btn msg-delete-btn" onclick="deleteChatMessage(${chat.id})">✕ Delete</button>
+                        </div>
+                    `;
+                }
 
-        function submitChatMessage() {
-            const field = document.getElementById('chatInputField');
-            const text = field.value.trim();
-            if(!text) return;
-
-            const box = document.getElementById('chatMsgContainer');
-            box.innerHTML += `
-                <div class="msg-row msg-me">
-                    <div class="msg-meta-container"><span>${currentUser}</span></div>
-                    <div class="bubble-wrapper">
-                        <div class="bubble">${text}</div>
+                row.innerHTML = `
+                    <div class="msg-meta-container">
+                        <span>@${chat.from}</span><span>${chat.time}</span>
                     </div>
-                </div>
-            `;
-            field.value = '';
-            box.scrollTop = box.scrollHeight;
+                    <div class="bubble-wrapper">
+                        <div class="bubble">${chat.text}${mediaContent}</div>
+                    </div>
+                    ${interactMarkup}
+                `;
+                container.appendChild(row);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function deleteChatMessage(chatId) {
+            const index = memoryChats.findIndex(c => c.id === chatId);
+            if (index !== -1) {
+                memoryChats.splice(index, 1);
+                triggerErrorAudio();
+                renderChatHistory();
+                showToast("Message deleted from thread logs.", "error");
+            }
         }
 
         function insertEmojiIntoChat(emoji) {
-            document.getElementById('chatInputField').value += emoji;
+            document.getElementById("chatInputField").value += emoji;
         }
 
         function handleFileAttachmentSelected(input) {
-            if(input.files && input.files[0]) {
-                document.getElementById('fileAttachmentPreview').innerText = input.files[0].name;
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                chatUploadedFileData = {
+                    name: file.name,
+                    type: file.type,
+                    dataUrl: e.target.result
+                };
+                document.getElementById("fileAttachmentPreview").innerHTML = `<span class="attachment-preview-tag">Attached: ${file.name}</span>`;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function submitChatMessage() {
+            const input = document.getElementById("chatInputField");
+            const text = input.value.trim();
+            if(!text && !chatUploadedFileData) return;
+
+            const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            memoryChats.push({
+                id: memoryChats.length + 1,
+                from: memoryActiveUser,
+                to: currentTargetChatUser,
+                text: text,
+                time: timeString,
+                reactions: {},
+                file: chatUploadedFileData
+            });
+
+            input.value = "";
+            chatUploadedFileData = null;
+            document.getElementById("fileAttachmentPreview").innerText = "";
+            triggerMessageAudio();
+            renderChatHistory();
+        }
+
+        function toggleAuthForms(mode) {
+            if (mode === 'signin') {
+                document.getElementById("authSignUpBox").style.display = "none";
+                document.getElementById("authSignInBox").style.display = "block";
+            } else {
+                document.getElementById("authSignUpBox").style.display = "block";
+                document.getElementById("authSignInBox").style.display = "none";
             }
         }
 
-        // Preferences UI Dark/Light Theme Engine Configuration
-        function initThemeEngine() {
-            const toggle = document.getElementById('themeToggleCheckbox');
-            
-            // Detect user profile cache configuration preferences
-            if(localStorage.getItem('ultra_dark_mode') === 'enabled') {
-                document.body.classList.add('dark-mode');
-                toggle.checked = true;
-            }
+        function processSignUp(e) {
+            e.preventDefault();
+            const u = document.getElementById("signUpUser").value.trim();
+            const p = document.getElementById("signUpPass").value;
+            if(memoryDatabase[u]) { showToast("Handle already active in directory.", "error"); return; }
+            memoryDatabase[u] = p;
+            memoryActiveUser = u;
+            postAuthInit();
+        }
 
-            toggle.addEventListener('change', () => {
-                if(toggle.checked) {
-                    document.body.classList.add('dark-mode');
-                    localStorage.setItem('ultra_dark_mode', 'enabled');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    localStorage.setItem('ultra_dark_mode', 'disabled');
-                }
-            });
+        function processSignIn(e) {
+            e.preventDefault();
+            const u = document.getElementById("signInUser").value.trim();
+            const p = document.getElementById("signInPass").value;
+            if(memoryDatabase[u] && memoryDatabase[u] === p) {
+                memoryActiveUser = u;
+                postAuthInit();
+            } else {
+                showToast("Invalid security credentials.", "error");
+            }
+        }
+
+        function postAuthInit() {
+            updateGlobalUIState();
+            renderActiveOperators();
+            renderChatFriends();
+            const keys = Object.keys(memoryDatabase).filter(k => k !== memoryActiveUser);
+            currentTargetChatUser = keys.length ? keys[0] : "";
+            renderChatHistory();
+            switchView("home");
+            showToast("Welcome backend operator console online!");
+        }
+
+        function triggerSignOut() {
+            memoryActiveUser = "";
+            updateGlobalUIState();
+            switchView("auth");
+            toggleAuthForms('signin');
+            showToast("Session security context unlinked.");
         }
     </script>
 </body>
