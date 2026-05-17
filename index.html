@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra KHsite - Production</title>
+    <title>Ultra KHsite - Feature Production Complete</title>
     <style>
         :root {
             --bit-blue-primary: #1E50FF;  
@@ -51,7 +51,6 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- SIDEBAR NAVIGATION --- */
         .sidebar {
             width: 250px;
             background-color: var(--bit-blue-primary);
@@ -113,19 +112,17 @@
             background-color: var(--bit-bg-card);
             height: 60px; display: flex; align-items: center; justify-content: space-between;
             padding: 0 25px; border-bottom: 1px solid var(--bit-border-light); flex-shrink: 0;
-            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .top-bar-right { display: flex; align-items: center; gap: 15px; color: var(--bit-text-light); }
-        .lang-select { padding: 4px 8px; border: 1px solid var(--bit-border-light); border-radius: 4px; background-color: var(--bit-bg-card); color: var(--bit-text-dark); font-weight: 600; cursor: pointer; outline: none; font-size: 13px; }
+        .lang-select { padding: 4px 8px; border: 1px solid var(--bit-border-light); border-radius: 4px; background-color: var(--bit-bg-card); color: var(--bit-text-dark); font-weight: 600; cursor: pointer; font-size: 13px; }
         .top-bar-profile-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
 
         .container { padding: 25px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
-        .card { background: var(--bit-bg-card); border-radius: 8px; border: 1px solid var(--bit-border-light); padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: background-color 0.3s, border-color 0.3s; }
+        .card { background: var(--bit-bg-card); border-radius: 8px; border: 1px solid var(--bit-border-light); padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .page-view { display: none; height: 100%; }
         .page-view.active { display: block; }
 
-        /* --- UI PANELS --- */
         .split-view-layout { display: flex; gap: 25px; height: 100%; align-items: flex-start; }
         .left-form-panel { width: 350px; flex-shrink: 0; }
         .right-display-panel { flex-grow: 1; }
@@ -135,11 +132,10 @@
         .form-input, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
         .form-textarea { resize: none; height: 70px; }
         
-        .btn-submit { width: 100%; background: var(--bit-blue-primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; transition: background 0.2s; }
+        .btn-submit { width: 100%; background: var(--bit-blue-primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
         .btn-submit:hover { background: var(--bit-blue-hover); }
         .toggle-container { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--bit-border-light); }
 
-        /* --- HOME WORKSPACE FEED --- */
         .home-layout { display: flex; gap: 25px; align-items: flex-start; }
         .home-main-feed { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; }
         .home-side-metrics { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
@@ -152,8 +148,9 @@
         .post-content-text { color: var(--bit-text-dark); font-size: 14px; line-height: 1.5; margin-bottom: 12px; }
         .tag-badge { display: inline-block; background: rgba(30, 80, 255, 0.1); color: var(--bit-blue-primary); padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 5px; font-weight: 600; }
 
-        .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; }
+        .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; gap: 15px; }
         .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; }
+        .action-trigger-btn:hover { color: var(--bit-blue-primary); }
 
         .comments-section-wrapper { display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 10px; }
         .comment-item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 8px; }
@@ -161,7 +158,13 @@
         .comment-user-title { font-weight: 700; color: var(--bit-text-dark); }
         .comment-input-inline-box { display: flex; gap: 10px; margin-top: 10px; }
 
-        /* --- CHAT VIEW --- */
+        /* Notification Layout Styles */
+        .notification-stream-list { display: flex; flex-direction: column; gap: 10px; }
+        .notification-card-item { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; align-items: center; justify-content: space-between; }
+        .notification-card-item.unread { border-left: 4px solid var(--bit-blue-primary); background: rgba(30, 80, 255, 0.02); }
+        .notif-text { font-size: 13px; color: var(--bit-text-dark); }
+        .notif-time { font-size: 11px; color: var(--bit-text-light); }
+
         .chat-layout { display: flex; background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; height: 100%; overflow: hidden; min-height: 450px; }
         .chat-sidebar { width: 280px; border-right: 1px solid var(--bit-border-light); display: flex; flex-direction: column; }
         .chat-sidebar-header { padding: 15px 20px; font-weight: 700; border-bottom: 1px solid var(--bit-border-light); background: rgba(0,0,0,0.01); }
@@ -174,19 +177,37 @@
         .chat-window-header { height: 50px; padding: 0 20px; border-bottom: 1px solid var(--bit-border-light); display: flex; align-items: center; font-weight: 600; }
         .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: rgba(0, 0, 0, 0.02); }
         
-        .msg-row { display: flex; flex-direction: column; width: 100%; }
+        .msg-row { display: flex; flex-direction: column; width: 100%; position: relative; }
         .msg-row.msg-me { align-items: flex-end; }
         .msg-row.msg-them { align-items: flex-start; }
-        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; }
+        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }
         
-        .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; }
-        .bubble { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; }
+        .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; group: hover; }
+        .bubble { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; position: relative; }
         .msg-me .bubble { background: var(--chat-bubble-me); color: #FFFFFF; border-bottom-right-radius: 2px; }
         .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }
         
+        /* Inline Actions / Reactions Styling */
+        .msg-interact-bar { display: flex; gap: 8px; font-size: 11px; margin-top: 4px; color: var(--bit-text-light); }
+        .msg-interact-btn { cursor: pointer; background: none; border: none; color: var(--bit-text-light); font-size: 11px; }
+        .msg-interact-btn:hover { color: var(--bit-blue-primary); }
+        .msg-delete-btn:hover { color: var(--bit-danger); }
+        .reactions-pill-box { display: flex; gap: 4px; margin-top: 4px; }
+        .react-badge { background: var(--bit-bg-main); border: 1px solid var(--bit-border-light); border-radius: 10px; padding: 1px 6px; font-size: 11px; cursor: pointer; }
+
         .chat-input-container { border-top: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; flex-direction: column; }
         .chat-input-area { padding: 15px 20px; display: flex; gap: 10px; align-items: center; }
         .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
+        
+        .chat-utility-row { display: flex; gap: 10px; padding: 0 20px 10px; align-items: center; }
+        .emoji-picker-inline { display: flex; gap: 6px; }
+        .emoji-select-btn { background: rgba(0,0,0,0.04); border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .emoji-select-btn:hover { background: rgba(30,80,255,0.1); }
+        
+        .file-attach-label { cursor: pointer; display: flex; align-items: center; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .file-attach-label:hover { background: rgba(30,80,255,0.1); }
+        .attachment-preview-tag { display: inline-flex; align-items: center; background: var(--bit-warning); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-top: 4px; }
+
         .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
         .metrics-grid-vertical { display: flex; flex-direction: column; gap: 15px; }
@@ -196,7 +217,6 @@
         .metric-widget-status { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; margin-top: 8px; }
         .dot-pulse { width: 8px; height: 8px; background-color: var(--bit-success); border-radius: 50%; margin-right: 6px; display: inline-block; }
 
-        /* Notification Toast Container */
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 420px; pointer-events: none; }
         .toast-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); padding: 14px 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); display: flex; align-items: center; gap: 12px; pointer-events: auto; border-left: 5px solid var(--bit-blue-primary); animation: toastSlideIn 0.3s forwards; }
         .toast-card.success { border-left-color: var(--bit-success); }
@@ -227,17 +247,18 @@
     <aside class="sidebar">
         <div class="sidebar-brand"><span class="brand-text-space">Ultra</span><span>KH</span></div>
         <ul class="sidebar-menu">
-            <li class="sidebar-item" data-target="home" id="nav-home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><span>Home</span></a></li>
+            <li class="sidebar-item active" data-target="home" id="nav-home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><span>Home</span></a></li>
             <li class="sidebar-item" data-target="message" id="nav-message"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span>Chat</span></a></li>
+            <li class="sidebar-item" data-target="notifications" id="nav-notifications"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div><span>Notifications (<span id="notifBadgeCount">0</span>)</span></a></li>
             <li class="sidebar-item" data-target="profile" id="nav-profile"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span>Profile</span></a></li>
-            <li class="sidebar-item active" data-target="register" id="nav-register"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div><span>Accounts</span></a></li>
+            <li class="sidebar-item" data-target="register" id="nav-register"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div><span>Accounts</span></a></li>
             <li class="sidebar-item" style="margin-top:auto;" onclick="triggerLogout()"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Logout</span></a></li>
         </ul>
     </aside>
 
     <main class="main-content">
         <header class="top-bar">
-            <div id="breadcrumb" style="font-weight: 600; color: var(--bit-text-light);">Dashboard / Accounts</div>
+            <div id="breadcrumb" style="font-weight: 600; color: var(--bit-text-light);">Dashboard / Home</div>
             <div class="top-bar-right">
                 <select class="lang-select">
                     <option value="en">English</option>
@@ -245,14 +266,14 @@
                 </select>
                 <div class="top-bar-profile-wrap">
                     <div style="width:24px; height:24px; background: #E0E0E0; border-radius:50%;"></div>
-                    <div><span id="topBarUserHandle">Guest</span></div>
+                    <div><span id="topBarUserHandle">Admin</span></div>
                 </div>
             </div>
         </header>
 
         <div class="container" id="mainContainer">
             <!-- PAGE HOME -->
-            <div class="page-view" id="page-home">
+            <div class="page-view active" id="page-home">
                 <div class="home-layout">
                     <div class="home-main-feed">
                         <div class="card" style="padding: 20px;">
@@ -278,10 +299,21 @@
                             <p style="color: var(--bit-text-light); font-size: 12px;">Your workspace platform channels are active.</p>
                         </div>
                         <div class="metrics-grid-vertical">
-                            <div class="metric-widget-card"><div class="metric-widget-title">Total Registry Accounts</div><div class="metric-widget-value" id="metUserCount">0</div></div>
+                            <div class="metric-widget-card"><div class="metric-widget-title">Total Registry Accounts</div><div class="metric-widget-value" id="metUserCount">2</div></div>
                             <div class="metric-widget-card"><div class="metric-widget-title">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span>Operational / Online</span></div></div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- PAGE NOTIFICATIONS -->
+            <div class="page-view" id="page-notifications">
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                        <h3>System and Workspace Notifications</h3>
+                        <button class="btn-send" style="padding:4px 12px; font-size:12px;" onclick="clearAllNotifications()">Clear All</button>
+                    </div>
+                    <div class="notification-stream-list" id="notificationStreamBox"></div>
                 </div>
             </div>
 
@@ -322,6 +354,20 @@
                         <div class="chat-window-header" id="activeChatUser">Select an operator thread to view history</div>
                         <div class="chat-messages-box" id="chatMsgContainer"></div>
                         <div class="chat-input-container">
+                            <div class="chat-utility-row">
+                                <div class="emoji-picker-inline">
+                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('👍')">👍</button>
+                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('❤️')">❤️</button>
+                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('😮')">😮</button>
+                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('🔥')">🔥</button>
+                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('🙏')">🙏</button>
+                                </div>
+                                <label class="file-attach-label" for="chatFileInput">
+                                    📎 Attach File
+                                    <input type="file" id="chatFileInput" style="display:none;" onchange="handleFileAttachmentSelected(this)">
+                                </label>
+                                <span id="fileAttachmentPreview" style="font-size:12px; color:var(--bit-text-light);"></span>
+                            </div>
                             <div class="chat-input-area">
                                 <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here...">
                                 <button class="btn-send" onclick="submitChatMessage()">Send</button>
@@ -332,7 +378,7 @@
             </div>
 
             <!-- PAGE REGISTER / AUTH -->
-            <div class="page-view active" id="page-register">
+            <div class="page-view" id="page-register">
                 <div class="split-view-layout" style="justify-content: center; align-items: center; min-height: 400px;">
                     <div class="card left-form-panel" id="authRegisterBox" style="width: 100%; max-width: 400px;">
                         <h3 style="margin-bottom: 20px; text-align: center;">Create Operator Profile</h3>
@@ -375,66 +421,58 @@
     </main>
 
     <script>
-        // CRITICAL FALLBACKS: Setup default fallback entities if localStorage layout is brand new
-        if (!localStorage.getItem('users')) {
-            localStorage.setItem('users', JSON.stringify({ "Admin": "123456", "Operator_Alpha": "123456" }));
-        }
-        if (!localStorage.getItem('appPosts')) {
-            localStorage.setItem('appPosts', JSON.stringify([
-                { id: 1, author: "System", text: "Storage initialized. Ready for registration profiles.", tags: ["system"], likes: 2, comments: [] }
-            ]));
-        }
-        if (!localStorage.getItem('chatMessages')) {
-            localStorage.setItem('chatMessages', JSON.stringify([
-                { id: 1, from: "Admin", to: "Operator_Alpha", text: "Welcome to the real-time operational dashboard.", time: "08:30 AM" }
-            ]));
+        // Data Structures Setup
+        let memoryDatabase = { "Admin": "123456", "Operator_Alpha": "123456" };
+        let memoryActiveUser = "Admin"; 
+        let memoryPosts = [
+            { id: 1, author: "Admin", text: "Deposit channels are running normally.", tags: ["deposit", "reconciliation"], likes: 4, comments: [], shares: 1 },
+            { id: 2, author: "Operator_Alpha", text: "Third-party gateway channel updated successfully.", tags: ["channels"], likes: 2, comments: [], shares: 0 }
+        ];
+        let memoryChats = [
+            { id: 1, from: "Admin", to: "Operator_Alpha", text: "Please monitor the pending withdrawal requests.", time: "08:30 AM", reactions: {}, file: null },
+            { id: 2, from: "Operator_Alpha", to: "Admin", text: "Acknowledged. All systems clear.", time: "08:32 AM", reactions: {}, file: null }
+        ];
+        let memoryNotifications = [
+            { id: 1, user: "Admin", text: "System connection initialized securely.", time: "Just now", unread: true }
+        ];
+
+        function safeGet(key, fallback) {
+            try { return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : fallback; } 
+            catch(e) { return fallback; }
         }
 
-        let userDatabase = JSON.parse(localStorage.getItem('users'));
-        let currentSessionUser = localStorage.getItem('activeUser') || null;
-        let selectedActiveChatPartner = "";
-        let appPosts = JSON.parse(localStorage.getItem('appPosts'));
-        let chatMessages = JSON.parse(localStorage.getItem('chatMessages'));
+        function safeSet(key, val) {
+            try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+        }
+
+        let userDatabase = safeGet('users', memoryDatabase);
+        let currentSessionUser = safeGet('activeUser', "Admin");
+        let selectedActiveChatPartner = "Operator_Alpha";
+        let appPosts = safeGet('appPosts', memoryPosts);
+        let chatMessages = safeGet('chatMessages', memoryChats);
+        let appNotifications = safeGet('appNotifications', memoryNotifications);
+        let activeSelectedFileBase64 = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             initNavigation();
             initThemeEngine();
-            
-            if (!currentSessionUser) {
-                switchPage('register');
-                toggleAuthForms('register');
-            } else {
-                switchPage('home');
-            }
-            
+            switchPage('home'); 
             syncUIContext();
 
-            // FIX: Background interval listener that resets only on deep changes to avoid input focus bugs
             setInterval(() => {
-                const freshUsers = JSON.parse(localStorage.getItem('users'));
-                const freshPosts = JSON.parse(localStorage.getItem('appPosts'));
-                const freshChats = JSON.parse(localStorage.getItem('chatMessages'));
-
-                if (freshUsers) userDatabase = freshUsers;
+                userDatabase = safeGet('users', userDatabase);
+                appPosts = safeGet('appPosts', appPosts);
+                chatMessages = safeGet('chatMessages', chatMessages);
+                appNotifications = safeGet('appNotifications', appNotifications);
                 
-                if (freshPosts && JSON.stringify(freshPosts) !== JSON.stringify(appPosts)) {
-                    appPosts = freshPosts;
-                    if (document.getElementById('page-home').classList.contains('active')) {
-                        renderHomeFeed();
-                    }
-                }
-                if (freshChats && JSON.stringify(freshChats) !== JSON.stringify(chatMessages)) {
-                    chatMessages = freshChats;
-                    if (document.getElementById('page-message').classList.contains('active')) {
-                        loadChatHistory();
-                    }
-                }
+                updateSystemBadges();
                 document.getElementById('metUserCount').textContent = Object.keys(userDatabase).length;
             }, 1000);
         });
 
         function showToast(message, type = 'info') {
             const hub = document.getElementById('toastHub');
+            if(!hub) return;
             const toast = document.createElement('div');
             toast.className = `toast-card ${type}`;
             toast.innerHTML = `<span class="toast-message">${message}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
@@ -442,16 +480,29 @@
             setTimeout(() => { if (toast.parentElement) toast.remove(); }, 4000);
         }
 
+        function pushSystemNotification(text) {
+            appNotifications.push({
+                id: Date.now(),
+                user: currentSessionUser,
+                text: text,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                unread: true
+            });
+            safeSet('appNotifications', appNotifications);
+            updateSystemBadges();
+        }
+
+        function updateSystemBadges() {
+            const unreadCount = appNotifications.filter(n => n.unread).length;
+            const badge = document.getElementById('notifBadgeCount');
+            if(badge) badge.textContent = unreadCount;
+        }
+
         function initNavigation() {
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.addEventListener('click', () => {
                     const target = item.getAttribute('data-target');
                     if (!target) return;
-                    
-                    if (!currentSessionUser && target !== 'register') {
-                        showToast("Access Denied. Please register or login first.", "error");
-                        return;
-                    }
                     switchPage(target);
                 });
             });
@@ -471,22 +522,26 @@
             
             if(target === 'home') renderHomeFeed();
             if(target === 'message') { renderFriendsSidebar(); loadChatHistory(); }
+            if(target === 'notifications') renderNotificationsFeed();
         }
 
         function syncUIContext() {
             document.getElementById('topBarUserHandle').textContent = currentSessionUser || "Guest";
             document.getElementById('profUserHandle').value = currentSessionUser || "";
             document.getElementById('metUserCount').textContent = Object.keys(userDatabase).length;
+            updateSystemBadges();
         }
 
         function initThemeEngine() {
             const checkbox = document.getElementById('themeToggleCheckbox');
-            checkbox.addEventListener('change', () => {
-                document.body.classList.toggle('dark-mode', checkbox.checked);
-            });
+            if(checkbox) {
+                checkbox.addEventListener('change', () => {
+                    document.body.classList.toggle('dark-mode', checkbox.checked);
+                });
+            }
         }
 
-        /* --- HOME CHANNEL ENGINE --- */
+        /* --- HOME CHANNEL ENGINE (Post, Comment, Share, Tags) --- */
         function renderHomeFeed() {
             const stream = document.getElementById('homeFeedStream');
             if(!stream) return;
@@ -495,11 +550,11 @@
             appPosts.slice().reverse().forEach(post => {
                 const card = document.createElement('div');
                 card.className = 'post-card';
-                let tagsMarkup = post.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('');
+                let tagsMarkup = (post.tags || []).map(t => `<span class="tag-badge">#${t}</span>`).join('');
                 let commentsMarkup = (post.comments || []).map(c => `
                     <div class="comment-item-row">
                         <div class="comment-content-bubble">
-                            <div class="comment-user-title">${c.user}</div>
+                            <div class="comment-user-title">@${c.user}</div>
                             <div>${c.text}</div>
                         </div>
                     </div>
@@ -511,14 +566,15 @@
                         <span class="post-time">ID: ${post.id}</span>
                     </div>
                     <div class="post-content-text">${post.text}</div>
-                    <div style="margin-bottom:10px;">${tagsMarkup}</div>
+                    <div style="margin-bottom:12px;">${tagsMarkup}</div>
                     <div class="post-actions">
                         <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Like (${post.likes || 0})</button>
+                        <button class="action-trigger-btn" onclick="sharePost(${post.id})">🔗 Share (${post.shares || 0})</button>
                     </div>
                     <div class="comments-section-wrapper">
                         ${commentsMarkup}
                         <div class="comment-input-inline-box">
-                            <input type="text" class="form-input" placeholder="Write a comment..." id="cmt-input-${post.id}">
+                            <input type="text" class="form-input" placeholder="Write a team comment..." id="cmt-input-${post.id}">
                             <button class="btn-send" style="padding:4px 12px;" onclick="addComment(${post.id})">Reply</button>
                         </div>
                     </div>
@@ -533,23 +589,31 @@
             const tagsInput = document.getElementById('postTags').value;
             const tags = tagsInput.split(',').map(t => t.trim()).filter(t => t.length > 0);
 
-            appPosts.push({
-                id: Date.now(),
-                author: currentSessionUser,
-                text: text,
-                tags: tags,
-                likes: 0,
-                comments: []
-            });
-            localStorage.setItem('appPosts', JSON.stringify(appPosts));
+            appPosts.push({ id: Date.now(), author: currentSessionUser, text: text, tags: tags, likes: 0, comments: [], shares: 0 });
+            safeSet('appPosts', appPosts);
+            
+            pushSystemNotification(`New operational update posted by @${currentSessionUser}`);
             document.getElementById('homePublishForm').reset();
             renderHomeFeed();
-            showToast("Workspace post published!", "success");
+            showToast("Workspace log published!", "success");
         }
 
         function likePost(id) {
             appPosts = appPosts.map(p => p.id === id ? { ...p, likes: (p.likes || 0) + 1 } : p);
-            localStorage.setItem('appPosts', JSON.stringify(appPosts));
+            safeSet('appPosts', appPosts);
+            renderHomeFeed();
+        }
+
+        function sharePost(id) {
+            appPosts = appPosts.map(p => {
+                if(p.id === id) {
+                    const cleanCount = p.shares || 0;
+                    showToast(`Internal Link copied for log record ID: ${id}`, "success");
+                    return { ...p, shares: cleanCount + 1 };
+                }
+                return p;
+            });
+            safeSet('appPosts', appPosts);
             renderHomeFeed();
         }
 
@@ -563,23 +627,51 @@
                 }
                 return p;
             });
-
-            localStorage.setItem('appPosts', JSON.stringify(appPosts));
+            safeSet('appPosts', appPosts);
             input.value = '';
             renderHomeFeed();
         }
 
-        /* --- CHAT ENGINE --- */
+        /* --- NOTIFICATIONS ENGINE --- */
+        function renderNotificationsFeed() {
+            const box = document.getElementById('notificationStreamBox');
+            if(!box) return;
+            box.innerHTML = '';
+
+            if(appNotifications.length === 0) {
+                box.innerHTML = `<div style="text-align:center; padding:20px; color:var(--bit-text-light);">No new notifications data profile.</div>`;
+                return;
+            }
+
+            appNotifications.slice().reverse().forEach(n => {
+                const row = document.createElement('div');
+                row.className = `notification-card-item ${n.unread ? 'unread' : ''}`;
+                row.innerHTML = `
+                    <div>
+                        <div class="notif-text">${n.text}</div>
+                        <div class="notif-time">${n.time}</div>
+                    </div>
+                `;
+                box.appendChild(row);
+                n.unread = false; // Mark as read instantly on visualization load
+            });
+            safeSet('appNotifications', appNotifications);
+            updateSystemBadges();
+        }
+
+        function clearAllNotifications() {
+            appNotifications = [];
+            safeSet('appNotifications', appNotifications);
+            renderNotificationsFeed();
+        }
+
+        /* --- MESSAGES CHAT ENGINE (Emoji, File, Reactions, Delete) --- */
         function renderFriendsSidebar() {
             const container = document.getElementById('chatFriendsContainer');
             if(!container) return;
             container.innerHTML = '';
 
             const users = Object.keys(userDatabase).filter(u => u !== currentSessionUser);
-            if(users.length > 0 && !selectedActiveChatPartner) {
-                selectedActiveChatPartner = users[0];
-            }
-
             users.forEach(user => {
                 const li = document.createElement('li');
                 li.className = `friend-item ${user === selectedActiveChatPartner ? 'active' : ''}`;
@@ -614,33 +706,115 @@
             filtered.forEach(m => {
                 const row = document.createElement('div');
                 row.className = `msg-row ${m.from === currentSessionUser ? 'msg-me' : 'msg-them'}`;
+                
+                // Build reaction indicators HTML markup
+                let reactHTML = '';
+                if(m.reactions && Object.keys(m.reactions).length > 0) {
+                    reactHTML = `<div class="reactions-pill-box">`;
+                    for(const [emoji, count] of Object.entries(m.reactions)) {
+                        if(count > 0) reactHTML += `<span class="react-badge" onclick="reactToMessage(${m.id}, '${emoji}')">${emoji} ${count}</span>`;
+                    }
+                    reactHTML += `</div>`;
+                }
+
+                // File content attachment rendering fallback check logic
+                let fileHTML = '';
+                if(m.file) {
+                    fileHTML = `<div style="margin-top:6px; padding:6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:11px;">
+                        📁 <a href="${m.file.data}" download="${m.file.name}" style="color:var(--bit-blue-primary); font-weight:bold; text-decoration:underline;">Download ${m.file.name}</a>
+                    </div>`;
+                }
+
                 row.innerHTML = `
                     <div class="msg-meta-container"><span>${m.from}</span> • <span>${m.time}</span></div>
-                    <div class="bubble-wrapper"><div class="bubble">${m.text}</div></div>
+                    <div class="bubble-wrapper">
+                        <div class="bubble">
+                            <div>${m.text}</div>
+                            ${fileHTML}
+                        </div>
+                    </div>
+                    <div class="msg-interact-bar">
+                        <button class="msg-interact-btn" onclick="reactToMessage(${m.id}, '👍')">👍</button>
+                        <button class="msg-interact-btn" onclick="reactToMessage(${m.id}, '❤️')">❤️</button>
+                        <button class="msg-interact-btn" onclick="reactToMessage(${m.id}, '🔥')">🔥</button>
+                        <button class="msg-interact-btn msg-delete-btn" style="margin-left:8px;" onclick="deleteChatMessage(${m.id})">❌ Delete</button>
+                    </div>
+                    ${reactHTML}
                 `;
                 container.appendChild(row);
             });
             container.scrollTop = container.scrollHeight;
         }
 
+        function insertEmojiIntoChat(emoji) {
+            const input = document.getElementById('chatInputField');
+            if(input) {
+                input.value += emoji;
+                input.focus();
+            }
+        }
+
+        function handleFileAttachmentSelected(inputElement) {
+            const file = inputElement.files[0];
+            if(!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                activeSelectedFileBase64 = {
+                    name: file.name,
+                    data: e.target.result
+                };
+                document.getElementById('fileAttachmentPreview').innerHTML = `<span class="attachment-preview-tag">Attached: ${file.name}</span>`;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function submitChatMessage() {
             const input = document.getElementById('chatInputField');
-            if(!input || !input.value.trim() || !selectedActiveChatPartner) return;
+            if(!input || (!input.value.trim() && !activeSelectedFileBase64) || !selectedActiveChatPartner) return;
 
             chatMessages.push({
                 id: Date.now(),
                 from: currentSessionUser,
                 to: selectedActiveChatPartner,
-                text: input.value.trim(),
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                text: input.value.trim() || "Sent a file mapping attachment.",
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                reactions: {},
+                file: activeSelectedFileBase64
             });
 
-            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+            safeSet('chatMessages', chatMessages);
+            
+            // Reset input values completely
             input.value = '';
+            activeSelectedFileBase64 = null;
+            document.getElementById('chatFileInput').value = '';
+            document.getElementById('fileAttachmentPreview').innerHTML = '';
+            
             loadChatHistory();
         }
 
-        /* --- AUTH SYSTEM --- */
+        function reactToMessage(id, emoji) {
+            chatMessages = chatMessages.map(m => {
+                if(m.id === id) {
+                    let rx = m.reactions || {};
+                    rx[emoji] = (rx[emoji] || 0) + 1;
+                    return { ...m, reactions: rx };
+                }
+                return m;
+            });
+            safeSet('chatMessages', chatMessages);
+            loadChatHistory();
+        }
+
+        function deleteChatMessage(id) {
+            chatMessages = chatMessages.filter(m => m.id !== id);
+            safeSet('chatMessages', chatMessages);
+            loadChatHistory();
+            showToast("Message deleted successfully.", "info");
+        }
+
+        /* --- REGISTRATION PROFILE DATA ENGINE --- */
         function toggleAuthForms(view) {
             document.getElementById('authRegisterBox').style.display = view === 'login' ? 'none' : 'block';
             document.getElementById('authLoginBox').style.display = view === 'login' ? 'block' : 'none';
@@ -657,9 +831,9 @@
             }
 
             userDatabase[u] = p;
-            localStorage.setItem('users', JSON.stringify(userDatabase));
+            safeSet('users', userDatabase);
             currentSessionUser = u;
-            localStorage.setItem('activeUser', currentSessionUser);
+            safeSet('activeUser', currentSessionUser);
             
             syncUIContext();
             switchPage('home');
@@ -674,7 +848,7 @@
 
             if(userDatabase[u] && userDatabase[u] === p) {
                 currentSessionUser = u;
-                localStorage.setItem('activeUser', currentSessionUser);
+                safeSet('activeUser', currentSessionUser);
                 selectedActiveChatPartner = ""; 
                 syncUIContext();
                 switchPage('home');
@@ -693,15 +867,18 @@
             userDatabase[newHandle] = userDatabase[currentSessionUser];
             delete userDatabase[currentSessionUser];
             currentSessionUser = newHandle;
-            localStorage.setItem('users', JSON.stringify(userDatabase));
-            localStorage.setItem('activeUser', currentSessionUser);
+            
+            safeSet('users', userDatabase);
+            safeSet('activeUser', currentSessionUser);
+            
             syncUIContext();
             showToast("Profile updated!", "success");
         }
 
         function triggerLogout() {
             localStorage.removeItem('activeUser');
-            currentSessionUser = null;
+            currentSessionUser = "Admin"; // Fallback cleanly instead of breaking layout state mapping bounds
+            safeSet('activeUser', "Admin");
             selectedActiveChatPartner = "";
             syncUIContext();
             switchPage('register');
