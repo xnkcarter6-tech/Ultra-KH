@@ -6,12 +6,12 @@
     <title>Ultra KHsite - Interactive Production Engine</title>
     <style>
         :root {
-            --bit-blue-primary: #1E50FF;              
-            --bit-blue-hover: #0033E6;                
-            --bit-blue-active: #0026B3;               
-            --bit-text-menu: #FFFFFF;                 
-            --bit-bg-main: #EDF1F7;                           
-            --bit-bg-card: #FFFFFF;                           
+            --bit-blue-primary: #1E50FF;                          
+            --bit-blue-hover: #0033E6;                            
+            --bit-blue-active: #0026B3;                           
+            --bit-text-menu: #FFFFFF;                             
+            --bit-bg-main: #EDF1F7;                                       
+            --bit-bg-card: #FFFFFF;                                       
             --bit-border-light: #E0E0E0;
             --bit-text-dark: #1F2D3D;
             --bit-text-light: #606266;
@@ -22,7 +22,6 @@
             --bit-success: #52C41A;
             --bit-warning: #FAAD14;
         }
-
         body.dark-mode {
             --bit-bg-main: #141E30;
             --bit-bg-card: #1F2A44;
@@ -32,14 +31,12 @@
             --chat-bubble-them: #2D3D5A;
             --chat-text-them: #FFFFFF;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Khmer OS Battambang', sans-serif;
         }
-
         body {
             background-color: var(--bit-bg-main);
             color: var(--bit-text-dark);
@@ -49,7 +46,6 @@
             font-size: 14px;
             transition: background-color 0.3s, color 0.3s;
         }
-
         .sidebar {
             width: 250px;
             background-color: var(--bit-blue-primary);
@@ -59,22 +55,19 @@
             flex-shrink: 0;
             z-index: 100;
         }
-
         .sidebar-brand {
             background-color: var(--bit-blue-primary);
             padding: 24px 20px;
             font-size: 24px;
             font-weight: 800; 
-            color: #FFFFFF;                
+            color: #FFFFFF;                            
             display: flex;
             align-items: center;
             letter-spacing: 0.5px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .brand-text-space { margin-right: 8px; }
-        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
-        
+        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }                
         .sidebar-item a {
             display: flex;
             align-items: center;
@@ -85,11 +78,9 @@
             font-weight: 700; 
             font-size: 14px;
         }
-
         .sidebar-item a:hover { background-color: var(--bit-blue-hover); }
         .sidebar-item.active { background-color: var(--bit-blue-active); position: relative; }
         .sidebar-item.active::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background-color: white; }
-
         .sidebar-icon {
             width: 18px;
             height: 18px;
@@ -99,47 +90,37 @@
             justify-content: center;
             flex-shrink: 0;
         }
-
         .sidebar-icon svg {
             width: 100%; height: 100%; fill: none; stroke: currentColor;
             stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
         }
-
-        .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
-        
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }                
         .top-bar {
             background-color: var(--bit-bg-card);
             height: 60px; display: flex; align-items: center; justify-content: space-between;
             padding: 0 25px; border-bottom: 1px solid var(--bit-border-light); flex-shrink: 0;
         }
-
         .top-bar-right { display: flex; align-items: center; gap: 15px; color: var(--bit-text-light); }
         .lang-select { padding: 4px 8px; border: 1px solid var(--bit-border-light); border-radius: 4px; background-color: var(--bit-bg-card); color: var(--bit-text-dark); font-weight: 600; cursor: pointer; font-size: 13px; }
         .top-bar-profile-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-
         .container { padding: 25px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
         .card { background: var(--bit-bg-card); border-radius: 8px; border: 1px solid var(--bit-border-light); padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .page-view { display: none; height: 100%; }
         .page-view.active { display: block; }
-
         .split-view-layout { display: flex; gap: 25px; height: 100%; align-items: flex-start; }
         .left-form-panel { width: 350px; flex-shrink: 0; }
         .right-display-panel { flex-grow: 1; }
-
         .form-group { margin-bottom: 18px; }
         .form-label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--bit-text-dark); }
         .form-input, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
-        .form-textarea { resize: none; height: 70px; }
-        
+        .form-textarea { resize: none; height: 70px; }                
         .btn-submit { width: 100%; background: var(--bit-blue-primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
         .btn-submit:hover { background: var(--bit-blue-hover); }
         .toggle-container { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--bit-border-light); }
-
         .home-layout { display: flex; gap: 25px; align-items: flex-start; }
         .home-main-feed { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; }
         .home-side-metrics { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
-        .feed-container { display: flex; flex-direction: column; gap: 20px; margin-top: 10px; }
-        
+        .feed-container { display: flex; flex-direction: column; gap: 20px; margin-top: 10px; }                
         .post-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; }
         .post-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .post-author { font-weight: 700; color: var(--bit-text-dark); }
@@ -149,23 +130,19 @@
         .post-file-link { display: inline-flex; align-items: center; gap: 6px; color: var(--bit-blue-primary); text-decoration: none; font-weight: 600; margin-bottom: 12px; background: rgba(30, 80, 255, 0.05); padding: 6px 12px; border-radius: 6px; font-size: 13px; }
         .post-file-link:hover { text-decoration: underline; }
         .tag-badge { display: inline-block; background: rgba(30, 80, 255, 0.1); color: var(--bit-blue-primary); padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 5px; font-weight: 600; }
-
         .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; gap: 15px; }
         .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; transition: color 0.2s; }
         .action-trigger-btn:hover { color: var(--bit-blue-primary); }
-
         .comments-section-wrapper { display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 10px; }
         .comment-item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 8px; }
         .comment-content-bubble { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 8px 12px; flex-grow: 1; color: var(--bit-text-dark); }
         .comment-user-title { font-weight: 700; color: var(--bit-text-dark); }
         .comment-input-inline-box { display: flex; gap: 10px; margin-top: 10px; }
-
         .notification-stream-list { display: flex; flex-direction: column; gap: 10px; }
         .notification-card-item { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; align-items: center; justify-content: space-between; }
         .notification-card-item.unread { border-left: 4px solid var(--bit-blue-primary); background: rgba(30, 80, 255, 0.02); }
         .notif-text { font-size: 13px; color: var(--bit-text-dark); }
         .notif-time { font-size: 11px; color: var(--bit-text-light); }
-
         .chat-layout { display: flex; background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; height: 100%; overflow: hidden; min-height: 450px; }
         .chat-sidebar { width: 280px; border-right: 1px solid var(--bit-border-light); display: flex; flex-direction: column; }
         .chat-sidebar-header { padding: 15px 20px; font-weight: 700; border-bottom: 1px solid var(--bit-border-light); background: rgba(0,0,0,0.01); }
@@ -173,52 +150,41 @@
         .friend-item { padding: 15px 20px; border-bottom: 1px solid var(--bit-border-light); cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .friend-item.active { background: rgba(30, 80, 255, 0.08); }
         .friend-name { font-weight: 600; color: var(--bit-text-dark); font-size: 13px; }
-
         .chat-window { flex-grow: 1; display: flex; flex-direction: column; background: var(--bit-bg-card); position: relative; min-width: 0; }
         .chat-window-header { height: 50px; padding: 0 20px; border-bottom: 1px solid var(--bit-border-light); display: flex; align-items: center; font-weight: 600; }
-        .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: rgba(0, 0, 0, 0.02); }
-        
+        .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: rgba(0, 0, 0, 0.02); }                
         .msg-row { display: flex; flex-direction: column; width: 100%; position: relative; }
         .msg-row.msg-me { align-items: flex-end; }
         .msg-row.msg-them { align-items: flex-start; }
-        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }
-        
+        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }                
         .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; }
         .bubble { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; position: relative; }
         .msg-me .bubble { background: var(--chat-bubble-me); color: #FFFFFF; border-bottom-right-radius: 2px; }
-        .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }
-        
+        .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }                
         .msg-interact-bar { display: flex; gap: 8px; font-size: 11px; margin-top: 4px; color: var(--bit-text-light); visibility: hidden; opacity: 0; transition: opacity 0.15s, visibility 0.15s; }
         .msg-row:hover .msg-interact-bar { visibility: visible; opacity: 1; }
         .msg-interact-btn { cursor: pointer; background: none; border: none; color: var(--bit-text-light); font-size: 11px; font-weight: 600; }
         .msg-interact-btn:hover { color: var(--bit-blue-primary); }
         .msg-delete-btn:hover { color: var(--bit-danger) !important; }
-
         .chat-input-container { border-top: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; flex-direction: column; }
         .chat-input-area { padding: 15px 20px; display: flex; gap: 10px; align-items: center; }
-        .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
-        
+        .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }                
         .chat-utility-row { display: flex; gap: 10px; padding: 0 20px 10px; align-items: center; }
         .emoji-picker-inline { display: flex; gap: 6px; }
         .emoji-select-btn { background: rgba(0,0,0,0.04); border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
-        .emoji-select-btn:hover { background: rgba(30,80,255,0.1); }
-        
+        .emoji-select-btn:hover { background: rgba(30,80,255,0.1); }                
         .file-attach-label { cursor: pointer; display: flex; align-items: center; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--bit-text-dark); transition: background 0.2s; }
         .file-attach-label:hover { background: rgba(30,80,255,0.1); }
-
         .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-
         .metrics-grid-vertical { display: flex; flex-direction: column; gap: 15px; }
         .metric-widget-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; min-height: 100px; }
         .metric-widget-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--bit-text-light); letter-spacing: 0.5px; margin-bottom: 8px; }
         .metric-widget-value { font-size: 28px; font-weight: 800; color: var(--bit-blue-primary); }
         .metric-widget-status { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; margin-top: 8px; }
         .dot-pulse { width: 8px; height: 8px; background-color: var(--bit-success); border-radius: 50%; margin-right: 6px; display: inline-block; }
-
         .user-directory-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
         .user-directory-table th { padding: 8px 5px; color: var(--bit-text-light); border-bottom: 2px solid var(--bit-border-light); }
         .user-directory-table td { padding: 10px 5px; border-bottom: 1px solid var(--bit-border-light); }
-
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 420px; pointer-events: none; }
         .toast-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); padding: 14px 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); display: flex; align-items: center; gap: 12px; pointer-events: auto; border-left: 5px solid var(--bit-blue-primary); animation: toastSlideIn 0.3s forwards; }
         .toast-card.success { border-left-color: var(--bit-success); }
@@ -226,14 +192,12 @@
         .toast-message { font-size: 13.5px; font-weight: 600; color: var(--bit-text-dark); flex-grow: 1; }
         .toast-close { background: transparent; border: none; cursor: pointer; color: var(--bit-text-light); font-weight: bold; }
         @keyframes toastSlideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
         .welcome-content-box h4 { margin-top: 12px; font-weight: 700; font-size: 13px; color: var(--bit-text-dark); }
         .welcome-content-box ul { list-style: none; margin: 8px 0; padding-left: 0; }
         .welcome-content-box ul li { font-size: 13px; color: var(--bit-text-light); position: relative; padding-left: 14px; margin-bottom: 4px; }
         .welcome-content-box ul li::before { content: "•"; color: var(--bit-blue-primary); position: absolute; left: 0; font-weight: bold; }
         .welcome-content-box p { font-size: 13px; color: var(--bit-text-light); line-height: 1.4; margin-bottom: 10px; }
         .welcome-hashtags { font-size: 12px; font-weight: 600; color: var(--bit-blue-primary); margin-top: 10px; }
-
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; }
@@ -263,22 +227,19 @@
             <li class="sidebar-item" style="margin-top:auto;" onclick="triggerSignOut()"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Sign Out</span></a></li>
         </ul>
     </aside>
-
     <main class="main-content">
         <header class="top-bar">
             <div id="breadcrumb" style="font-weight: 600; color: var(--bit-text-light);">Dashboard / Home</div>
             <div class="top-bar-right">
                 <select class="lang-select">
                     <option value="en">English</option>
-                    <option value="kh">ភាសាខ្មែរ</option>
-                </select>
+                    <option value="kh">ភាសាខ្មែរ</option>                </select>
                 <div class="top-bar-profile-wrap">
                     <div style="width:24px; height:24px; background: #E0E0E0; border-radius:50%;"></div>
                     <div><span id="topBarUserHandle">Admin</span></div>
                 </div>
             </div>
         </header>
-
         <div class="container" id="mainContainer">
             <div class="page-view active" id="page-home">
                 <div class="home-layout">
@@ -290,7 +251,7 @@
                                     <textarea class="form-textarea" id="postText" required placeholder="What is happening within your workspace channels?"></textarea>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 12px;">
-                                    <label class="form-label">Add Tags (comma separated)</label>                                    
+                                    <label class="form-label">Add Tags (comma separated)</label>
                                     <input type="text" id="postTags" class="form-input" placeholder="e.g. general, announcement, urgent">
                                 </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -305,7 +266,6 @@
                         </div>
                         <div class="feed-container" id="homeFeedStream"></div>
                     </div>
-
                     <div class="home-side-metrics">
                         <div class="card" style="padding: 20px;">
                             <h3 style="margin-bottom: 10px; color: var(--bit-blue-primary);">Welcome to Ultra KH 🚀</h3>
@@ -323,10 +283,9 @@
                                 <strong style="color: var(--bit-text-dark); display:block; margin-top:8px;">The future starts here. 🔥</strong>
                                 <div class="welcome-hashtags">#UltraKH #Community #Welcome #StayConnected</div>
                             </div>
-                        </div>
-                                                                        
+                        </div>                                                                                                
                         <div class="card" style="padding: 20px;">
-                            <h3 style="margin-bottom: 12px;">Active System Operators (<span id="metUserCount">2</span>)</h3>
+                            <h3 style="margin-bottom: 12px;">Active System Operators (<span id="metUserCount">1</span>)</h3>
                             <table class="user-directory-table">
                                 <thead>
                                     <tr>
@@ -337,7 +296,6 @@
                                 <tbody id="systemUserTableBody"></tbody>
                             </table>
                         </div>
-
                         <div class="metrics-grid-vertical">
                             <div class="metric-widget-card"><div class="metric-widget-title">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span>Operational / Online</span></div></div>
                         </div>
@@ -451,7 +409,7 @@
                             <button type="submit" class="btn-submit">Sign In</button>
                         </form>
                         <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Create one here</a>
+                            Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Create an account</a>
                         </p>
                     </div>
                 </div>
@@ -459,638 +417,397 @@
         </div>
     </main>
 
+    <!-- COMPLETE JAVASCRIPT CORE LOGIC ENGINE -->
     <script>
-        // State Management Objects
-        let currentUser = "Admin";
-        let currentUserId = "user-admin";
-        let activeTargetChatId = null;
-        let selectedHomeFileBase64 = null;
-        let selectedHomeFileName = "";
-        let selectedChatFileBase64 = null;
-        let selectedChatFileName = "";
-
-        // Seeded Static Arrays
-        let usersList = [
-            { id: "user-admin", username: "Admin", email: "admin@ultrakh.com", status: "Online" },
-            { id: "user-sophia", username: "Sophia_Dev", email: "sophia@ultrakh.com", status: "Online" },
-            { id: "user-rath", username: "VannRath", email: "rath@ultrakh.com", status: "Away" }
+        // Data Structures Initialization using localStorage
+        let users = JSON.parse(localStorage.getItem('ultra_users')) || [
+            { username: 'Admin', email: 'admin@ultrakh.com', active: true }
         ];
+        let currentUser = localStorage.getItem('ultra_current_user') || 'Admin';
+        let posts = JSON.parse(localStorage.getItem('ultra_posts')) || [];
+        let notifications = JSON.parse(localStorage.getItem('ultra_notifications')) || [];
+        let temporaryAttachedFile = null;
 
-        let notifications = [
-            { id: 1, text: "Sophia_Dev shared an architecture review note inside Channel #production", time: "10 mins ago", unread: true },
-            { id: 2, text: "System security policy verified successfully for node KH-MAIN", time: "1 hour ago", unread: false }
-        ];
-
-        let feedPosts = [
-            {
-                id: 101,
-                author: "Sophia_Dev",
-                time: "20 mins ago",
-                content: "Just finalized the design specs for the layout system. Check it out and provide feedback inside the chat matrix module!",
-                tags: ["general", "announcement"],
-                fileData: null,
-                fileName: "",
-                likes: 4,
-                comments: [
-                    { author: "VannRath", text: "Looks great, clean layout!" }
-                ]
-            }
-        ];
-
-        // Chat Data Structure Matrix
-        let chatLogs = {
-            "user-sophia": [
-                { id: 1, senderId: "user-sophia", senderName: "Sophia_Dev", text: "Hello! Did you review the production deployment code?", time: "09:14 AM", fileData: null },
-                { id: 2, senderId: "user-admin", senderName: "Admin", text: "Hey Sophia, looking over the metrics logs right now.", time: "09:16 AM", fileData: null }
-            ],
-            "user-rath": [
-                { id: 1, senderId: "user-rath", senderName: "VannRath", text: "System upgrade packages successfully validated.", time: "Yesterday", fileData: null }
-            ]
-        };
-
-        // Synthesizer Notification Sound Engine
-        function playNotificationSound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Note Chime 1
-                const osc1 = audioCtx.createOscillator();
-                const gain1 = audioCtx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 Note
-                gain1.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                gain1.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-                osc1.connect(gain1);
-                gain1.connect(audioCtx.destination);
-                osc1.start();
-                osc1.stop(audioCtx.currentTime + 0.12);
-
-                // Note Chime 2 (Harmony Offset delay)
-                setTimeout(() => {
-                    const osc2 = audioCtx.createOscillator();
-                    const gain2 = audioCtx.createGain();
-                    osc2.type = 'sine';
-                    osc2.frequency.setValueAtTime(880.00, audioCtx.currentTime); // A5 Note
-                    gain2.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                    gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
-                    osc2.connect(gain2);
-                    gain2.connect(audioCtx.destination);
-                    osc2.start();
-                    osc2.stop(audioCtx.currentTime + 0.22);
-                }, 75);
-            } catch (e) {
-                console.log("Audio contextual block safely bypassed via environment rules:", e);
-            }
-        }
-
-        // Initialize App Operations
+        // Document Ready Entry Point
         document.addEventListener("DOMContentLoaded", () => {
-            setupNavigation();
-            setupThemeControl();
-            renderAllViews();
-            initRealtimeSimulation();
+            initNavigationListeners();
+            initThemeEngine();
+            syncUserDataUI();
+            renderPosts();
+            renderNotifications();
         });
 
-        function setupNavigation() {
-            document.querySelectorAll(".sidebar-item[data-target]").forEach(item => {
-                item.addEventListener("click", () => {
-                    const viewTarget = item.getAttribute("data-target");
-                    switchView(viewTarget);
+        // Toast Alert System Engine
+        function showToastNotification(message, type = 'success') {
+            const container = document.getElementById('toastHub');
+            const toast = document.createElement('div');
+            toast.className = `toast-card ${type}`;
+            toast.innerHTML = `
+                <span class="toast-message">${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Navigation Layout Controller Engine
+        function initNavigationListeners() {
+            document.querySelectorAll('.sidebar-item[data-target]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const targetPage = item.getAttribute('data-target');
+                    
+                    // Toggle Active Sidebar Class
+                    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    // Show active panel view
+                    document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
+                    document.getElementById(`page-${targetPage}`).classList.add('active');
+
+                    // Breadcrumb label modifier
+                    document.getElementById('breadcrumb').innerText = `Dashboard / ${targetPage.charAt(0).toUpperCase() + targetPage.slice(1)}`;
+                    
+                    if(targetPage === 'message') loadChatOperatorEngine();
                 });
             });
         }
 
-        function switchView(target) {
-            document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("active"));
-            document.querySelectorAll(".page-view").forEach(v => v.classList.remove("active"));
+        // Authentication State Engine (Sign Up Code logic)
+        function processSignUp(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('signUpUser').value.trim();
+            const emailInput = document.getElementById('signUpEmail').value.trim();
+            const passwordInput = document.getElementById('signUpPass').value;
 
-            const activeNav = document.getElementById(`nav-${target}`);
-            if (activeNav) activeNav.classList.add("active");
-
-            const activePage = document.getElementById(`page-${target}`);
-            if (activePage) activePage.classList.add("active");
-
-            const breadcrumb = document.getElementById("breadcrumb");
-            breadcrumb.innerText = `Dashboard / ${target.charAt(0).toUpperCase() + target.slice(1)}`;
-        }
-
-        function setupThemeControl() {
-            const checkbox = document.getElementById("themeToggleCheckbox");
-            checkbox.addEventListener("change", () => {
-                if (checkbox.checked) {
-                    document.body.classList.add("dark-mode");
-                    showToast("Dark Mode engaged successfully.", "success");
-                } else {
-                    document.body.classList.remove("dark-mode");
-                    showToast("Light Mode restored.", "success");
-                }
-            });
-        }
-
-        // View Renderers
-        function renderAllViews() {
-            renderUserDirectory();
-            renderNotificationCenter();
-            renderFeedStream();
-            renderChatSidebar();
-            renderChatWindowMessages();
-            updateGlobalHeaderCounters();
-        }
-
-        function updateGlobalHeaderCounters() {
-            document.getElementById("topBarUserHandle").innerText = currentUser;
-            document.getElementById("profUserHandle").value = currentUser;
-            
-            const unreadCount = notifications.filter(n => n.unread).length;
-            document.getElementById("notifBadgeCount").innerText = unreadCount;
-            document.getElementById("metUserCount").innerText = usersList.length;
-        }
-
-        function renderUserDirectory() {
-            const tableBody = document.getElementById("systemUserTableBody");
-            tableBody.innerHTML = "";
-            usersList.forEach(user => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td style="font-weight:700;">${user.username} <span style="font-size:11px;font-weight:normal;color:var(--bit-text-light);">(${user.email})</span></td>
-                    <td><span style="color: ${user.status === 'Online' ? 'var(--bit-success)' : 'var(--bit-warning)'}; font-weight:700;">● ${user.status}</span></td>
-                `;
-                tableBody.appendChild(tr);
-            });
-        }
-
-        function renderNotificationCenter() {
-            const container = document.getElementById("notificationStreamBox");
-            container.innerHTML = "";
-            if (notifications.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--bit-text-light);">No recent notifications.</div>`;
-                return;
-            }
-            notifications.forEach(notif => {
-                const div = document.createElement("div");
-                div.className = `notification-card-item ${notif.unread ? 'unread' : ''}`;
-                div.innerHTML = `
-                    <div>
-                        <div class="notif-text">${notif.text}</div>
-                        <div class="notif-time">${notif.time}</div>
-                    </div>
-                    ${notif.unread ? `<button class="btn-send" style="padding:2px 8px; font-size:11px;" onclick="markNotificationRead(${notif.id})">Read</button>` : ''}
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function markNotificationRead(id) {
-            const index = notifications.findIndex(n => n.id === id);
-            if (index !== -1) {
-                notifications[index].unread = false;
-                renderNotificationCenter();
-                updateGlobalHeaderCounters();
-            }
-        }
-
-        function clearAllNotifications() {
-            notifications = [];
-            renderNotificationCenter();
-            updateGlobalHeaderCounters();
-            showToast("Notification queue cleared.", "success");
-        }
-
-        // Fully Dynamic Feed Stream Renderer
-        function renderFeedStream() {
-            const stream = document.getElementById("homeFeedStream");
-            stream.innerHTML = "";
-            
-            if (feedPosts.length === 0) {
-                stream.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--bit-text-light);">No updates published yet.</div>`;
+            if (users.some(u => u.username.toLowerCase() === usernameInput.toLowerCase())) {
+                showToastNotification("This username is already taken!", "error");
                 return;
             }
 
-            feedPosts.forEach(post => {
-                const postCard = document.createElement("div");
-                postCard.className = "card post-card";
+            const newUser = { username: usernameInput, email: emailInput };
+            users.push(newUser);
+            localStorage.setItem('ultra_users', JSON.stringify(users));
 
-                let tagsMarkup = "";
-                if (post.tags) {
-                    post.tags.forEach(t => { if(t && t.trim()) tagsMarkup += `<span class="tag-badge">#${t.trim()}</span>`; });
-                }
+            currentUser = usernameInput;
+            localStorage.setItem('ultra_current_user', currentUser);
 
-                let assetMarkup = "";
-                if (post.fileData) {
-                    if (post.fileData.startsWith("data:image")) {
-                        assetMarkup = `<img src="${post.fileData}" class="post-media-attachment" alt="upload">`;
-                    } else {
-                        assetMarkup = `<a href="${post.fileData}" download="${post.fileName}" class="post-file-link">📁 Download Associated Resource (${post.fileName})</a>`;
-                    }
-                }
-
-                let commentsMarkup = "";
-                if (post.comments && post.comments.length > 0) {
-                    post.comments.forEach(c => {
-                        commentsMarkup += `
-                            <div class="comment-item-row" style="margin-bottom:6px;">
-                                <div class="comment-content-bubble">
-                                    <span class="comment-user-title">${c.author}:</span> ${c.text}
-                                </div>
-                            </div>
-                        `;
-                    });
-                } else {
-                    commentsMarkup = `<div style="font-size:11px; color:var(--bit-text-light); padding:4px 0;" id="no-comments-${post.id}">No comments yet. Be the first to respond!</div>`;
-                }
-
-                const upvoteCount = post.likes || 0;
-
-                postCard.innerHTML = `
-                    <div class="post-header">
-                        <span class="post-author">@${post.author}</span>
-                        <span class="post-time">${post.time}</span>
-                    </div>
-                    <div class="post-content-text">${post.content}</div>
-                    <div style="margin-bottom: 10px;">${tagsMarkup}</div>
-                    ${assetMarkup}
-                    
-                    <div class="post-actions">
-                        <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Upvote (${upvoteCount})</button>
-                        <button class="action-trigger-btn" onclick="focusCommentField(${post.id})">💬 Comment</button>
-                        <button class="action-trigger-btn" onclick="sharePost(${post.id})">🔗 Share Link</button>
-                    </div>
-                    
-                    <div class="comments-section-wrapper">
-                        <div id="comment-box-list-${post.id}">${commentsMarkup}</div>
-                        <div class="comment-input-inline-box">
-                            <input type="text" id="comment-field-${post.id}" class="form-input" style="padding:6px 10px;" placeholder="Write a workspace response..." onkeydown="if(event.key === 'Enter') addPostComment(${post.id})">
-                            <button class="btn-send" style="padding:6px 12px; font-size:12px;" onclick="addPostComment(${post.id})">Reply</button>
-                        </div>
-                    </div>
-                `;
-                stream.appendChild(postCard);
-            });
+            showToastNotification(`Welcome to Ultra KH, ${currentUser}!`);
+            document.getElementById('signUpSystemForm').reset();
+            
+            syncUserDataUI();
+            document.getElementById('nav-home').click(); // Navigate home
         }
 
+        function processSignIn(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('signInUser').value.trim();
+            
+            const matchedUser = users.find(u => u.username.toLowerCase() === usernameInput.toLowerCase());
+            if (!matchedUser) {
+                showToastNotification("Account Operator handle not found!", "error");
+                return;
+            }
+
+            currentUser = matchedUser.username;
+            localStorage.setItem('ultra_current_user', currentUser);
+
+            showToastNotification(`Logged in successfully as ${currentUser}`);
+            document.getElementById('signInSystemForm').reset();
+            
+            syncUserDataUI();
+            document.getElementById('nav-home').click();
+        }
+
+        function triggerSignOut() {
+            currentUser = 'Guest';
+            localStorage.setItem('ultra_current_user', currentUser);
+            syncUserDataUI();
+            showToastNotification("You have signed out from session terminal.", "error");
+            document.getElementById('nav-auth').click();
+        }
+
+        function toggleAuthForms(formType) {
+            if(formType === 'signin') {
+                document.getElementById('authSignUpBox').style.display = 'none';
+                document.getElementById('authSignInBox').style.display = 'block';
+            } else {
+                document.getElementById('authSignUpBox').style.display = 'block';
+                document.getElementById('authSignInBox').style.display = 'none';
+            }
+        }
+
+        // Profile Management Update Engine
+        function handleProfileUpdate(event) {
+            event.preventDefault();
+            const updatedName = document.getElementById('profUserHandle').value.trim();
+            if(!updatedName) return;
+
+            // Map and update users matching previous current user
+            users = users.map(u => u.username === currentUser ? { ...u, username: updatedName } : u);
+            localStorage.setItem('ultra_users', JSON.stringify(users));
+
+            currentUser = updatedName;
+            localStorage.setItem('ultra_current_user', currentUser);
+
+            syncUserDataUI();
+            showToastNotification("Operator profile data successfully saved.");
+        }
+
+        // Synchronize Global Data elements directly with UI layout 
+        function syncUserDataUI() {
+            document.getElementById('topBarUserHandle').innerText = currentUser;
+            document.getElementById('profUserHandle').value = currentUser !== 'Guest' ? currentUser : '';
+            
+            // Re-render System operator list tables
+            const userTable = document.getElementById('systemUserTableBody');
+            userTable.innerHTML = '';
+            users.forEach(u => {
+                userTable.innerHTML += `
+                    <tr>
+                        <td><strong>${u.username}</strong></td>
+                        <td><span class="dot-pulse"></span> Active Online</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('metUserCount').innerText = users.length;
+        }
+
+        // Post Publishing & Feed System Engine
         function handleHomeFileSelected(input) {
-            const file = input.files[0];
-            if (!file) return;
-            selectedHomeFileName = file.name;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                selectedHomeFileBase64 = e.target.result;
-                document.getElementById("homeFilePreview").innerText = `📎 ${file.name}`;
-            };
-            reader.readAsDataURL(file);
+            if(input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    temporaryAttachedFile = { name: file.name, data: e.target.result, type: file.type };
+                    document.getElementById('homeFilePreview').innerText = `📎 ${file.name}`;
+                }
+                reader.readAsDataURL(file);
+            }
         }
 
-        function handlePostPublish(e) {
-            e.preventDefault();
-            const text = document.getElementById("postText").value;
-            const tagsRaw = document.getElementById("postTags").value;
-            const tags = tagsRaw ? tagsRaw.split(",") : [];
+        function handlePostPublish(event) {
+            event.preventDefault();
+            const text = document.getElementById('postText').value;
+            const tagsRaw = document.getElementById('postTags').value;
+            const processedTags = tagsRaw.split(',').map(t => t.trim()).filter(t => t.length > 0);
 
             const newPost = {
                 id: Date.now(),
                 author: currentUser,
-                time: "Just now",
+                time: "Just Now",
                 content: text,
-                tags: tags,
-                fileData: selectedHomeFileBase64,
-                fileName: selectedHomeFileName,
+                tags: processedTags,
+                attachment: temporaryAttachedFile,
                 likes: 0,
                 comments: []
             };
 
-            feedPosts.unshift(newPost);
-            document.getElementById("homePublishForm").reset();
-            selectedHomeFileBase64 = null;
-            selectedHomeFileName = "";
-            document.getElementById("homeFilePreview").innerText = "";
-
-            renderFeedStream();
-            showToast("Update broadcast successfully.", "success");
-        }
-
-        // Interactive Post Features Logic
-        function likePost(postId) {
-            const post = feedPosts.find(p => p.id === postId);
-            if (post) {
-                if (!post.likes) post.likes = 0;
-                post.likes += 1;
-                renderFeedStream();
-                showToast("Post upvoted successfully!", "success");
-            }
-        }
-
-        function focusCommentField(postId) {
-            const field = document.getElementById(`comment-field-${postId}`);
-            if (field) field.focus();
-        }
-
-        function addPostComment(postId) {
-            const inputField = document.getElementById(`comment-field-${postId}`);
-            const text = inputField.value.trim();
-            if (!text) return;
-
-            const post = feedPosts.find(p => p.id === postId);
-            if (post) {
-                if (!post.comments) post.comments = [];
-                post.comments.push({ author: currentUser, text: text });
-                inputField.value = "";
-                renderFeedStream();
-                showToast("Response recorded on update thread.", "success");
-            }
-        }
-
-        function sharePost(postId) {
-            const post = feedPosts.find(p => p.id === postId);
-            if (post) {
-                const shareString = `[Ultra KH Channel Update] @${post.author}: "${post.content}"`;
-                navigator.clipboard.writeText(shareString).then(() => {
-                    showToast("Post resource string copied to clipboard!", "success");
-                }).catch(() => {
-                    showToast("Clipboard access denied.", "error");
-                });
-            }
-        }
-
-        // Realtime Chat Modules
-        function renderChatSidebar() {
-            const container = document.getElementById("chatFriendsContainer");
-            container.innerHTML = "";
+            posts.unshift(newPost);
+            localStorage.setItem('ultra_posts', JSON.stringify(posts));
             
-            usersList.forEach(user => {
-                if (user.id === currentUserId) return;
-                
-                const li = document.createElement("li");
-                li.className = `friend-item ${activeTargetChatId === user.id ? 'active' : ''}`;
-                li.onclick = () => selectChatThread(user.id);
-                li.innerHTML = `
-                    <div style="width:10px; height:10px; border-radius:50%; background:${user.status === 'Online' ? 'var(--bit-success)' : 'var(--bit-warning)'};"></div>
-                    <div class="friend-name">${user.username}</div>
-                `;
-                container.appendChild(li);
-            });
-        }
+            // Add automated log activity to notifications panel
+            addSystemNotification(`User ${currentUser} published an update to workspace streams.`);
 
-        function selectChatThread(userId) {
-            activeTargetChatId = userId;
-            const targetUser = usersList.find(u => u.id === userId);
-            document.getElementById("activeChatUser").innerText = targetUser ? `Thread Room: @${targetUser.username}` : "Select an operator thread to view history";
-            renderChatSidebar();
-            renderChatWindowMessages();
-        }
-
-        function renderChatWindowMessages() {
-            const box = document.getElementById("chatMsgContainer");
-            box.innerHTML = "";
+            // Reset Form fields
+            document.getElementById('homePublishForm').reset();
+            temporaryAttachedFile = null;
+            document.getElementById('homeFilePreview').innerText = '';
             
-            if (!activeTargetChatId) {
-                box.innerHTML = `<div style="margin:auto; text-align:center; color:var(--bit-text-light);">Select an operator thread from the sidebar workspace directory to begin transmission.</div>`;
+            renderPosts();
+            showToastNotification("Workspace broadcast update posted successfully!");
+        }
+
+        function renderPosts() {
+            const feed = document.getElementById('homeFeedStream');
+            feed.innerHTML = '';
+
+            if(posts.length === 0) {
+                feed.innerHTML = `<div class="card" style="text-align:center;color:var(--bit-text-light)">No feed activity shared yet inside this system workspace.</div>`;
                 return;
             }
 
-            const messages = chatLogs[activeTargetChatId] || [];
-            if(messages.length === 0) {
-                box.innerHTML = `<div style="margin:auto; text-align:center; color:var(--bit-text-light);">Secure room initialized. Begin conversation logs safely.</div>`;
-                return;
-            }
-
-            messages.forEach(msg => {
-                const isMe = msg.senderId === currentUserId;
-                const msgRow = document.createElement("div");
-                msgRow.className = `msg-row ${isMe ? 'msg-me' : 'msg-them'}`;
-
-                let mediaMarkup = "";
-                if(msg.fileData) {
-                    if (msg.fileData.startsWith("data:image")) {
-                        mediaMarkup = `<img src="${msg.fileData}" style="max-width:100%; border-radius:6px; margin-top:5px; display:block; max-height:150px; object-fit:cover;">`;
+            posts.forEach(post => {
+                let tagsHtml = post.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('');
+                let mediaHtml = '';
+                if(post.attachment) {
+                    if(post.attachment.type.startsWith('image/')) {
+                        mediaHtml = `<img src="${post.attachment.data}" class="post-media-attachment" alt="Upload">`;
                     } else {
-                        mediaMarkup = `<a href="${msg.fileData}" download="${msg.fileName || 'file'}" style="display:block; color:white; font-size:12px; margin-top:5px; text-decoration:underline;">📁 Shared Attachment File</a>`;
+                        mediaHtml = `<a href="${post.attachment.data}" download="${post.attachment.name}" class="post-file-link">📁 Download File: ${post.attachment.name}</a>`;
                     }
                 }
 
-                msgRow.innerHTML = `
-                    <div class="msg-meta-container">
-                        <span><b>${msg.senderName}</b></span>
-                        <span>${msg.time}</span>
-                    </div>
-                    <div class="bubble-wrapper">
-                        <div class="bubble">
-                            <div>${msg.text}</div>
-                            ${mediaMarkup}
+                let commentsHtml = post.comments.map(c => `
+                    <div class="comment-item-row">
+                        <div class="comment-content-bubble">
+                            <span class="comment-user-title">${c.user}:</span> ${c.text}
                         </div>
                     </div>
-                    <div class="msg-interact-bar">
-                        <span class="msg-interact-btn msg-delete-btn" onclick="deleteChatMessage('${activeTargetChatId}', ${msg.id})">Purge</span>
+                `).join('');
+
+                feed.innerHTML += `
+                    <div class="post-card">
+                        <div class="post-header">
+                            <span class="post-author">${post.author}</span>
+                            <span class="post-time">${post.time}</span>
+                        </div>
+                        <div class="post-content-text">${post.content}</div>
+                        <div>${tagsHtml}</div>
+                        ${mediaHtml}
+                        <div class="post-actions">
+                            <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Like (${post.likes})</button>
+                        </div>
+                        <div class="comments-section-wrapper">
+                            ${commentsHtml}
+                            <div class="comment-input-inline-box">
+                                <input type="text" class="form-input" placeholder="Write a workspace comment..." id="cmt-input-${post.id}" onkeydown="if(event.key === 'Enter') submitComment(${post.id})">
+                            </div>
+                        </div>
                     </div>
                 `;
-                box.appendChild(msgRow);
             });
-            box.scrollTop = box.scrollHeight;
         }
 
-        function handleFileAttachmentSelected(input) {
-            const file = input.files[0];
-            if (!file) return;
-            selectedChatFileName = file.name;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                selectedChatFileBase64 = e.target.result;
-                document.getElementById("fileAttachmentPreview").innerText = `📎 Attached: ${file.name}`;
-            };
-            reader.readAsDataURL(file);
+        function likePost(id) {
+            posts = posts.map(p => p.id === id ? { ...p, likes: p.likes + 1 } : p);
+            localStorage.setItem('ultra_posts', JSON.stringify(posts));
+            renderPosts();
         }
 
-        function insertEmojiIntoChat(emoji) {
-            const input = document.getElementById("chatInputField");
-            input.value += emoji;
-            input.focus();
+        function submitComment(id) {
+            const input = document.getElementById(`cmt-input-${id}`);
+            if(!input.value.trim()) return;
+
+            posts = posts.map(p => {
+                if(p.id === id) {
+                    p.comments.push({ user: currentUser, text: input.value.trim() });
+                }
+                return p;
+            });
+            localStorage.setItem('ultra_posts', JSON.stringify(posts));
+            renderPosts();
+        }
+
+        // Notification Stream Engine
+        function addSystemNotification(text) {
+            notifications.unshift({ id: Date.now(), text: text, time: "Just Now", unread: true });
+            localStorage.setItem('ultra_notifications', JSON.stringify(notifications));
+            renderNotifications();
+        }
+
+        function renderNotifications() {
+            const box = document.getElementById('notificationStreamBox');
+            const countBadge = document.getElementById('notifBadgeCount');
+            box.innerHTML = '';
+
+            let unreadCount = notifications.filter(n => n.unread).length;
+            countBadge.innerText = unreadCount;
+
+            if(notifications.length === 0) {
+                box.innerHTML = `<div style="text-align:center;color:var(--bit-text-light);padding:20px;">No system alert triggers logged.</div>`;
+                return;
+            }
+
+            notifications.forEach(n => {
+                box.innerHTML += `
+                    <div class="notification-card-item ${n.unread ? 'unread' : ''}">
+                        <span class="notif-text">${n.text}</span>
+                        <span class="notif-time">${n.time}</span>
+                    </div>
+                `;
+            });
+
+            // Mark read once viewed
+            notifications = notifications.map(n => ({ ...n, unread: false }));
+            localStorage.setItem('ultra_notifications', JSON.stringify(notifications));
+        }
+
+        function clearAllNotifications() {
+            notifications = [];
+            localStorage.setItem('ultra_notifications', JSON.stringify(notifications));
+            renderNotifications();
+        }
+
+        // Chat System Engine Implementation
+        function loadChatOperatorEngine() {
+            const container = document.getElementById('chatFriendsContainer');
+            container.innerHTML = '';
+            
+            // Loop all registered application workers except currently logged account
+            let filteredOps = users.filter(u => u.username !== currentUser);
+            if(filteredOps.length === 0) {
+                container.innerHTML = `<div style="padding:15px; font-size:12px; color:var(--bit-text-light)">No other workspace accounts registered.</div>`;
+                return;
+            }
+
+            filteredOps.forEach((op, index) => {
+                container.innerHTML += `
+                    <li class="friend-item ${index === 0 ? 'active' : ''}" onclick="selectChatOperator(this, '${op.username}')">
+                        <div style="width:8px;height:8px;background:var(--bit-success);border-radius:50%"></div>
+                        <span class="friend-name">${op.username}</span>
+                    </li>
+                `;
+            });
+
+            if(filteredOps.length > 0) {
+                document.getElementById('activeChatUser').innerText = `Active Session Channel with: ${filteredOps[0].username}`;
+            }
+        }
+
+        function selectChatOperator(element, username) {
+            document.querySelectorAll('.friend-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('activeChatUser').innerText = `Active Session Channel with: ${username}`;
+            document.getElementById('chatMsgContainer').innerHTML = `<div style="text-align:center;color:var(--bit-text-light);font-size:12px;margin-top:20px;">Secure channel established. Ready to transfer packages.</div>`;
         }
 
         function submitChatMessage() {
-            if (!activeTargetChatId) {
-                showToast("Please select a valid conversation channel target first.", "error");
-                return;
-            }
-            const input = document.getElementById("chatInputField");
-            const text = input.value.trim();
-            
-            if (!text && !selectedChatFileBase64) return;
+            const field = document.getElementById('chatInputField');
+            const text = field.value.trim();
+            if(!text) return;
 
-            const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            if (!chatLogs[activeTargetChatId]) {
-                chatLogs[activeTargetChatId] = [];
-            }
-
-            const newMsg = {
-                id: Date.now(),
-                senderId: currentUserId,
-                senderName: currentUser,
-                text: text,
-                time: timeString,
-                fileData: selectedChatFileBase64,
-                fileName: selectedChatFileName
-            };
-
-            chatLogs[activeTargetChatId].push(newMsg);
-            
-            input.value = "";
-            selectedChatFileBase64 = null;
-            selectedChatFileName = "";
-            document.getElementById("fileAttachmentPreview").innerText = "";
-
-            renderChatWindowMessages();
-        }
-
-        function deleteChatMessage(threadId, msgId) {
-            if(chatLogs[threadId]) {
-                chatLogs[threadId] = chatLogs[threadId].filter(m => m.id !== msgId);
-                renderChatWindowMessages();
-                showToast("Message line successfully purged from local storage context.", "success");
-            }
-        }
-
-        // Simulated Realtime WebSocket Layer Engine
-        function initRealtimeSimulation() {
-            setInterval(() => {
-                if (!activeTargetChatId) return;
-
-                if (Math.random() > 0.8) {
-                    const responses = [
-                        "Acknowledged, synchronizing workspace modules.",
-                        "Processing database node structural diagnostics now. 👍",
-                        "Please verify the server cluster configuration logs.",
-                        "Everything looks smooth from our deployment telemetry side. 🔥",
-                        "Agreed. Let us organize a brief team call via the sync room later."
-                    ];
-                    const randomText = responses[Math.floor(Math.random() * responses.length)];
-                    const targetUser = usersList.find(u => u.id === activeTargetChatId);
-                    
-                    if (!targetUser) return;
-                    
-                    const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    
-                    if (!chatLogs[activeTargetChatId]) {
-                        chatLogs[activeTargetChatId] = [];
-                    }
-
-                    chatLogs[activeTargetChatId].push({
-                        id: Date.now(),
-                        senderId: targetUser.id,
-                        senderName: targetUser.username,
-                        text: randomText,
-                        time: timeString,
-                        fileData: null
-                    });
-
-                    renderChatWindowMessages();
-                    playNotificationSound();
-                    
-                    notifications.unshift({
-                        id: Date.now(),
-                        text: `New live chat message alert received from @${targetUser.username}`,
-                        time: "Just Now",
-                        unread: true
-                    });
-                    
-                    updateGlobalHeaderCounters();
-                    renderNotificationCenter();
-                }
-            }, 7000); 
-        }
-
-        // Profile Form Updates
-        function handleProfileUpdate(e) {
-            e.preventDefault();
-            const value = document.getElementById("profUserHandle").value.trim();
-            if(value) {
-                currentUser = value;
-                const index = usersList.findIndex(u => u.id === currentUserId);
-                if(index !== -1) usersList[index].username = currentUser;
-                
-                renderAllViews();
-                showToast("System profiles synced successfully.", "success");
-            }
-        }
-
-        // Authentication Portal Subsystem
-        function toggleAuthForms(mode) {
-            const signupBox = document.getElementById("authSignUpBox");
-            const signinBox = document.getElementById("authSignInBox");
-            if (mode === 'signin') {
-                signupBox.style.display = "none";
-                signinBox.style.display = "block";
-            } else {
-                signupBox.style.display = "block";
-                signinBox.style.display = "none";
-            }
-        }
-
-        function processSignUp(e) {
-            e.preventDefault();
-            const username = document.getElementById("signUpUser").value.trim();
-            const email = document.getElementById("signUpEmail").value.trim();
-            const password = document.getElementById("signUpPass").value;
-
-            if(!username || !email || !password) return;
-
-            const newId = `user-${Date.now()}`;
-            const newUserObj = { id: newId, username: username, email: email, status: "Online" };
-            
-            usersList.push(newUserObj);
-            
-            currentUser = username;
-            currentUserId = newId;
-
-            document.getElementById("signUpSystemForm").reset();
-            renderAllViews();
-            switchView("home");
-            showToast(`Welcome logged inside room context: ${username}`, "success");
-        }
-
-        function processSignIn(e) {
-            e.preventDefault();
-            const username = document.getElementById("signInUser").value.trim();
-            if(!username) return;
-
-            const existing = usersList.find(u => u.username.toLowerCase() === username.toLowerCase());
-            if (existing) {
-                currentUser = existing.username;
-                currentUserId = existing.id;
-                existing.status = "Online";
-            } else {
-                const newId = `user-${Date.now()}`;
-                currentUserId = newId;
-                currentUser = username;
-                usersList.push({ id: newId, username: username, email: `${username.toLowerCase()}@ultrakh.com`, status: "Online" });
-            }
-
-            document.getElementById("signInSystemForm").reset();
-            renderAllViews();
-            switchView("home");
-            showToast(`Welcome back session active: ${currentUser}`, "success");
-        }
-
-        function triggerSignOut() {
-            currentUser = "Guest";
-            currentUserId = "guest-id";
-            showToast("Session disconnected from environment core.", "error");
-            renderAllViews();
-            switchView("auth");
-            toggleAuthForms('signin');
-        }
-
-        // Globalized Toast Framework Engine
-        function showToast(message, type = "info") {
-            playNotificationSound();
-            const hub = document.getElementById("toastHub");
-            const card = document.createElement("div");
-            card.className = `toast-card ${type}`;
-            card.innerHTML = `
-                <div class="toast-message">${message}</div>
-                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            const box = document.getElementById('chatMsgContainer');
+            box.innerHTML += `
+                <div class="msg-row msg-me">
+                    <div class="msg-meta-container"><span>${currentUser}</span></div>
+                    <div class="bubble-wrapper">
+                        <div class="bubble">${text}</div>
+                    </div>
+                </div>
             `;
-            hub.appendChild(card);
-            setTimeout(() => { card.remove(); }, 4000);
+            field.value = '';
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function insertEmojiIntoChat(emoji) {
+            document.getElementById('chatInputField').value += emoji;
+        }
+
+        function handleFileAttachmentSelected(input) {
+            if(input.files && input.files[0]) {
+                document.getElementById('fileAttachmentPreview').innerText = input.files[0].name;
+            }
+        }
+
+        // Preferences UI Dark/Light Theme Engine Configuration
+        function initThemeEngine() {
+            const toggle = document.getElementById('themeToggleCheckbox');
+            
+            // Detect user profile cache configuration preferences
+            if(localStorage.getItem('ultra_dark_mode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                toggle.checked = true;
+            }
+
+            toggle.addEventListener('change', () => {
+                if(toggle.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('ultra_dark_mode', 'enabled');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('ultra_dark_mode', 'disabled');
+                }
+            });
         }
     </script>
 </body>
