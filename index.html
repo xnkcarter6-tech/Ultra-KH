@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra KHsite - Feature Production Complete</title>
+    <title>Ultra KHsite - Enhanced Interface Production</title>
     <style>
         :root {
             --bit-blue-primary: #1E50FF;  
@@ -74,7 +74,7 @@
         }
 
         .brand-text-space { margin-right: 8px; }
-        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; }
+        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
         
         .sidebar-item a {
             display: flex;
@@ -158,7 +158,6 @@
         .comment-user-title { font-weight: 700; color: var(--bit-text-dark); }
         .comment-input-inline-box { display: flex; gap: 10px; margin-top: 10px; }
 
-        /* Notification Layout Styles */
         .notification-stream-list { display: flex; flex-direction: column; gap: 10px; }
         .notification-card-item { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; align-items: center; justify-content: space-between; }
         .notification-card-item.unread { border-left: 4px solid var(--bit-blue-primary); background: rgba(30, 80, 255, 0.02); }
@@ -182,12 +181,11 @@
         .msg-row.msg-them { align-items: flex-start; }
         .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }
         
-        .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; group: hover; }
+        .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; }
         .bubble { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; position: relative; }
         .msg-me .bubble { background: var(--chat-bubble-me); color: #FFFFFF; border-bottom-right-radius: 2px; }
         .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }
         
-        /* Inline Actions / Reactions Styling */
         .msg-interact-bar { display: flex; gap: 8px; font-size: 11px; margin-top: 4px; color: var(--bit-text-light); }
         .msg-interact-btn { cursor: pointer; background: none; border: none; color: var(--bit-text-light); font-size: 11px; }
         .msg-interact-btn:hover { color: var(--bit-blue-primary); }
@@ -227,10 +225,10 @@
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; flex-direction: row; }
-            .sidebar-brand { padding: 15px 20px; font-size: 18px; border-bottom: none; }
-            .sidebar-menu { display: flex; flex-direction: row; }
-            .sidebar-item a { padding: 15px 15px; font-size: 12px; flex-direction: column; }
+            .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; }
+            .sidebar-brand { padding: 15px 20px; font-size: 18px; border-bottom: none; width: 100%; justify-content: center; }
+            .sidebar-menu { display: flex; flex-direction: row; width: 100%; justify-content: space-around; overflow-x: auto; }
+            .sidebar-item a { padding: 12px 10px; font-size: 12px; flex-direction: column; }
             .sidebar-item a span { display: none; }
             .sidebar-item.active::before { left: 0; right: 0; bottom: 0; top: auto; width: auto; height: 3px; }
             .home-layout, .split-view-layout, .chat-layout { flex-direction: column; height: auto; gap: 15px; }
@@ -244,15 +242,15 @@
 <body>
 
     <div class="toast-container" id="toastHub"></div>
-    <aside class="sidebar">
+    <aside class="sidebar" id="appSidebar">
         <div class="sidebar-brand"><span class="brand-text-space">Ultra</span><span>KH</span></div>
         <ul class="sidebar-menu">
+            <li class="sidebar-item" data-target="notifications" id="nav-notifications"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div><span>Notifications (<span id="notifBadgeCount">0</span>)</span></a></li>
             <li class="sidebar-item active" data-target="home" id="nav-home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><span>Home</span></a></li>
             <li class="sidebar-item" data-target="message" id="nav-message"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span>Chat</span></a></li>
-            <li class="sidebar-item" data-target="notifications" id="nav-notifications"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div><span>Notifications (<span id="notifBadgeCount">0</span>)</span></a></li>
             <li class="sidebar-item" data-target="profile" id="nav-profile"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span>Profile</span></a></li>
-            <li class="sidebar-item" data-target="register" id="nav-register"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div><span>Accounts</span></a></li>
-            <li class="sidebar-item" style="margin-top:auto;" onclick="triggerLogout()"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Logout</span></a></li>
+            <li class="sidebar-item" data-target="auth" id="nav-auth"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div><span>Accounts</span></a></li>
+            <li class="sidebar-item" style="margin-top:auto;" onclick="triggerSignOut()"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Sign Out</span></a></li>
         </ul>
     </aside>
 
@@ -299,7 +297,7 @@
                             <p style="color: var(--bit-text-light); font-size: 12px;">Your workspace platform channels are active.</p>
                         </div>
                         <div class="metrics-grid-vertical">
-                            <div class="metric-widget-card"><div class="metric-widget-title">Total Registry Accounts</div><div class="metric-widget-value" id="metUserCount">2</div></div>
+                            <div class="metric-widget-card"><div class="metric-widget-title">Total Accounts</div><div class="metric-widget-value" id="metUserCount">2</div></div>
                             <div class="metric-widget-card"><div class="metric-widget-title">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span>Operational / Online</span></div></div>
                         </div>
                     </div>
@@ -377,42 +375,42 @@
                 </div>
             </div>
 
-            <!-- PAGE REGISTER / AUTH -->
-            <div class="page-view" id="page-register">
+            <!-- PAGE AUTH (SIGN UP / SIGN IN) -->
+            <div class="page-view" id="page-auth">
                 <div class="split-view-layout" style="justify-content: center; align-items: center; min-height: 400px;">
-                    <div class="card left-form-panel" id="authRegisterBox" style="width: 100%; max-width: 400px;">
-                        <h3 style="margin-bottom: 20px; text-align: center;">Create Operator Profile</h3>
-                        <form id="registerSystemForm" onsubmit="processRegistration(event)">
+                    <div class="card left-form-panel" id="authSignUpBox" style="width: 100%; max-width: 400px;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">Sign Up Workspace Account</h3>
+                        <form id="signUpSystemForm" onsubmit="processSignUp(event)">
                             <div class="form-group">
                                 <label class="form-label">Username</label>
-                                <input type="text" class="form-input" id="regUser" required placeholder="Choose admin or member handle...">
+                                <input type="text" class="form-input" id="signUpUser" required placeholder="Choose operator handle...">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-input" id="regPass" required placeholder="••••••••">
+                                <input type="password" class="form-input" id="signUpPass" required placeholder="••••••••">
                             </div>
-                            <button type="submit" class="btn-submit">Register Workspace Account</button>
+                            <button type="submit" class="btn-submit">Sign Up & Log In</button>
                         </form>
                         <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Already registered? <a href="javascript:void(0)" onclick="toggleAuthForms('login')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Log In here</a>
+                            Already have an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signin')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Sign In here</a>
                         </p>
                     </div>
 
-                    <div class="card left-form-panel" id="authLoginBox" style="width: 100%; max-width: 400px; display: none;">
-                        <h3 style="margin-bottom: 20px; text-align: center;">Workspace Portal Login</h3>
-                        <form id="loginSystemForm" onsubmit="processLogin(event)">
+                    <div class="card left-form-panel" id="authSignInBox" style="width: 100%; max-width: 400px; display: none;">
+                        <h3 style="margin-bottom: 20px; text-align: center;">Sign In Portal</h3>
+                        <form id="signInSystemForm" onsubmit="processSignIn(event)">
                             <div class="form-group">
                                 <label class="form-label">Username</label>
-                                <input type="text" class="form-input" id="loginUser" required placeholder="Enter handle name...">
+                                <input type="text" class="form-input" id="signInUser" required placeholder="Enter handle name...">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-input" id="loginPass" required placeholder="••••••••">
+                                <input type="password" class="form-input" id="signInPass" required placeholder="••••••••">
                             </div>
-                            <button type="submit" class="btn-submit">Authenticate Session</button>
+                            <button type="submit" class="btn-submit">Sign In</button>
                         </form>
                         <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('register')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Register now</a>
+                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Sign Up now</a>
                         </p>
                     </div>
                 </div>
@@ -421,7 +419,29 @@
     </main>
 
     <script>
-        // Data Structures Setup
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSystemSound(frequency, type, duration) {
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.type = type;
+                oscillator.frequency.value = frequency;
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch (e) {
+                console.log("Audio contextual playback initialization ignored.");
+            }
+        }
+
+        function triggerSuccessAudio() { playSystemSound(587.33, 'sine', 0.15); setTimeout(() => playSystemSound(880, 'sine', 0.2), 100); }
+        function triggerMessageAudio() { playSystemSound(659.25, 'triangle', 0.1); }
+        function triggerErrorAudio() { playSystemSound(220, 'sawtooth', 0.3); }
+
         let memoryDatabase = { "Admin": "123456", "Operator_Alpha": "123456" };
         let memoryActiveUser = "Admin"; 
         let memoryPosts = [
@@ -447,7 +467,7 @@
 
         let userDatabase = safeGet('users', memoryDatabase);
         let currentSessionUser = safeGet('activeUser', "Admin");
-        let selectedActiveChatPartner = "Operator_Alpha";
+        let selectedActiveChatPartner = "";
         let appPosts = safeGet('appPosts', memoryPosts);
         let chatMessages = safeGet('chatMessages', memoryChats);
         let appNotifications = safeGet('appNotifications', memoryNotifications);
@@ -456,7 +476,14 @@
         document.addEventListener("DOMContentLoaded", () => {
             initNavigation();
             initThemeEngine();
-            switchPage('home'); 
+            
+            // Auto redirect if logged out or default state matching
+            if(currentSessionUser === "LoggedOut") {
+                switchPage('auth');
+                toggleAuthForms('signin');
+            } else {
+                switchPage('home'); 
+            }
             syncUIContext();
 
             setInterval(() => {
@@ -466,7 +493,8 @@
                 appNotifications = safeGet('appNotifications', appNotifications);
                 
                 updateSystemBadges();
-                document.getElementById('metUserCount').textContent = Object.keys(userDatabase).length;
+                const countWidget = document.getElementById('metUserCount');
+                if(countWidget) countWidget.textContent = Object.keys(userDatabase).length;
             }, 1000);
         });
 
@@ -477,6 +505,10 @@
             toast.className = `toast-card ${type}`;
             toast.innerHTML = `<span class="toast-message">${message}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
             hub.appendChild(toast);
+            
+            if(type === 'error') triggerErrorAudio();
+            else if(type === 'success') triggerSuccessAudio();
+            
             setTimeout(() => { if (toast.parentElement) toast.remove(); }, 4000);
         }
 
@@ -501,6 +533,11 @@
         function initNavigation() {
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.addEventListener('click', () => {
+                    if(currentSessionUser === "LoggedOut") {
+                        showToast("Please sign up or sign in to open workspace modules.", "error");
+                        switchPage('auth');
+                        return;
+                    }
                     const target = item.getAttribute('data-target');
                     if (!target) return;
                     switchPage(target);
@@ -526,9 +563,18 @@
         }
 
         function syncUIContext() {
-            document.getElementById('topBarUserHandle').textContent = currentSessionUser || "Guest";
-            document.getElementById('profUserHandle').value = currentSessionUser || "";
-            document.getElementById('metUserCount').textContent = Object.keys(userDatabase).length;
+            const sidebar = document.getElementById('appSidebar');
+            if(currentSessionUser === "LoggedOut") {
+                document.getElementById('topBarUserHandle').textContent = "Guest Mode";
+                document.getElementById('profUserHandle').value = "";
+                sidebar.style.opacity = "0.6";
+            } else {
+                document.getElementById('topBarUserHandle').textContent = currentSessionUser;
+                document.getElementById('profUserHandle').value = currentSessionUser;
+                sidebar.style.opacity = "1";
+            }
+            const countWidget = document.getElementById('metUserCount');
+            if(countWidget) countWidget.textContent = Object.keys(userDatabase).length;
             updateSystemBadges();
         }
 
@@ -541,7 +587,7 @@
             }
         }
 
-        /* --- HOME CHANNEL ENGINE (Post, Comment, Share, Tags) --- */
+        /* --- HOME CHANNEL ENGINE --- */
         function renderHomeFeed() {
             const stream = document.getElementById('homeFeedStream');
             if(!stream) return;
@@ -602,14 +648,14 @@
             appPosts = appPosts.map(p => p.id === id ? { ...p, likes: (p.likes || 0) + 1 } : p);
             safeSet('appPosts', appPosts);
             renderHomeFeed();
+            playSystemSound(700, 'sine', 0.05);
         }
 
         function sharePost(id) {
             appPosts = appPosts.map(p => {
                 if(p.id === id) {
-                    const cleanCount = p.shares || 0;
                     showToast(`Internal Link copied for log record ID: ${id}`, "success");
-                    return { ...p, shares: cleanCount + 1 };
+                    return { ...p, shares: (p.shares || 0) + 1 };
                 }
                 return p;
             });
@@ -630,6 +676,7 @@
             safeSet('appPosts', appPosts);
             input.value = '';
             renderHomeFeed();
+            playSystemSound(600, 'sine', 0.08);
         }
 
         /* --- NOTIFICATIONS ENGINE --- */
@@ -639,21 +686,16 @@
             box.innerHTML = '';
 
             if(appNotifications.length === 0) {
-                box.innerHTML = `<div style="text-align:center; padding:20px; color:var(--bit-text-light);">No new notifications data profile.</div>`;
+                box.innerHTML = `<div style="text-align:center; padding:20px; color:var(--bit-text-light);">No notifications logs.</div>`;
                 return;
             }
 
             appNotifications.slice().reverse().forEach(n => {
                 const row = document.createElement('div');
                 row.className = `notification-card-item ${n.unread ? 'unread' : ''}`;
-                row.innerHTML = `
-                    <div>
-                        <div class="notif-text">${n.text}</div>
-                        <div class="notif-time">${n.time}</div>
-                    </div>
-                `;
+                row.innerHTML = `<div><div class="notif-text">${n.text}</div><div class="notif-time">${n.time}</div></div>`;
                 box.appendChild(row);
-                n.unread = false; // Mark as read instantly on visualization load
+                n.unread = false; 
             });
             safeSet('appNotifications', appNotifications);
             updateSystemBadges();
@@ -665,13 +707,18 @@
             renderNotificationsFeed();
         }
 
-        /* --- MESSAGES CHAT ENGINE (Emoji, File, Reactions, Delete) --- */
+        /* --- MESSAGES CHAT ENGINE --- */
         function renderFriendsSidebar() {
             const container = document.getElementById('chatFriendsContainer');
             if(!container) return;
             container.innerHTML = '';
 
             const users = Object.keys(userDatabase).filter(u => u !== currentSessionUser);
+            if(users.length === 0) {
+                container.innerHTML = `<div style="padding:15px; font-size:12px; color:var(--bit-text-light);">No other operators online.</div>`;
+                return;
+            }
+
             users.forEach(user => {
                 const li = document.createElement('li');
                 li.className = `friend-item ${user === selectedActiveChatPartner ? 'active' : ''}`;
@@ -692,6 +739,7 @@
 
             if (!selectedActiveChatPartner) {
                 header.textContent = "Select an operator thread to view history";
+                container.innerHTML = '';
                 return;
             }
 
@@ -707,7 +755,6 @@
                 const row = document.createElement('div');
                 row.className = `msg-row ${m.from === currentSessionUser ? 'msg-me' : 'msg-them'}`;
                 
-                // Build reaction indicators HTML markup
                 let reactHTML = '';
                 if(m.reactions && Object.keys(m.reactions).length > 0) {
                     reactHTML = `<div class="reactions-pill-box">`;
@@ -717,7 +764,6 @@
                     reactHTML += `</div>`;
                 }
 
-                // File content attachment rendering fallback check logic
                 let fileHTML = '';
                 if(m.file) {
                     fileHTML = `<div style="margin-top:6px; padding:6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:11px;">
@@ -727,12 +773,7 @@
 
                 row.innerHTML = `
                     <div class="msg-meta-container"><span>${m.from}</span> • <span>${m.time}</span></div>
-                    <div class="bubble-wrapper">
-                        <div class="bubble">
-                            <div>${m.text}</div>
-                            ${fileHTML}
-                        </div>
-                    </div>
+                    <div class="bubble-wrapper"><div class="bubble"><div>${m.text}</div>${fileHTML}</div></div>
                     <div class="msg-interact-bar">
                         <button class="msg-interact-btn" onclick="reactToMessage(${m.id}, '👍')">👍</button>
                         <button class="msg-interact-btn" onclick="reactToMessage(${m.id}, '❤️')">❤️</button>
@@ -760,10 +801,7 @@
             
             const reader = new FileReader();
             reader.onload = function(e) {
-                activeSelectedFileBase64 = {
-                    name: file.name,
-                    data: e.target.result
-                };
+                activeSelectedFileBase64 = { name: file.name, data: e.target.result };
                 document.getElementById('fileAttachmentPreview').innerHTML = `<span class="attachment-preview-tag">Attached: ${file.name}</span>`;
             };
             reader.readAsDataURL(file);
@@ -777,7 +815,7 @@
                 id: Date.now(),
                 from: currentSessionUser,
                 to: selectedActiveChatPartner,
-                text: input.value.trim() || "Sent a file mapping attachment.",
+                text: input.value.trim() || "Sent an item mapping channel link.",
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                 reactions: {},
                 file: activeSelectedFileBase64
@@ -785,12 +823,12 @@
 
             safeSet('chatMessages', chatMessages);
             
-            // Reset input values completely
             input.value = '';
             activeSelectedFileBase64 = null;
             document.getElementById('chatFileInput').value = '';
             document.getElementById('fileAttachmentPreview').innerHTML = '';
             
+            triggerMessageAudio();
             loadChatHistory();
         }
 
@@ -814,16 +852,16 @@
             showToast("Message deleted successfully.", "info");
         }
 
-        /* --- REGISTRATION PROFILE DATA ENGINE --- */
+        /* --- SIGN UP / SIGN IN PORTAL ENGINE --- */
         function toggleAuthForms(view) {
-            document.getElementById('authRegisterBox').style.display = view === 'login' ? 'none' : 'block';
-            document.getElementById('authLoginBox').style.display = view === 'login' ? 'block' : 'none';
+            document.getElementById('authSignUpBox').style.display = view === 'signin' ? 'none' : 'block';
+            document.getElementById('authSignInBox').style.display = view === 'signin' ? 'block' : 'none';
         }
 
-        function processRegistration(e) {
+        function processSignUp(e) {
             e.preventDefault();
-            const u = document.getElementById('regUser').value.trim();
-            const p = document.getElementById('regPass').value;
+            const u = document.getElementById('signUpUser').value.trim();
+            const p = document.getElementById('signUpPass').value;
 
             if(userDatabase[u]) {
                 showToast("Account handle taken!", "error");
@@ -832,19 +870,22 @@
 
             userDatabase[u] = p;
             safeSet('users', userDatabase);
+            
+            // Auto-login session activation instantly after signup
             currentSessionUser = u;
             safeSet('activeUser', currentSessionUser);
+            selectedActiveChatPartner = ""; 
             
             syncUIContext();
             switchPage('home');
-            showToast("New Account registered successfully!", "success");
-            document.getElementById('registerSystemForm').reset();
+            showToast("Registered and authenticated safely inside core logs!", "success");
+            document.getElementById('signUpSystemForm').reset();
         }
 
-        function processLogin(e) {
+        function processSignIn(e) {
             e.preventDefault();
-            const u = document.getElementById('loginUser').value.trim();
-            const p = document.getElementById('loginPass').value;
+            const u = document.getElementById('signInUser').value.trim();
+            const p = document.getElementById('signInPass').value;
 
             if(userDatabase[u] && userDatabase[u] === p) {
                 currentSessionUser = u;
@@ -852,10 +893,10 @@
                 selectedActiveChatPartner = ""; 
                 syncUIContext();
                 switchPage('home');
-                showToast("Session authenticated!", "success");
-                document.getElementById('loginSystemForm').reset();
+                showToast("Signed in successfully!", "success");
+                document.getElementById('signInSystemForm').reset();
             } else {
-                showToast("Invalid credentials!", "error");
+                showToast("Invalid credentials configurations!", "error");
             }
         }
 
@@ -875,15 +916,16 @@
             showToast("Profile updated!", "success");
         }
 
-        function triggerLogout() {
-            localStorage.removeItem('activeUser');
-            currentSessionUser = "Admin"; // Fallback cleanly instead of breaking layout state mapping bounds
-            safeSet('activeUser', "Admin");
+        function triggerSignOut() {
+            // Complete session clearing state parameters logic mapping
+            currentSessionUser = "LoggedOut"; 
+            safeSet('activeUser', "LoggedOut");
             selectedActiveChatPartner = "";
+            
             syncUIContext();
-            switchPage('register');
-            toggleAuthForms('login'); 
-            showToast("Logged out successfully.", "info");
+            switchPage('auth');
+            toggleAuthForms('signin'); 
+            showToast("Successfully logged out from current operator channel workspace.", "info");
         }
     </script>
 </body>
