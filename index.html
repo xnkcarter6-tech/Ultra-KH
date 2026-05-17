@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -335,8 +334,7 @@
             <div class="page-view active" id="page-register">
                 <div class="split-view-layout" style="justify-content: center; align-items: center; min-height: 400px;">
                     <div class="card left-form-panel" id="authRegisterBox" style="width: 100%; max-width: 400px;">
-                        <h3 style="margin-bottom: 5px; text-align: center;">Create Operator Profile</h3>
-                        <div style="text-align: center; color: var(--bit-danger); font-size: 12px; font-weight: 700; margin-bottom: 15px;">[ SYSTEM STORAGE WAS CLEANED & RESET ]</div>
+                        <h3 style="margin-bottom: 20px; text-align: center;">Create Operator Profile</h3>
                         <form id="registerSystemForm" onsubmit="processRegistration(event)">
                             <div class="form-group">
                                 <label class="form-label">Username</label>
@@ -376,40 +374,41 @@
     </main>
 
     <script>
-        // CRITICAL ADJUSTMENT: Force-delete all past user accounts and sessions on load
-        localStorage.removeItem('users');
-        localStorage.removeItem('activeUser');
-        localStorage.removeItem('chatMessages');
-        localStorage.removeItem('appPosts');
-
-        // Setup clean state
-        let userDatabase = {};
-        let currentSessionUser = null;
+        // FIXED LOGIC: Read active database if existing, do not drop or wipe database variables on load
+        let userDatabase = JSON.parse(localStorage.getItem('users')) || {};
+        let currentSessionUser = localStorage.getItem('activeUser') || null;
         let selectedActiveChatPartner = "";
 
-        let appPosts = [
-            { id: 1, author: "System", text: "Storage initialized. Ready for new admin and member registration profiles.", tags: ["reset", "system"], likes: 0, comments: [] }
+        let appPosts = JSON.parse(localStorage.getItem('appPosts')) || [
+            { id: 1, author: "System", text: "Storage initialized. Ready for registration profiles.", tags: ["system"], likes: 0, comments: [] }
         ];
-        localStorage.setItem('appPosts', JSON.stringify(appPosts));
+        if(!localStorage.getItem('appPosts')) {
+            localStorage.setItem('appPosts', JSON.stringify(appPosts));
+        }
 
-        let chatMessages = [];
+        let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
 
         document.addEventListener("DOMContentLoaded", () => {
             initNavigation();
             initThemeEngine();
             
-            // Lock UI into registration view state immediately
-            switchPage('register');
-            toggleAuthForms('register');
-            syncUIContext();
+            // Layout View Routing rules
+            if (!currentSessionUser) {
+                switchPage('register');
+                toggleAuthForms('register');
+            } else {
+                switchPage('home');
+            }
             
-            showToast("System wiped clean. Ready for new registrations.", "info");
+            syncUIContext();
 
-            // Sync loop
+            // Real-time loop sync wrapper
             setInterval(() => {
                 const updatedPosts = JSON.parse(localStorage.getItem('appPosts'));
                 const updatedChats = JSON.parse(localStorage.getItem('chatMessages'));
+                const updatedUsers = JSON.parse(localStorage.getItem('users'));
                 
+                if (updatedUsers) userDatabase = updatedUsers;
                 if (updatedPosts && JSON.stringify(updatedPosts) !== JSON.stringify(appPosts)) {
                     appPosts = updatedPosts;
                     renderHomeFeed();
@@ -418,6 +417,7 @@
                     chatMessages = updatedChats;
                     loadChatHistory();
                 }
+                document.getElementById('metUserCount').textContent = Object.keys(userDatabase).length;
             }, 1000);
         });
 
@@ -693,8 +693,8 @@
             selectedActiveChatPartner = "";
             syncUIContext();
             switchPage('register');
-            toggleAuthForms('register');
-            showToast("Logged out.", "info");
+            toggleAuthForms('login'); 
+            showToast("Logged out successfully.", "info");
         }
     </script>
 </body>
