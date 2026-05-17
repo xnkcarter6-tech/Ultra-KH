@@ -69,7 +69,8 @@
             display: flex;
             align-items: center;
             letter-spacing: 0.5px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);         }
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);         
+        }
 
         .brand-text-space { margin-right: 8px; }
         .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
@@ -113,7 +114,6 @@
         }
 
         .top-bar-right { display: flex; align-items: center; gap: 15px; color: var(--bit-text-light); }
-        .lang-select { padding: 4px 8px; border: 1px solid var(--bit-border-light); border-radius: 4px; background-color: var(--bit-bg-card); color: var(--bit-text-dark); font-weight: 600; cursor: pointer; font-size: 13px; }
         .top-bar-profile-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
 
         .container { padding: 25px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
@@ -132,7 +132,6 @@
         
         .btn-submit { width: 100%; background: var(--bit-blue-primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
         .btn-submit:hover { background: var(--bit-blue-hover); }
-        .toggle-container { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--bit-border-light); }
 
         .home-layout { display: flex; gap: 25px; align-items: flex-start; }
         .home-main-feed { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; }
@@ -144,26 +143,10 @@
         .post-author { font-weight: 700; color: var(--bit-text-dark); }
         .post-time { font-size: 12px; color: var(--bit-text-light); }
         .post-content-text { color: var(--bit-text-dark); font-size: 14px; line-height: 1.5; margin-bottom: 12px; white-space: pre-line; }
-        .post-media-attachment { margin-bottom: 12px; max-width: 100%; border-radius: 6px; max-height: 300px; object-fit: cover; border: 1px solid var(--bit-border-light); }
-        .post-file-link { display: inline-flex; align-items: center; gap: 6px; color: var(--bit-blue-primary); text-decoration: none; font-weight: 600; margin-bottom: 12px; background: rgba(30, 80, 255, 0.05); padding: 6px 12px; border-radius: 6px; font-size: 13px; }
-        .post-file-link:hover { text-decoration: underline; }
         .tag-badge { display: inline-block; background: rgba(30, 80, 255, 0.1); color: var(--bit-blue-primary); padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 5px; font-weight: 600; }
-
-        .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; gap: 15px; }
-        .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; }
-        .action-trigger-btn:hover { color: var(--bit-blue-primary); }
-
-        .comments-section-wrapper { display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 10px; }
-        .comment-item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 8px; }
-        .comment-content-bubble { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 8px 12px; flex-grow: 1; }
-        .comment-user-title { font-weight: 700; color: var(--bit-text-dark); }
-        .comment-input-inline-box { display: flex; gap: 10px; margin-top: 10px; }
 
         .notification-stream-list { display: flex; flex-direction: column; gap: 10px; }
         .notification-card-item { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; align-items: center; justify-content: space-between; }
-        .notification-card-item.unread { border-left: 4px solid var(--bit-blue-primary); background: rgba(30, 80, 255, 0.02); }
-        .notif-text { font-size: 13px; color: var(--bit-text-dark); }
-        .notif-time { font-size: 11px; color: var(--bit-text-light); }
 
         .chat-layout { display: flex; background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; height: 100%; overflow: hidden; min-height: 450px; }
         .chat-sidebar { width: 280px; border-right: 1px solid var(--bit-border-light); display: flex; flex-direction: column; }
@@ -176,42 +159,13 @@
         .chat-window { flex-grow: 1; display: flex; flex-direction: column; background: var(--bit-bg-card); position: relative; min-width: 0; }
         .chat-window-header { height: 50px; padding: 0 20px; border-bottom: 1px solid var(--bit-border-light); display: flex; align-items: center; font-weight: 600; }
         .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: rgba(0, 0, 0, 0.02); }
-        
-        .msg-row { display: flex; flex-direction: column; width: 100%; position: relative; }
-        .msg-row.msg-me { align-items: flex-end; }
-        .msg-row.msg-them { align-items: flex-start; }
-        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }
-        
-        .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; }
-        .bubble { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; position: relative; }
-        .msg-me .bubble { background: var(--chat-bubble-me); color: #FFFFFF; border-bottom-right-radius: 2px; }
-        .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border-bottom-left-radius: 2px; border: 1px solid var(--bit-border-light); }
-        
-        .msg-interact-bar { display: flex; gap: 8px; font-size: 11px; margin-top: 4px; color: var(--bit-text-light); visibility: hidden; opacity: 0; transition: opacity 0.15s, visibility 0.15s; }
-        .msg-row:hover .msg-interact-bar { visibility: visible; opacity: 1; }
-        .msg-interact-btn { cursor: pointer; background: none; border: none; color: var(--bit-text-light); font-size: 11px; font-weight: 600; }
-        .msg-interact-btn:hover { color: var(--bit-blue-primary); }
-        .msg-delete-btn:hover { color: var(--bit-danger) !important; }
-
-        .chat-input-container { border-top: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; flex-direction: column; }
-        .chat-input-area { padding: 15px 20px; display: flex; gap: 10px; align-items: center; }
+        .chat-input-area { padding: 15px 20px; display: flex; gap: 10px; align-items: center; border-top: 1px solid var(--bit-border-light); }
         .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
-        
-        .chat-utility-row { display: flex; gap: 10px; padding: 0 20px 10px; align-items: center; }
-        .emoji-picker-inline { display: flex; gap: 6px; }
-        .emoji-select-btn { background: rgba(0,0,0,0.04); border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 14px; }
-        .emoji-select-btn:hover { background: rgba(30,80,255,0.1); }
-        
-        .file-attach-label { cursor: pointer; display: flex; align-items: center; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--bit-text-dark); transition: background 0.2s; }
-        .file-attach-label:hover { background: rgba(30,80,255,0.1); }
-        .attachment-preview-tag { display: inline-flex; align-items: center; background: var(--bit-warning); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-top: 4px; }
-
         .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
         .metrics-grid-vertical { display: flex; flex-direction: column; gap: 15px; }
         .metric-widget-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; min-height: 100px; }
         .metric-widget-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--bit-text-light); letter-spacing: 0.5px; margin-bottom: 8px; }
-        .metric-widget-value { font-size: 28px; font-weight: 800; color: var(--bit-blue-primary); }
         .metric-widget-status { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; margin-top: 8px; }
         .dot-pulse { width: 8px; height: 8px; background-color: var(--bit-success); border-radius: 50%; margin-right: 6px; display: inline-block; }
 
@@ -221,46 +175,37 @@
 
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 420px; pointer-events: none; }
         .toast-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); padding: 14px 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); display: flex; align-items: center; gap: 12px; pointer-events: auto; border-left: 5px solid var(--bit-blue-primary); animation: toastSlideIn 0.3s forwards; }
-        .toast-card.success { border-left-color: var(--bit-success); }
-        .toast-card.error { border-left-color: var(--bit-danger); }
         .toast-message { font-size: 13.5px; font-weight: 600; color: var(--bit-text-dark); flex-grow: 1; }
-        .toast-close { background: transparent; border: none; cursor: pointer; color: var(--bit-text-light); font-weight: bold; }
         @keyframes toastSlideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .welcome-content-box h4 { margin-top: 12px; font-weight: 700; font-size: 13px; color: var(--bit-text-dark); }
-        .welcome-content-box ul { list-style: none; margin: 8px 0; padding-left: 0; }
-        .welcome-content-box ul li { font-size: 13px; color: var(--bit-text-light); position: relative; padding-left: 14px; margin-bottom: 4px; }
-        .welcome-content-box ul li::before { content: "•"; color: var(--bit-blue-primary); position: absolute; left: 0; font-weight: bold; }
         .welcome-content-box p { font-size: 13px; color: var(--bit-text-light); line-height: 1.4; margin-bottom: 10px; }
         .welcome-hashtags { font-size: 12px; font-weight: 600; color: var(--bit-blue-primary); margin-top: 10px; }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; }
-            .sidebar-brand { padding: 15px 20px; font-size: 18px; border-bottom: none; width: 100%; justify-content: center; }
-            .sidebar-menu { display: flex; flex-direction: row; width: 100%; justify-content: space-around; overflow-x: auto; }
-            .sidebar-item a { padding: 12px 10px; font-size: 12px; flex-direction: column; }
-            .sidebar-item a span { display: none; }
-            .sidebar-item.active::before { left: 0; right: 0; bottom: 0; top: auto; width: auto; height: 3px; }
-            .home-layout, .split-view-layout, .chat-layout { flex-direction: column; height: auto; gap: 15px; }
-            .home-side-metrics, .left-form-panel, .chat-sidebar { width: 100%; }
-            .chat-layout { height: calc(100vh - 120px); }
-            .chat-sidebar { max-height: 120px; }
-            .chat-window { height: 350px; }
-        }
     </style>
 </head>
 <body>
     <div class="toast-container" id="toastHub"></div>
+    
     <aside class="sidebar" id="appSidebar">
         <div class="sidebar-brand"><span class="brand-text-space">Ultra</span><span>KH</span></div>
         <ul class="sidebar-menu">
-            <li class="sidebar-item" data-target="page-notifications" id="nav-notifications"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div><span>Notifications (<span id="notifBadgeCount">0</span>)</span></a></li>
-            <li class="sidebar-item active" data-target="page-home" id="nav-home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><span>Home</span></a></li>
-            <li class="sidebar-item" data-target="page-message" id="nav-message"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span>Chat</span></a></li>
-            <li class="sidebar-item" data-target="page-profile" id="nav-profile"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span>Profile</span></a></li>
-            <li class="sidebar-item" data-target="page-auth" id="nav-auth"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div><span>Accounts</span></a></li>
-            <li class="sidebar-item" style="margin-top:auto;" onclick="triggerSignOut()"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Sign Out</span></a></li>
+            <li class="sidebar-item" data-target="page-notifications" id="nav-notifications">
+                <a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div><span>Notifications (1)</span></a>
+            </li>
+            <li class="sidebar-item active" data-target="page-home" id="nav-home">
+                <a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><span>Home</span></a>
+            </li>
+            <li class="sidebar-item" data-target="page-message" id="nav-message">
+                <a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span>Chat</span></a>
+            </li>
+            <li class="sidebar-item" data-target="page-profile" id="nav-profile">
+                <a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span>Profile</span></a>
+            </li>
+            <li class="sidebar-item" data-target="page-auth" id="nav-auth">
+                <a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle></svg></div><span>Accounts</span></a>
+            </li>
+            <li class="sidebar-item" style="margin-top:auto;" onclick="triggerSignOut()">
+                <a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div><span>Sign Out</span></a>
+            </li>
         </ul>
     </aside>
 
@@ -268,10 +213,6 @@
         <header class="top-bar">
             <div id="breadcrumb" style="font-weight: 600; color: var(--bit-text-light);">Dashboard / Home</div>
             <div class="top-bar-right">
-                <select class="lang-select">
-                    <option value="en">English</option>
-                    <option value="kh">ភាសាខ្មែរ</option>
-                </select>
                 <div class="top-bar-profile-wrap">
                     <div style="width:24px; height:24px; background: #E0E0E0; border-radius:50%;"></div>
                     <div><span id="topBarUserHandle">Admin</span></div>
@@ -293,12 +234,7 @@
                                     <label class="form-label">Add Tags (comma separated)</label>
                                     <input type="text" id="postTags" class="form-input" placeholder="e.g. general, announcement, urgent">
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <label class="file-attach-label" for="homeFileInput">
-                                        📎 Add Image / File
-                                        <input type="file" id="homeFileInput" style="display:none;" onchange="handleHomeFileSelected(this)">
-                                    </label>
-                                    <span id="homeFilePreview" style="font-size:12px; color:var(--bit-text-light); max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                                <div style="display: flex; justify-content: right; align-items: center;">
                                     <button type="submit" class="btn-submit" style="width: auto; padding: 8px 24px;">Publish Post</button>
                                 </div>
                             </form>
@@ -310,23 +246,13 @@
                         <div class="card" style="padding: 20px;">
                             <h3 style="margin-bottom: 10px; color: var(--bit-blue-primary);">Welcome to Ultra KH 🚀</h3>
                             <div class="welcome-content-box">
-                                <p>We are excited to launch our official social media platform dedicated to sharing updates, knowledge, trends, entertainment, and community engagement.</p>
-                                <h4>Our Purpose:</h4>
-                                <ul>
-                                    <li>Stay updated with the latest news and content</li>
-                                    <li>Learn and grow together</li>
-                                    <li>Share ideas and experiences</li>
-                                    <li>Connect with the Ultra KH community</li>
-                                </ul>
-                                <p>Thank you for being part of our journey. Your support means everything to us, and we look forward to building an amazing community together.</p>
-                                <p>Follow us and stay connected with Ultra KH.</p>
-                                <strong style="color: var(--bit-text-dark); display:block; margin-top:8px;">The future starts here. 🔥</strong>
-                                <div class="welcome-hashtags">#UltraKH #Community #Welcome #StayConnected</div>
+                                <p>Welcome to our official platform tracker feed updates.</p>
+                                <div class="welcome-hashtags">#UltraKH #Community #StayConnected</div>
                             </div>
                         </div>
                                                  
                         <div class="card" style="padding: 20px;">
-                            <h3 style="margin-bottom: 12px;">Active System Operators (<span id="metUserCount">0</span>)</h3>
+                            <h3 style="margin-bottom: 12px;">Active Operators (<span id="metUserCount">0</span>)</h3>
                             <table class="user-directory-table">
                                 <thead>
                                     <tr>
@@ -334,12 +260,20 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="systemUserTableBody"></tbody>
+                                <tbody id="systemUserTableBody">
+                                    <tr><td colspan="2" style="text-align:center; color:var(--bit-text-light);">Connecting sync stream...</td></tr>
+                                </tbody>
                             </table>
                         </div>
 
                         <div class="metrics-grid-vertical">
-                            <div class="metric-widget-card"><div class="metric-widget-title">System Status</div><div class="metric-widget-status"><span class="dot-pulse"></span><span>Operational / Online</span></div></div>
+                            <div class="metric-widget-card">
+                                <div class="metric-widget-title">System Connection Status</div>
+                                <div class="metric-widget-status" id="liveStatusIndicator">
+                                    <span class="dot-pulse" style="background-color: var(--bit-warning);"></span>
+                                    <span>Syncing Live Cloud...</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -347,34 +281,10 @@
 
             <div class="page-view" id="page-notifications">
                 <div class="card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                        <h3>System and Workspace Notifications</h3>
-                        <button class="btn-send" style="padding:4px 12px; font-size:12px;" onclick="clearAllNotifications()">Clear All</button>
-                    </div>
-                    <div class="notification-stream-list" id="notificationStreamBox"></div>
-                </div>
-            </div>
-
-            <div class="page-view" id="page-profile">
-                <div class="split-view-layout">
-                    <div class="card left-form-panel">
-                        <h3 style="margin-bottom: 15px; text-align: center;">Account Info</h3>
-                        <form id="profileUpdateForm" onsubmit="handleProfileUpdate(event)">
-                            <div class="form-group">
-                                <label class="form-label">Active Operator Username</label>
-                                <input type="text" class="form-input" id="profUserHandle" required value="Admin">
-                            </div>
-                            <button type="submit" class="btn-submit">Save Changes</button>
-                        </form>
-                    </div>
-                    <div class="card right-display-panel">
-                        <h3 style="margin-bottom: 15px;">Workspace Preferences</h3>
-                        <div class="toggle-container">
-                            <div>
-                                <div style="font-weight: 700;">Developer Dark Mode</div>
-                                <div style="font-size: 12px; color: var(--bit-text-light);">Switch background layout color palette to low-light style.</div>
-                            </div>
-                            <input type="checkbox" id="themeToggleCheckbox" style="width: 20px; height: 20px; cursor: pointer;">
+                    <h3>System Alerts</h3>
+                    <div class="notification-stream-list" style="margin-top: 15px;">
+                        <div class="notification-card-item">
+                            <div class="notif-text">Welcome to the newly structured Ultra KH Interface production.</div>
                         </div>
                     </div>
                 </div>
@@ -383,76 +293,49 @@
             <div class="page-view" id="page-message">
                 <div class="chat-layout">
                     <div class="chat-sidebar">
-                        <div class="chat-sidebar-header">Workspace Operators</div>
-                        <ul class="friends-list" id="chatFriendsContainer"></ul>
+                        <div class="chat-sidebar-header">Workspace Threads</div>
+                        <ul class="friends-list">
+                            <li class="friend-item active"><span class="friend-name">General Operator Chat Room</span></li>
+                        </ul>
                     </div>
                     <div class="chat-window">
-                        <div class="chat-window-header" id="activeChatUser">Select an operator thread to view history</div>
-                        <div class="chat-messages-box" id="chatMsgContainer"></div>
-                        <div class="chat-input-container">
-                            <div class="chat-utility-row">
-                                <div class="emoji-picker-inline">
-                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('👍')">👍</button>
-                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('❤️')">❤️</button>
-                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('😮')">😮</button>
-                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('🔥')">🔥</button>
-                                    <button class="emoji-select-btn" onclick="insertEmojiIntoChat('🙏')">🙏</button>
-                                </div>
-                                <label class="file-attach-label" for="chatFileInput">
-                                    📎 Attach File
-                                    <input type="file" id="chatFileInput" style="display:none;" onchange="handleFileAttachmentSelected(this)">
-                                </label>
-                                <span id="fileAttachmentPreview" style="font-size:12px; color:var(--bit-text-light);"></span>
-                            </div>
-                            <div class="chat-input-area">
-                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here...">
-                                <button class="btn-send" onclick="submitChatMessage()">Send</button>
-                            </div>
+                        <div class="chat-window-header">General Chat Stream</div>
+                        <div class="chat-messages-box">
+                            <div style="text-align: center; color: var(--bit-text-light); font-size: 12px;">Channel initialized</div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" class="chat-input" placeholder="Type chat update messages here...">
+                            <button class="btn-send">Send</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="page-view" id="page-auth">
-                <div class="split-view-layout" style="justify-content: center; align-items: center; min-height: 400px;">
-                    <div class="card left-form-panel" id="authSignUpBox" style="width: 100%; max-width: 400px;">
-                        <h3 style="margin-bottom: 20px; text-align: center;">Sign Up Workspace Account</h3>
-                        <form id="signUpSystemForm" onsubmit="processSignUp(event)">
-                            <div class="form-group">
-                                <label class="form-label">Username</label>
-                                <input type="text" class="form-input" id="signUpUser" required placeholder="Choose operator handle...">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-input" id="signUpPass" required placeholder="••••••••">
-                            </div>
-                            <button type="submit" class="btn-submit">Sign Up & Log In</button>
-                        </form>
-                        <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Already have an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signin')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Sign In here</a>
-                        </p>
-                    </div>
-
-                    <div class="card left-form-panel" id="authSignInBox" style="width: 100%; max-width: 400px; display: none;">
-                        <h3 style="margin-bottom: 20px; text-align: center;">Sign In Portal</h3>
-                        <form id="signInSystemForm" onsubmit="processSignIn(event)">
-                            <div class="form-group">
-                                <label class="form-label">Username</label>
-                                <input type="text" class="form-input" id="signInUser" required placeholder="Enter handle name...">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-input" id="signInPass" required placeholder="••••••••">
-                            </div>
-                            <button type="submit" class="btn-submit">Sign In</button>
-                        </form>
-                        <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Sign Up here</a>
-                        </p>
-                    </div>
+            <div class="page-view" id="page-profile">
+                <div class="card" style="max-width: 450px;">
+                    <h3 style="margin-bottom: 15px;">Local Account Handle Profile</h3>
+                    <form id="profileUpdateForm">
+                        <div class="form-group">
+                            <label class="form-label">Active Operator Username</label>
+                            <input type="text" class="form-input" id="profUserHandle" required value="Admin">
+                        </div>
+                        <button type="submit" class="btn-submit">Save Changes</button>
+                    </form>
                 </div>
             </div>
 
+            <div class="page-view" id="page-auth">
+                <div class="card" style="max-width: 450px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 20px; text-align: center;">Register Global System Operator</h3>
+                    <form id="signUpSystemForm">
+                        <div class="form-group">
+                            <label class="form-label">Global Identity Handle</label>
+                            <input type="text" class="form-input" id="signUpUser" required placeholder="Choose operator handle...">
+                        </div>
+                        <button type="submit" class="btn-submit">Register Globally</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -460,7 +343,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // IMPORTANT: Replace these empty strings with your configuration credentials from the Firebase Console!
+        // IMPORTANT: Paste your exact configuration keys directly into here!
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -471,64 +354,38 @@
             appId: "YOUR_APP_ID"
         };
 
-        // Initialize App Connection
+        // Initialize Firebase Connection
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Document Targets
+        // DOM Targets
         const systemUserTableBody = document.getElementById("systemUserTableBody");
         const metUserCount = document.getElementById("metUserCount");
         const homeFeedStream = document.getElementById("homeFeedStream");
+        const liveStatusIndicator = document.getElementById("liveStatusIndicator");
 
-        // UI Toast Controller Utility
         function showToast(message, type = 'success') {
             const container = document.getElementById("toastHub");
             const element = document.createElement("div");
             element.className = `toast-card ${type}`;
-            element.innerHTML = `
-                <span class="toast-message">${message}</span>
-                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
-            `;
+            element.innerHTML = `<span class="toast-message">${message}</span>`;
             container.appendChild(element);
-            setTimeout(() => { element.remove(); }, 4000);
+            setTimeout(() => { element.remove(); }, 3500);
         }
 
-        // 1. SIGN UP ACTION (Pushes user entries to the shared cloud database)
-        window.processSignUp = function(event) {
-            event.preventDefault();
-            const username = document.getElementById("signUpUser").value.trim();
-            
-            if (username) {
-                const targetUserRef = ref(database, 'users/' + username);
-                
-                set(targetUserRef, {
-                    username: username,
-                    status: "Online",
-                    timestamp: new Date().toISOString()
-                }).then(() => {
-                    showToast(`Account @${username} registered globally!`, "success");
-                    document.getElementById("topBarUserHandle").innerText = username;
-                    document.getElementById("profUserHandle").value = username;
-                    document.getElementById("signUpSystemForm").reset();
-                }).catch((err) => {
-                    showToast("Sync Error: " + err.message, "error");
-                });
-            }
-        };
-
-        // 2. LIVE REAL-TIME DATABASE PUBLISHING FOR POST FEED
+        // Live Publishing Event Handler
         document.getElementById("homePublishForm").addEventListener("submit", function(event) {
             event.preventDefault();
             
             const postText = document.getElementById("postText").value.trim();
             const postTags = document.getElementById("postTags").value.trim();
-            const userHandle = document.getElementById("topBarUserHandle").innerText || "Admin";
+            const userHandle = document.getElementById("topBarUserHandle").innerText;
 
             if (!postText) return;
 
             const postsRef = ref(database, 'posts');
             const newPostRef = push(postsRef);
-            const tagsArray = postTags ? postTags.split(',').map(tag => tag.trim()) : [];
+            const tagsArray = postTags ? postTags.split(',').map(t => t.trim()) : [];
 
             set(newPostRef, {
                 author: userHandle,
@@ -538,13 +395,50 @@
             }).then(() => {
                 showToast("Post updated to Firebase feed!", "success");
                 document.getElementById("homePublishForm").reset();
-                document.getElementById("homeFilePreview").innerText = "";
             }).catch((err) => {
-                showToast("Publish Error: " + err.message, "error");
+                showToast("Error: " + err.message, "error");
             });
         });
 
-        // 3. LIVE SYSTEM SYNC LISTENER (Users Panel)
+        // Global Account Registration Operator Sync Add
+        document.getElementById("signUpSystemForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const username = document.getElementById("signUpUser").value.trim();
+            
+            if (username) {
+                const targetUserRef = ref(database, 'users/' + username);
+                set(targetUserRef, {
+                    username: username,
+                    status: "Online",
+                    timestamp: new Date().toISOString()
+                }).then(() => {
+                    showToast(`@${username} registered!`, "success");
+                    document.getElementById("topBarUserHandle").innerText = username;
+                    document.getElementById("profUserHandle").value = username;
+                    document.getElementById("signUpSystemForm").reset();
+                }).catch((err) => {
+                    showToast("Sync Error: " + err.message, "error");
+                });
+            }
+        });
+
+        // Cloud handshaking listener status indicator updater
+        const connectionRef = ref(database, '.info/connected');
+        onValue(connectionRef, (snap) => {
+            if (snap.val() === true) {
+                liveStatusIndicator.innerHTML = `
+                    <span class="dot-pulse" style="background-color: var(--bit-success);"></span>
+                    <span style="color: var(--bit-success); font-weight: bold;">Operational / Connected</span>
+                `;
+            } else {
+                liveStatusIndicator.innerHTML = `
+                    <span class="dot-pulse" style="background-color: var(--bit-danger);"></span>
+                    <span style="color: var(--bit-danger);">Offline / Disconnected</span>
+                `;
+            }
+        });
+
+        // Continuous users table listener stream
         const userDatabaseRef = ref(database, 'users');
         onValue(userDatabaseRef, (snapshot) => {
             const data = snapshot.val();
@@ -556,40 +450,35 @@
                 
                 userKeys.forEach((key) => {
                     const currentUser = data[key];
-                    const elementRow = `
+                    systemUserTableBody.innerHTML += `
                         <tr>
                             <td><strong>@${currentUser.username}</strong></td>
-                            <td><span class="dot-pulse"></span> ${currentUser.status}</td>
+                            <td><span class="dot-pulse" style="background-color: var(--bit-success);"></span> ${currentUser.status || 'Online'}</td>
                         </tr>
                     `;
-                    systemUserTableBody.innerHTML += elementRow;
                 });
             } else {
                 metUserCount.innerText = "0";
+                systemUserTableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:var(--bit-text-light);">No operators registered yet.</td></tr>`;
             }
         });
 
-        // 4. LIVE FEED POSTS DATA LISTENER
+        // Continuous updates feed data listener stream
         const postsDatabaseRef = ref(database, 'posts');
         onValue(postsDatabaseRef, (snapshot) => {
             const data = snapshot.val();
             homeFeedStream.innerHTML = "";
             
             if (data) {
-                const postKeys = Object.keys(data).reverse(); // Newest first
-                
-                postKeys.forEach((key) => {
+                Object.keys(data).reverse().forEach((key) => {
                     const post = data[key];
                     let tagsHTML = "";
                     if (post.tags && Array.isArray(post.tags)) {
-                        post.tags.forEach(tag => {
-                            if(tag) tagsHTML += `<span class="tag-badge">#${tag}</span>`;
-                        });
+                        post.tags.forEach(t => { if(t) tagsHTML += `<span class="tag-badge">#${t}</span>`; });
                     }
-
                     const postDate = new Date(post.timestamp).toLocaleString();
 
-                    const postCard = `
+                    homeFeedStream.innerHTML += `
                         <div class="post-card">
                             <div class="post-header">
                                 <span class="post-author">@${post.author}</span>
@@ -597,72 +486,35 @@
                             </div>
                             <div class="post-content-text">${post.content}</div>
                             <div style="margin-bottom: 12px;">${tagsHTML}</div>
-                            <div class="post-actions">
-                                <button class="action-trigger-btn">👍 Like</button>
-                                <button class="action-trigger-btn">💬 Comment</button>
-                            </div>
                         </div>
                     `;
-                    homeFeedStream.innerHTML += postCard;
                 });
             } else {
-                homeFeedStream.innerHTML = `<p style="text-align:center; color:var(--bit-text-light); padding:20px;">No posts published yet. Be the first!</p>`;
+                homeFeedStream.innerHTML = `<p style="text-align:center; color:var(--bit-text-light); padding:20px;">No updates published yet.</p>`;
             }
         });
     </script>
 
     <script>
-        // Tab Layout Menu Switch Router Engine
         document.querySelectorAll('.sidebar-item[data-target]').forEach(item => {
             item.addEventListener('click', function() {
                 document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
                 document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-                
                 this.classList.add('active');
-                const targetPage = this.getAttribute('data-target');
-                document.getElementById(targetPage).classList.add('active');
+                document.getElementById(this.getAttribute('data-target')).classList.add('active');
                 
-                // Update simple breadcrumb label UI text
                 const pageLabel = this.querySelector('span').innerText.split(' ')[0];
                 document.getElementById('breadcrumb').innerText = `Dashboard / ${pageLabel}`;
             });
         });
 
-        // Toggle Sign In vs Sign Up views
-        function toggleAuthForms(view) {
-            if(view === 'signin') {
-                document.getElementById('authSignUpBox').style.display = 'none';
-                document.getElementById('authSignInBox').style.display = 'block';
-            } else {
-                document.getElementById('authSignUpBox').style.display = 'block';
-                document.getElementById('authSignInBox').style.display = 'none';
-            }
-        }
+        document.getElementById("profileUpdateForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const val = document.getElementById("profUserHandle").value.trim();
+            if(val) document.getElementById("topBarUserHandle").innerText = val;
+        });
 
-        // Profile updates local display handles
-        function handleProfileUpdate(e) { 
-            e.preventDefault(); 
-            const newHandle = document.getElementById("profUserHandle").value.trim();
-            if(newHandle) {
-                document.getElementById("topBarUserHandle").innerText = newHandle;
-                alert("Local profile operator handle changed to @" + newHandle); 
-            }
-        }
-
-        // UI File attachments placeholder feedback hooks
-        function handleHomeFileSelected(input) {
-            if(input.files && input.files[0]) {
-                document.getElementById("homeFilePreview").innerText = "Selected: " + input.files[0].name;
-            }
-        }
-
-        // Placeholder fallback handlers for empty form UI functions
-        function processSignIn(e) { e.preventDefault(); alert("Logged In!"); }
-        function triggerSignOut() { alert("Signed Out!"); }
-        function clearAllNotifications() { document.getElementById("notificationStreamBox").innerHTML = ""; }
-        function insertEmojiIntoChat(e) { document.getElementById("chatInputField").value += e; }
-        function handleFileAttachmentSelected(i) { if(i.files[0]) document.getElementById("fileAttachmentPreview").innerText = i.files[0].name; }
-        function submitChatMessage() { alert("Message feature requires chat integration block."); }
+        function triggerSignOut() { alert("Operator Logged Out Local Session."); }
     </script>
 </body>
 </html>
