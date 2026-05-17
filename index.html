@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra KHsite - Enhanced Interface Production</title>
+    <title>Ultra KHsite - Audio Enhanced Production</title>
     <style>
         :root {
             --bit-blue-primary: #1E50FF;              
             --bit-blue-hover: #0033E6;                
             --bit-blue-active: #0026B3;               
             --bit-text-menu: #FFFFFF;                 
-            --bit-bg-main: #EDF1F7;                          
-            --bit-bg-card: #FFFFFF;                          
+            --bit-bg-main: #EDF1F7;                           
+            --bit-bg-card: #FFFFFF;                           
             --bit-border-light: #E0E0E0;
             --bit-text-dark: #1F2D3D;
             --bit-text-light: #606266;
@@ -205,7 +205,6 @@
         
         .file-attach-label { cursor: pointer; display: flex; align-items: center; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; color: var(--bit-text-dark); transition: background 0.2s; }
         .file-attach-label:hover { background: rgba(30,80,255,0.1); }
-        .attachment-preview-tag { display: inline-flex; align-items: center; background: var(--bit-warning); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-top: 4px; }
 
         .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
@@ -291,7 +290,8 @@
                                     <textarea class="form-textarea" id="postText" required placeholder="What is happening within your workspace channels?"></textarea>
                                 </div>
                                 <div class="form-group" style="margin-bottom: 12px;">
-                                    <label class="form-label">Add Tags (comma separated)</label>                                    <input type="text" id="postTags" class="form-input" placeholder="e.g. general, announcement, urgent">
+                                    <label class="form-label">Add Tags (comma separated)</label>                                    
+                                    <input type="text" id="postTags" class="form-input" placeholder="e.g. general, announcement, urgent">
                                 </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <label class="file-attach-label" for="homeFileInput">
@@ -324,7 +324,7 @@
                                 <div class="welcome-hashtags">#UltraKH #Community #Welcome #StayConnected</div>
                             </div>
                         </div>
-                                                
+                                                                        
                         <div class="card" style="padding: 20px;">
                             <h3 style="margin-bottom: 12px;">Active System Operators (<span id="metUserCount">2</span>)</h3>
                             <table class="user-directory-table">
@@ -405,7 +405,7 @@
                                 <span id="fileAttachmentPreview" style="font-size:12px; color:var(--bit-text-light);"></span>
                             </div>
                             <div class="chat-input-area">
-                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here...">
+                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type your message here..." onkeydown="if(event.key === 'Enter') submitChatMessage()">
                                 <button class="btn-send" onclick="submitChatMessage()">Send</button>
                             </div>
                         </div>
@@ -421,6 +421,10 @@
                             <div class="form-group">
                                 <label class="form-label">Username</label>
                                 <input type="text" class="form-input" id="signUpUser" required placeholder="Choose operator handle...">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" id="signUpEmail" required placeholder="name@company.com">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Password</label>
@@ -447,7 +451,7 @@
                             <button type="submit" class="btn-submit">Sign In</button>
                         </form>
                         <p style="margin-top: 20px; text-align: center; font-size: 13px; color: var(--bit-text-light);">
-                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Sign Up now</a>
+                            Need an account? <a href="javascript:void(0)" onclick="toggleAuthForms('signup')" style="color: var(--bit-blue-primary); font-weight: 700; text-decoration: none;">Create one here</a>
                         </p>
                     </div>
                 </div>
@@ -456,119 +460,265 @@
     </main>
 
     <script>
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        // State Management Objects
+        let currentUser = "Admin";
+        let currentUserId = "user-admin";
+        let activeTargetChatId = null;
+        let selectedHomeFileBase64 = null;
+        let selectedHomeFileName = "";
+        let selectedChatFileBase64 = null;
+        let selectedChatFileName = "";
 
-        function playSystemSound(frequency, type, duration) {
+        // Seeded Static Arrays
+        let usersList = [
+            { id: "user-admin", username: "Admin", email: "admin@ultrakh.com", status: "Online" },
+            { id: "user-sophia", username: "Sophia_Dev", email: "sophia@ultrakh.com", status: "Online" },
+            { id: "user-rath", username: "VannRath", email: "rath@ultrakh.com", status: "Away" }
+        ];
+
+        let notifications = [
+            { id: 1, text: "Sophia_Dev shared an architecture review note inside Channel #production", time: "10 mins ago", unread: true },
+            { id: 2, text: "System security policy verified successfully for node KH-MAIN", time: "1 hour ago", unread: false }
+        ];
+
+        let feedPosts = [
+            {
+                id: 101,
+                author: "Sophia_Dev",
+                time: "20 mins ago",
+                content: "Just finalized the design specs for the layout system. Check it out and provide feedback inside the chat matrix module!",
+                tags: ["general", "announcement"],
+                fileData: null,
+                fileName: "",
+                comments: [
+                    { author: "VannRath", text: "Looks great, clean layout!" }
+                ]
+            }
+        ];
+
+        // Chat Data Structure Matrix
+        let chatLogs = {
+            "user-sophia": [
+                { id: 1, senderId: "user-sophia", senderName: "Sophia_Dev", text: "Hello! Did you review the production deployment code?", time: "09:14 AM", fileData: null },
+                { id: 2, senderId: "user-admin", senderName: "Admin", text: "Hey Sophia, looking over the metrics logs right now.", time: "09:16 AM", fileData: null }
+            ],
+            "user-rath": [
+                { id: 1, senderId: "user-rath", senderName: "VannRath", text: "System upgrade packages successfully validated.", time: "Yesterday", fileData: null }
+            ]
+        };
+
+        // Synthesizer Notification Sound Engine
+        function playNotificationSound() {
             try {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                oscillator.type = type;
-                oscillator.frequency.value = frequency;
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + duration);
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Note Chime 1
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5 Note
+                gain1.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain1.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start();
+                osc1.stop(audioCtx.currentTime + 0.12);
+
+                // Note Chime 2 (Harmony Offset delay)
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(880.00, audioCtx.currentTime); // A5 Note
+                    gain2.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.start();
+                    osc2.stop(audioCtx.currentTime + 0.22);
+                }, 75);
             } catch (e) {
-                console.log("Audio contextual playback initialization ignored.");
+                console.log("Audio contextual block safely bypassed via environment rules:", e);
             }
         }
 
-        function triggerSuccessAudio() { playSystemSound(587.33, 'sine', 0.15); setTimeout(() => playSystemSound(880, 'sine', 0.2), 100); }
-        function triggerMessageAudio() { playSystemSound(659.25, 'triangle', 0.1); }
-        function triggerErrorAudio() { playSystemSound(220, 'sawtooth', 0.3); }
-
-        let memoryDatabase = { "Admin": "123456", "Operator_Alpha": "123456" };
-        let memoryActiveUser = "Admin"; 
-        let currentTargetChatUser = "Operator_Alpha";
-        let homeUploadedFileData = null;
-        let chatUploadedFileData = null;
-
-        let memoryPosts = [
-            { id: 1, author: "Admin", text: "Deposit channels are running normally.", tags: ["deposit", "reconciliation"], likes: 4, comments: [], shares: 1, file: null },
-            { id: 2, author: "Operator_Alpha", text: "Third-party gateway channel updated successfully.", tags: ["channels"], likes: 2, comments: [], shares: 0, file: null }
-        ];
-        
-        let memoryChats = [
-            { id: 1, from: "Admin", to: "Operator_Alpha", text: "Please monitor the pending withdrawal requests.", time: "08:30 AM", reactions: {}, file: null },
-            { id: 2, from: "Operator_Alpha", to: "Admin", text: "Acknowledged. All systems clear.", time: "08:32 AM", reactions: {}, file: null }
-        ];
-
-        let memoryNotifications = [
-            { id: 1, text: "System maintenance scheduled for midnight Sunday.", time: "2 hours ago", unread: true },
-            { id: 2, text: "Operator_Alpha shared a new asset log file.", time: "5 hours ago", unread: false }
-        ];
-
+        // Initialize App Operations
         document.addEventListener("DOMContentLoaded", () => {
-            initAppRoutes();
-            renderFeedPosts();
-            renderActiveOperators();
-            renderNotifications();
-            renderChatFriends();
-            renderChatHistory();
-            setupThemeToggle();
-            updateGlobalUIState();
+            setupNavigation();
+            setupThemeControl();
+            renderAllViews();
+            initRealtimeSimulation();
         });
 
-        function showToast(message, type = 'success') {
-            const hub = document.getElementById("toastHub");
-            const card = document.createElement("div");
-            card.className = `toast-card ${type}`;
-            card.innerHTML = `
-                <div class="toast-message">${message}</div>
-                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
-            `;
-            hub.appendChild(card);
-            if(type === 'success') triggerSuccessAudio(); else triggerErrorAudio();
-            setTimeout(() => card.remove(), 4000);
-        }
-
-        function initAppRoutes() {
+        function setupNavigation() {
             document.querySelectorAll(".sidebar-item[data-target]").forEach(item => {
                 item.addEventListener("click", () => {
-                    const viewId = item.getAttribute("data-target");
-                    if (viewId === "auth" && memoryActiveUser) {
-                        showToast("You are already authenticated.", "error");
-                        return;
-                    }
-                    switchView(viewId);
+                    const viewTarget = item.getAttribute("data-target");
+                    switchView(viewTarget);
                 });
             });
         }
 
-        function switchView(viewId) {
+        function switchView(target) {
             document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("active"));
             document.querySelectorAll(".page-view").forEach(v => v.classList.remove("active"));
-            
-            const selectedNav = document.getElementById(`nav-${viewId}`);
-            if(selectedNav) selectedNav.classList.add("active");
-            
-            const selectedPage = document.getElementById(`page-${viewId}`);
-            if(selectedPage) selectedPage.classList.add("active");
-            
-            document.getElementById("breadcrumb").innerText = `Dashboard / ${viewId.charAt(0).toUpperCase() + viewId.slice(1)}`;
+
+            const activeNav = document.getElementById(`nav-${target}`);
+            if (activeNav) activeNav.classList.add("active");
+
+            const activePage = document.getElementById(`page-${target}`);
+            if (activePage) activePage.classList.add("active");
+
+            const breadcrumb = document.getElementById("breadcrumb");
+            breadcrumb.innerText = `Dashboard / ${target.charAt(0).toUpperCase() + target.slice(1)}`;
         }
 
-        function updateGlobalUIState() {
-            document.getElementById("topBarUserHandle").innerText = memoryActiveUser || "Guest";
-            document.getElementById("profUserHandle").value = memoryActiveUser || "";
-            const badge = document.getElementById("notifBadgeCount");
-            const unreadCount = memoryNotifications.filter(n => n.unread).length;
-            badge.innerText = unreadCount;
+        function setupThemeControl() {
+            const checkbox = document.getElementById("themeToggleCheckbox");
+            checkbox.addEventListener("change", () => {
+                if (checkbox.checked) {
+                    document.body.classList.add("dark-mode");
+                    showToast("Dark Mode engaged successfully.", "success");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    showToast("Light Mode restored.", "success");
+                }
+            });
+        }
+
+        // View Renderers
+        function renderAllViews() {
+            renderUserDirectory();
+            renderNotificationCenter();
+            renderFeedStream();
+            renderChatSidebar();
+            renderChatWindowMessages();
+            updateGlobalHeaderCounters();
+        }
+
+        function updateGlobalHeaderCounters() {
+            document.getElementById("topBarUserHandle").innerText = currentUser;
+            document.getElementById("profUserHandle").value = currentUser;
+            
+            const unreadCount = notifications.filter(n => n.unread).length;
+            document.getElementById("notifBadgeCount").innerText = unreadCount;
+            document.getElementById("metUserCount").innerText = usersList.length;
+        }
+
+        function renderUserDirectory() {
+            const tableBody = document.getElementById("systemUserTableBody");
+            tableBody.innerHTML = "";
+            usersList.forEach(user => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="font-weight:700;">${user.username} <span style="font-size:11px;font-weight:normal;color:var(--bit-text-light);">(${user.email})</span></td>
+                    <td><span style="color: ${user.status === 'Online' ? 'var(--bit-success)' : 'var(--bit-warning)'}; font-weight:700;">● ${user.status}</span></td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function renderNotificationCenter() {
+            const container = document.getElementById("notificationStreamBox");
+            container.innerHTML = "";
+            if (notifications.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--bit-text-light);">No recent notifications.</div>`;
+                return;
+            }
+            notifications.forEach(notif => {
+                const div = document.createElement("div");
+                div.className = `notification-card-item ${notif.unread ? 'unread' : ''}`;
+                div.innerHTML = `
+                    <div>
+                        <div class="notif-text">${notif.text}</div>
+                        <div class="notif-time">${notif.time}</div>
+                    </div>
+                    ${notif.unread ? `<button class="btn-send" style="padding:2px 8px; font-size:11px;" onclick="markNotificationRead(${notif.id})">Read</button>` : ''}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function markNotificationRead(id) {
+            const index = notifications.findIndex(n => n.id === id);
+            if (index !== -1) {
+                notifications[index].unread = false;
+                renderNotificationCenter();
+                updateGlobalHeaderCounters();
+            }
+        }
+
+        function clearAllNotifications() {
+            notifications = [];
+            renderNotificationCenter();
+            updateGlobalHeaderCounters();
+            showToast("Notification queue cleared.", "success");
+        }
+
+        function renderFeedStream() {
+            const stream = document.getElementById("homeFeedStream");
+            stream.innerHTML = "";
+            feedPosts.forEach(post => {
+                const postCard = document.createElement("div");
+                postCard.className = "card post-card";
+
+                let tagsMarkup = "";
+                if (post.tags) {
+                    post.tags.forEach(t => { if(t) tagsMarkup += `<span class="tag-badge">#${t.trim()}</span>`; });
+                }
+
+                let assetMarkup = "";
+                if (post.fileData) {
+                    if (post.fileData.startsWith("data:image")) {
+                        assetMarkup = `<img src="${post.fileData}" class="post-media-attachment" alt="upload">`;
+                    } else {
+                        assetMarkup = `<a href="${post.fileData}" download="${post.fileName}" class="post-file-link">📁 Download Associated Resource (${post.fileName})</a>`;
+                    }
+                }
+
+                let commentsMarkup = "";
+                if (post.comments) {
+                    post.comments.forEach(c => {
+                        commentsMarkup += `
+                            <div class="comment-item-row">
+                                <div class="comment-content-bubble">
+                                    <span class="comment-user-title">${c.author}:</span> ${c.text}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                postCard.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-author">@${post.author}</span>
+                        <span class="post-time">${post.time}</span>
+                    </div>
+                    <div class="post-content-text">${post.content}</div>
+                    <div>${tagsMarkup}</div>
+                    ${assetMarkup}
+                    <div class="post-actions">
+                        <button class="action-trigger-btn">👍 Upvote Channel</button>
+                    </div>
+                    <div class="comments-section-wrapper">
+                        ${commentsMarkup}
+                        <div class="comment-input-inline-box">
+                            <input type="text" class="form-input" style="padding:6px 10px;" placeholder="Write a workspace response..." onkeydown="if(event.key === 'Enter') addPostComment(${post.id}, this)">
+                        </div>
+                    </div>
+                `;
+                stream.appendChild(postCard);
+            });
         }
 
         function handleHomeFileSelected(input) {
             const file = input.files[0];
             if (!file) return;
+            selectedHomeFileName = file.name;
             const reader = new FileReader();
             reader.onload = function(e) {
-                homeUploadedFileData = {
-                    name: file.name,
-                    type: file.type,
-                    dataUrl: e.target.result
-                };
-                document.getElementById("homeFilePreview").innerText = `📄 ${file.name}`;
+                selectedHomeFileBase64 = e.target.result;
+                document.getElementById("homeFilePreview").innerText = `📎 ${file.name}`;
             };
             reader.readAsDataURL(file);
         }
@@ -576,336 +726,321 @@
         function handlePostPublish(e) {
             e.preventDefault();
             const text = document.getElementById("postText").value;
-            const tagsInput = document.getElementById("postTags").value;
-            const tags = tagsInput ? tagsInput.split(",").map(t => t.trim()) : [];
+            const tagsRaw = document.getElementById("postTags").value;
+            const tags = tagsRaw ? tagsRaw.split(",") : [];
 
             const newPost = {
-                id: memoryPosts.length + 1,
-                author: memoryActiveUser || "Anonymous",
-                text: text,
+                id: Date.now(),
+                author: currentUser,
+                time: "Just now",
+                content: text,
                 tags: tags,
-                likes: 0,
-                comments: [],
-                shares: 0,
-                file: homeUploadedFileData
+                fileData: selectedHomeFileBase64,
+                fileName: selectedHomeFileName,
+                comments: []
             };
 
-            memoryPosts.unshift(newPost);
+            feedPosts.unshift(newPost);
             document.getElementById("homePublishForm").reset();
+            selectedHomeFileBase64 = null;
+            selectedHomeFileName = "";
             document.getElementById("homeFilePreview").innerText = "";
-            homeUploadedFileData = null;
-            
-            renderFeedPosts();
-            showToast("Update shared on system stream!");
+
+            renderFeedStream();
+            showToast("Update broadcast successfully.", "success");
         }
 
-        function renderFeedPosts() {
-            const container = document.getElementById("homeFeedStream");
-            container.innerHTML = "";
-            memoryPosts.forEach(post => {
-                let mediaMarkup = "";
-                if (post.file) {
-                    if (post.file.type.startsWith("image/")) {
-                        mediaMarkup = `<img src="${post.file.dataUrl}" class="post-media-attachment" alt="Uploaded Attachment">`;
-                    } else {
-                        mediaMarkup = `<a href="${post.file.dataUrl}" download="${post.file.name}" class="post-file-link">📁 Download ${post.file.name}</a>`;
-                    }
-                }
-
-                const card = document.createElement("div");
-                card.className = "post-card";
-                card.innerHTML = `
-                    <div class="post-header">
-                        <span class="post-author">@${post.author}</span>
-                        <span class="post-time">Just Now</span>
-                    </div>
-                    <div class="post-content-text">${post.text}</div>
-                    ${mediaMarkup}
-                    <div style="margin-bottom: 12px;">
-                        ${post.tags.map(t => `<span class="tag-badge">#${t}</span>`).join('')}
-                    </div>
-                    <div class="post-actions">
-                        <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Like (${post.likes})</button>
-                        <button class="action-trigger-btn" onclick="focusCommentBox(${post.id})">💬 Comment (${post.comments.length})</button>
-                    </div>
-                    <div class="comments-section-wrapper">
-                        <div id="comments-box-${post.id}">
-                            ${post.comments.map(c => `
-                                <div class="comment-item-row">
-                                    <div class="comment-content-bubble">
-                                        <span class="comment-user-title">@${c.user}:</span> ${c.text}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div class="comment-input-inline-box">
-                            <input type="text" class="form-input" id="com-in-${post.id}" placeholder="Write system response comment...">
-                            <button class="btn-send" style="padding: 6px 14px;" onclick="addComment(${post.id})">Post</button>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function likePost(id) {
-            const post = memoryPosts.find(p => p.id === id);
-            if (post) { post.likes++; renderFeedPosts(); }
-        }
-
-        function focusCommentBox(id) {
-            document.getElementById(`com-in-${id}`).focus();
-        }
-
-        function addComment(id) {
-            const input = document.getElementById(`com-in-${id}`);
-            if (!input.value.trim()) return;
-            const post = memoryPosts.find(p => p.id === id);
+        function addPostComment(postId, inputField) {
+            const text = inputField.value.trim();
+            if(!text) return;
+            const post = feedPosts.find(p => p.id === postId);
             if (post) {
-                post.comments.push({ user: memoryActiveUser || "Guest", text: input.value.trim() });
-                input.value = "";
-                renderFeedPosts();
-                showToast("Response comment cataloged.");
+                post.comments.push({ author: currentUser, text: text });
+                inputField.value = "";
+                renderFeedStream();
             }
         }
 
-        function renderActiveOperators() {
-            const tbody = document.getElementById("systemUserTableBody");
-            tbody.innerHTML = "";
-            Object.keys(memoryDatabase).forEach(user => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td style="font-weight:600;">@${user}</td>
-                    <td><span class="dot-pulse"></span> Active Now</td>
-                `;
-                tbody.appendChild(tr);
-            });
-            document.getElementById("metUserCount").innerText = Object.keys(memoryDatabase).length;
-        }
-
-        function renderNotifications() {
-            const container = document.getElementById("notificationStreamBox");
-            container.innerHTML = "";
-            memoryNotifications.forEach(n => {
-                const item = document.createElement("div");
-                item.className = `notification-card-item ${n.unread ? 'unread' : ''}`;
-                item.innerHTML = `
-                    <div>
-                        <div class="notif-text">${n.text}</div>
-                        <div class="notif-time">${n.time}</div>
-                    </div>
-                    ${n.unread ? `<button class="btn-send" style="padding:3px 8px; font-size:11px;" onclick="markNotifRead(${n.id})">Dismiss</button>` : ''}
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function markNotifRead(id) {
-            const n = memoryNotifications.find(notif => notif.id === id);
-            if(n) { n.unread = false; renderNotifications(); updateGlobalUIState(); }
-        }
-
-        function clearAllNotifications() {
-            memoryNotifications = [];
-            renderNotifications();
-            updateGlobalUIState();
-            showToast("Notification stream cleared.");
-        }
-
-        function handleProfileUpdate(e) {
-            e.preventDefault();
-            const newHandle = document.getElementById("profUserHandle").value.trim();
-            if(!newHandle) return;
-            if(newHandle !== memoryActiveUser) {
-                const oldPass = memoryDatabase[memoryActiveUser];
-                delete memoryDatabase[memoryActiveUser];
-                memoryActiveUser = newHandle;
-                memoryDatabase[newHandle] = oldPass;
-                updateGlobalUIState();
-                renderActiveOperators();
-                showToast("Username context updated.");
-            }
-        }
-
-        function setupThemeToggle() {
-            const checkbox = document.getElementById("themeToggleCheckbox");
-            checkbox.addEventListener("change", () => {
-                if(checkbox.checked) document.body.classList.add("dark-mode");
-                else document.body.classList.remove("dark-mode");
-            });
-        }
-
-        function renderChatFriends() {
+        // Realtime Chat Modules
+        function renderChatSidebar() {
             const container = document.getElementById("chatFriendsContainer");
             container.innerHTML = "";
-            Object.keys(memoryDatabase).forEach(user => {
-                if(user === memoryActiveUser) return;
+            
+            usersList.forEach(user => {
+                if (user.id === currentUserId) return;
+                
                 const li = document.createElement("li");
-                li.className = `friend-item ${user === currentTargetChatUser ? 'active' : ''}`;
-                li.innerText = `@${user}`;
-                li.onclick = () => {
-                    currentTargetChatUser = user;
-                    renderChatFriends();
-                    renderChatHistory();
-                };
+                li.className = `friend-item ${activeTargetChatId === user.id ? 'active' : ''}`;
+                li.onclick = () => selectChatThread(user.id);
+                li.innerHTML = `
+                    <div style="width:10px; height:10px; border-radius:50%; background:${user.status === 'Online' ? 'var(--bit-success)' : 'var(--bit-warning)'};"></div>
+                    <div class="friend-name">${user.username}</div>
+                `;
                 container.appendChild(li);
             });
         }
 
-        function renderChatHistory() {
-            const container = document.getElementById("chatMsgContainer");
-            const header = document.getElementById("activeChatUser");
-            if (!currentTargetChatUser) {
-                header.innerText = "Select an operator thread to view history";
-                container.innerHTML = "";
+        function selectChatThread(userId) {
+            activeTargetChatId = userId;
+            const targetUser = usersList.find(u => u.id === userId);
+            document.getElementById("activeChatUser").innerText = targetUser ? `Thread Room: @${targetUser.username}` : "Select an operator thread to view history";
+            renderChatSidebar();
+            renderChatWindowMessages();
+        }
+
+        function renderChatWindowMessages() {
+            const box = document.getElementById("chatMsgContainer");
+            box.innerHTML = "";
+            
+            if (!activeTargetChatId) {
+                box.innerHTML = `<div style="margin:auto; text-align:center; color:var(--bit-text-light);">Select an operator thread from the sidebar workspace directory to begin transmission.</div>`;
                 return;
             }
-            header.innerText = `Secure Operator Chat Connection: @${currentTargetChatUser}`;
-            container.innerHTML = "";
 
-            const filteredChats = memoryChats.filter(c => 
-                (c.from === memoryActiveUser && c.to === currentTargetChatUser) ||
-                (c.from === currentTargetChatUser && c.to === memoryActiveUser)
-            );
+            const messages = chatLogs[activeTargetChatId] || [];
+            if(messages.length === 0) {
+                box.innerHTML = `<div style="margin:auto; text-align:center; color:var(--bit-text-light);">Secure room initialized. Begin conversation logs safely.</div>`;
+                return;
+            }
 
-            filteredChats.forEach(chat => {
-                const isMe = chat.from === memoryActiveUser;
-                const row = document.createElement("div");
-                row.className = `msg-row ${isMe ? 'msg-me' : 'msg-them'}`;
-                
-                let mediaContent = "";
-                if (chat.file) {
-                    if (chat.file.type.startsWith("image/")) {
-                        mediaContent = `<br><img src="${chat.file.dataUrl}" style="max-width:200px; border-radius:6px; margin-top:5px; display:block;">`;
+            messages.forEach(msg => {
+                const isMe = msg.senderId === currentUserId;
+                const msgRow = document.createElement("div");
+                msgRow.className = `msg-row ${isMe ? 'msg-me' : 'msg-them'}`;
+
+                let mediaMarkup = "";
+                if(msg.fileData) {
+                    if (msg.fileData.startsWith("data:image")) {
+                        mediaMarkup = `<img src="${msg.fileData}" style="max-width:100%; border-radius:6px; margin-top:5px; display:block; max-height:150px; object-fit:cover;">`;
                     } else {
-                        mediaContent = `<br><a href="${chat.file.dataUrl}" download="${chat.file.name}" style="color:inherit; font-weight:bold; font-size:12px; display:inline-block; margin-top:5px;">📁 File: ${chat.file.name}</a>`;
+                        mediaMarkup = `<a href="${msg.fileData}" download="${msg.fileName || 'file'}" style="display:block; color:white; font-size:12px; margin-top:5px; text-decoration:underline;">📁 Shared Attachment File</a>`;
                     }
                 }
 
-                let interactMarkup = "";
-                if (isMe) {
-                    interactMarkup = `
-                        <div class="msg-interact-bar">
-                            <button class="msg-interact-btn msg-delete-btn" onclick="deleteChatMessage(${chat.id})">✕ Delete</button>
-                        </div>
-                    `;
-                }
-
-                row.innerHTML = `
+                msgRow.innerHTML = `
                     <div class="msg-meta-container">
-                        <span>@${chat.from}</span><span>${chat.time}</span>
+                        <span><b>${msg.senderName}</b></span>
+                        <span>${msg.time}</span>
                     </div>
                     <div class="bubble-wrapper">
-                        <div class="bubble">${chat.text}${mediaContent}</div>
+                        <div class="bubble">
+                            <div>${msg.text}</div>
+                            ${mediaMarkup}
+                        </div>
                     </div>
-                    ${interactMarkup}
+                    <div class="msg-interact-bar">
+                        <span class="msg-interact-btn msg-delete-btn" onclick="deleteChatMessage('${activeTargetChatId}', ${msg.id})">Purge</span>
+                    </div>
                 `;
-                container.appendChild(row);
+                box.appendChild(msgRow);
             });
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function deleteChatMessage(chatId) {
-            const index = memoryChats.findIndex(c => c.id === chatId);
-            if (index !== -1) {
-                memoryChats.splice(index, 1);
-                triggerErrorAudio();
-                renderChatHistory();
-                showToast("Message deleted from thread logs.", "error");
-            }
-        }
-
-        function insertEmojiIntoChat(emoji) {
-            document.getElementById("chatInputField").value += emoji;
+            box.scrollTop = box.scrollHeight;
         }
 
         function handleFileAttachmentSelected(input) {
             const file = input.files[0];
             if (!file) return;
+            selectedChatFileName = file.name;
             const reader = new FileReader();
             reader.onload = function(e) {
-                chatUploadedFileData = {
-                    name: file.name,
-                    type: file.type,
-                    dataUrl: e.target.result
-                };
-                document.getElementById("fileAttachmentPreview").innerHTML = `<span class="attachment-preview-tag">Attached: ${file.name}</span>`;
+                selectedChatFileBase64 = e.target.result;
+                document.getElementById("fileAttachmentPreview").innerText = `📎 Attached: ${file.name}`;
             };
             reader.readAsDataURL(file);
         }
 
-        function submitChatMessage() {
+        function insertEmojiIntoChat(emoji) {
             const input = document.getElementById("chatInputField");
-            const text = input.value.trim();
-            if(!text && !chatUploadedFileData) return;
-
-            const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            memoryChats.push({
-                id: memoryChats.length + 1,
-                from: memoryActiveUser,
-                to: currentTargetChatUser,
-                text: text,
-                time: timeString,
-                reactions: {},
-                file: chatUploadedFileData
-            });
-
-            input.value = "";
-            chatUploadedFileData = null;
-            document.getElementById("fileAttachmentPreview").innerText = "";
-            triggerMessageAudio();
-            renderChatHistory();
+            input.value += emoji;
+            input.focus();
         }
 
+        function submitChatMessage() {
+            if (!activeTargetChatId) {
+                showToast("Please select a valid conversation channel target first.", "error");
+                return;
+            }
+            const input = document.getElementById("chatInputField");
+            const text = input.value.trim();
+            
+            if (!text && !selectedChatFileBase64) return;
+
+            const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            if (!chatLogs[activeTargetChatId]) {
+                chatLogs[activeTargetChatId] = [];
+            }
+
+            const newMsg = {
+                id: Date.now(),
+                senderId: currentUserId,
+                senderName: currentUser,
+                text: text,
+                time: timeString,
+                fileData: selectedChatFileBase64,
+                fileName: selectedChatFileName
+            };
+
+            chatLogs[activeTargetChatId].push(newMsg);
+            
+            input.value = "";
+            selectedChatFileBase64 = null;
+            selectedChatFileName = "";
+            document.getElementById("fileAttachmentPreview").innerText = "";
+
+            renderChatWindowMessages();
+        }
+
+        function deleteChatMessage(threadId, msgId) {
+            if(chatLogs[threadId]) {
+                chatLogs[threadId] = chatLogs[threadId].filter(m => m.id !== msgId);
+                renderChatWindowMessages();
+                showToast("Message line successfully purged from local storage context.", "success");
+            }
+        }
+
+        // Simulated Realtime WebSocket Layer Engine
+        function initRealtimeSimulation() {
+            setInterval(() => {
+                if (!activeTargetChatId) return;
+
+                if (Math.random() > 0.8) {
+                    const responses = [
+                        "Acknowledged, synchronizing workspace modules.",
+                        "Processing database node structural diagnostics now. 👍",
+                        "Please verify the server cluster configuration logs.",
+                        "Everything looks smooth from our deployment telemetry side. 🔥",
+                        "Agreed. Let us organize a brief team call via the sync room later."
+                    ];
+                    const randomText = responses[Math.floor(Math.random() * responses.length)];
+                    const targetUser = usersList.find(u => u.id === activeTargetChatId);
+                    
+                    if (!targetUser) return;
+                    
+                    const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    
+                    if (!chatLogs[activeTargetChatId]) {
+                        chatLogs[activeTargetChatId] = [];
+                    }
+
+                    chatLogs[activeTargetChatId].push({
+                        id: Date.now(),
+                        senderId: targetUser.id,
+                        senderName: targetUser.username,
+                        text: randomText,
+                        time: timeString,
+                        fileData: null
+                    });
+
+                    renderChatWindowMessages();
+                    playNotificationSound(); // <-- Trigger programmatic synth notification sound
+                    
+                    notifications.unshift({
+                        id: Date.now(),
+                        text: `New live chat message alert received from @${targetUser.username}`,
+                        time: "Just Now",
+                        unread: true
+                    });
+                    
+                    updateGlobalHeaderCounters();
+                    renderNotificationCenter();
+                }
+            }, 7000); 
+        }
+
+        // Profile Form Updates
+        function handleProfileUpdate(e) {
+            e.preventDefault();
+            const value = document.getElementById("profUserHandle").value.trim();
+            if(value) {
+                currentUser = value;
+                const index = usersList.findIndex(u => u.id === currentUserId);
+                if(index !== -1) usersList[index].username = currentUser;
+                
+                renderAllViews();
+                showToast("System profiles synced successfully.", "success");
+            }
+        }
+
+        // Authentication Portal Subsystem
         function toggleAuthForms(mode) {
+            const signupBox = document.getElementById("authSignUpBox");
+            const signinBox = document.getElementById("authSignInBox");
             if (mode === 'signin') {
-                document.getElementById("authSignUpBox").style.display = "none";
-                document.getElementById("authSignInBox").style.display = "block";
+                signupBox.style.display = "none";
+                signinBox.style.display = "block";
             } else {
-                document.getElementById("authSignUpBox").style.display = "block";
-                document.getElementById("authSignInBox").style.display = "none";
+                signupBox.style.display = "block";
+                signinBox.style.display = "none";
             }
         }
 
         function processSignUp(e) {
             e.preventDefault();
-            const u = document.getElementById("signUpUser").value.trim();
-            const p = document.getElementById("signUpPass").value;
-            if(memoryDatabase[u]) { showToast("Handle already active in directory.", "error"); return; }
-            memoryDatabase[u] = p;
-            memoryActiveUser = u;
-            postAuthInit();
+            const username = document.getElementById("signUpUser").value.trim();
+            const email = document.getElementById("signUpEmail").value.trim();
+            const password = document.getElementById("signUpPass").value;
+
+            if(!username || !email || !password) return;
+
+            const newId = `user-${Date.now()}`;
+            const newUserObj = { id: newId, username: username, email: email, status: "Online" };
+            
+            usersList.push(newUserObj);
+            
+            currentUser = username;
+            currentUserId = newId;
+
+            document.getElementById("signUpSystemForm").reset();
+            renderAllViews();
+            switchView("home");
+            showToast(`Welcome logged inside room context: ${username}`, "success");
         }
 
         function processSignIn(e) {
             e.preventDefault();
-            const u = document.getElementById("signInUser").value.trim();
-            const p = document.getElementById("signInPass").value;
-            if(memoryDatabase[u] && memoryDatabase[u] === p) {
-                memoryActiveUser = u;
-                postAuthInit();
-            } else {
-                showToast("Invalid security credentials.", "error");
-            }
-        }
+            const username = document.getElementById("signInUser").value.trim();
+            if(!username) return;
 
-        function postAuthInit() {
-            updateGlobalUIState();
-            renderActiveOperators();
-            renderChatFriends();
-            const keys = Object.keys(memoryDatabase).filter(k => k !== memoryActiveUser);
-            currentTargetChatUser = keys.length ? keys[0] : "";
-            renderChatHistory();
+            const existing = usersList.find(u => u.username.toLowerCase() === username.toLowerCase());
+            if (existing) {
+                currentUser = existing.username;
+                currentUserId = existing.id;
+                existing.status = "Online";
+            } else {
+                const newId = `user-${Date.now()}`;
+                currentUserId = newId;
+                currentUser = username;
+                usersList.push({ id: newId, username: username, email: `${username.toLowerCase()}@ultrakh.com`, status: "Online" });
+            }
+
+            document.getElementById("signInSystemForm").reset();
+            renderAllViews();
             switchView("home");
-            showToast("Welcome backend operator console online!");
+            showToast(`Welcome back session active: ${currentUser}`, "success");
         }
 
         function triggerSignOut() {
-            memoryActiveUser = "";
-            updateGlobalUIState();
+            currentUser = "Guest";
+            currentUserId = "guest-id";
+            showToast("Session disconnected from environment core.", "error");
+            renderAllViews();
             switchView("auth");
             toggleAuthForms('signin');
-            showToast("Session security context unlinked.");
+        }
+
+        // Globalized Toast Framework Engine
+        function showToast(message, type = "info") {
+            playNotificationSound(); // <-- Trigger synchronous sound chime alert
+            const hub = document.getElementById("toastHub");
+            const card = document.createElement("div");
+            card.className = `toast-card ${type}`;
+            card.innerHTML = `
+                <div class="toast-message">${message}</div>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            hub.appendChild(card);
+            setTimeout(() => { card.remove(); }, 4000);
         }
     </script>
 </body>
