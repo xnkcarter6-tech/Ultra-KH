@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra KHsite - Audio Enhanced Production</title>
+    <title>Ultra KHsite - Interactive Production Engine</title>
     <style>
         :root {
             --bit-blue-primary: #1E50FF;              
@@ -70,7 +69,8 @@
             display: flex;
             align-items: center;
             letter-spacing: 0.5px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);         }
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         .brand-text-space { margin-right: 8px; }
         .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
@@ -151,12 +151,12 @@
         .tag-badge { display: inline-block; background: rgba(30, 80, 255, 0.1); color: var(--bit-blue-primary); padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-right: 5px; font-weight: 600; }
 
         .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; gap: 15px; }
-        .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; }
+        .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; transition: color 0.2s; }
         .action-trigger-btn:hover { color: var(--bit-blue-primary); }
 
         .comments-section-wrapper { display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 10px; }
         .comment-item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 8px; }
-        .comment-content-bubble { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 8px 12px; flex-grow: 1; }
+        .comment-content-bubble { background: rgba(0,0,0,0.03); border-radius: 12px; padding: 8px 12px; flex-grow: 1; color: var(--bit-text-dark); }
         .comment-user-title { font-weight: 700; color: var(--bit-text-dark); }
         .comment-input-inline-box { display: flex; gap: 10px; margin-top: 10px; }
 
@@ -490,6 +490,7 @@
                 tags: ["general", "announcement"],
                 fileData: null,
                 fileName: "",
+                likes: 4,
                 comments: [
                     { author: "VannRath", text: "Looks great, clean layout!" }
                 ]
@@ -655,16 +656,23 @@
             showToast("Notification queue cleared.", "success");
         }
 
+        // Fully Dynamic Feed Stream Renderer
         function renderFeedStream() {
             const stream = document.getElementById("homeFeedStream");
             stream.innerHTML = "";
+            
+            if (feedPosts.length === 0) {
+                stream.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--bit-text-light);">No updates published yet.</div>`;
+                return;
+            }
+
             feedPosts.forEach(post => {
                 const postCard = document.createElement("div");
                 postCard.className = "card post-card";
 
                 let tagsMarkup = "";
                 if (post.tags) {
-                    post.tags.forEach(t => { if(t) tagsMarkup += `<span class="tag-badge">#${t.trim()}</span>`; });
+                    post.tags.forEach(t => { if(t && t.trim()) tagsMarkup += `<span class="tag-badge">#${t.trim()}</span>`; });
                 }
 
                 let assetMarkup = "";
@@ -677,17 +685,21 @@
                 }
 
                 let commentsMarkup = "";
-                if (post.comments) {
+                if (post.comments && post.comments.length > 0) {
                     post.comments.forEach(c => {
                         commentsMarkup += `
-                            <div class="comment-item-row">
+                            <div class="comment-item-row" style="margin-bottom:6px;">
                                 <div class="comment-content-bubble">
                                     <span class="comment-user-title">${c.author}:</span> ${c.text}
                                 </div>
                             </div>
                         `;
                     });
+                } else {
+                    commentsMarkup = `<div style="font-size:11px; color:var(--bit-text-light); padding:4px 0;" id="no-comments-${post.id}">No comments yet. Be the first to respond!</div>`;
                 }
+
+                const upvoteCount = post.likes || 0;
 
                 postCard.innerHTML = `
                     <div class="post-header">
@@ -695,15 +707,20 @@
                         <span class="post-time">${post.time}</span>
                     </div>
                     <div class="post-content-text">${post.content}</div>
-                    <div>${tagsMarkup}</div>
+                    <div style="margin-bottom: 10px;">${tagsMarkup}</div>
                     ${assetMarkup}
+                    
                     <div class="post-actions">
-                        <button class="action-trigger-btn">👍 Upvote Channel</button>
+                        <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Upvote (${upvoteCount})</button>
+                        <button class="action-trigger-btn" onclick="focusCommentField(${post.id})">💬 Comment</button>
+                        <button class="action-trigger-btn" onclick="sharePost(${post.id})">🔗 Share Link</button>
                     </div>
+                    
                     <div class="comments-section-wrapper">
-                        ${commentsMarkup}
+                        <div id="comment-box-list-${post.id}">${commentsMarkup}</div>
                         <div class="comment-input-inline-box">
-                            <input type="text" class="form-input" style="padding:6px 10px;" placeholder="Write a workspace response..." onkeydown="if(event.key === 'Enter') addPostComment(${post.id}, this)">
+                            <input type="text" id="comment-field-${post.id}" class="form-input" style="padding:6px 10px;" placeholder="Write a workspace response..." onkeydown="if(event.key === 'Enter') addPostComment(${post.id})">
+                            <button class="btn-send" style="padding:6px 12px; font-size:12px;" onclick="addPostComment(${post.id})">Reply</button>
                         </div>
                     </div>
                 `;
@@ -737,6 +754,7 @@
                 tags: tags,
                 fileData: selectedHomeFileBase64,
                 fileName: selectedHomeFileName,
+                likes: 0,
                 comments: []
             };
 
@@ -750,14 +768,46 @@
             showToast("Update broadcast successfully.", "success");
         }
 
-        function addPostComment(postId, inputField) {
-            const text = inputField.value.trim();
-            if(!text) return;
+        // Interactive Post Features Logic
+        function likePost(postId) {
             const post = feedPosts.find(p => p.id === postId);
             if (post) {
+                if (!post.likes) post.likes = 0;
+                post.likes += 1;
+                renderFeedStream();
+                showToast("Post upvoted successfully!", "success");
+            }
+        }
+
+        function focusCommentField(postId) {
+            const field = document.getElementById(`comment-field-${postId}`);
+            if (field) field.focus();
+        }
+
+        function addPostComment(postId) {
+            const inputField = document.getElementById(`comment-field-${postId}`);
+            const text = inputField.value.trim();
+            if (!text) return;
+
+            const post = feedPosts.find(p => p.id === postId);
+            if (post) {
+                if (!post.comments) post.comments = [];
                 post.comments.push({ author: currentUser, text: text });
                 inputField.value = "";
                 renderFeedStream();
+                showToast("Response recorded on update thread.", "success");
+            }
+        }
+
+        function sharePost(postId) {
+            const post = feedPosts.find(p => p.id === postId);
+            if (post) {
+                const shareString = `[Ultra KH Channel Update] @${post.author}: "${post.content}"`;
+                navigator.clipboard.writeText(shareString).then(() => {
+                    showToast("Post resource string copied to clipboard!", "success");
+                }).catch(() => {
+                    showToast("Clipboard access denied.", "error");
+                });
             }
         }
 
@@ -933,7 +983,7 @@
                     });
 
                     renderChatWindowMessages();
-                    playNotificationSound(); // <-- Trigger programmatic synth notification sound
+                    playNotificationSound();
                     
                     notifications.unshift({
                         id: Date.now(),
@@ -1031,7 +1081,7 @@
 
         // Globalized Toast Framework Engine
         function showToast(message, type = "info") {
-            playNotificationSound(); // <-- Trigger synchronous sound chime alert
+            playNotificationSound();
             const hub = document.getElementById("toastHub");
             const card = document.createElement("div");
             card.className = `toast-card ${type}`;
