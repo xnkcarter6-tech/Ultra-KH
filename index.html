@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +14,13 @@
     --border:#d1d5db;
 }
 
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
-    font-family:'Khmer OS Battambang',sans-serif;
+    font-family:Arial,sans-serif;
     background:#eef2ff;
     display:flex;
     height:100vh;
@@ -92,7 +96,7 @@ input{
     border-radius:6px;
     margin-top:5px;
     margin-bottom:15px;
-    box-sizing:border-box;
+    font-size:14px;
 }
 
 button{
@@ -155,6 +159,7 @@ button:hover{
 }
 
 @media(max-width:768px){
+
     body{
         flex-direction:column;
     }
@@ -167,11 +172,14 @@ button:hover{
 
     .menu{
         display:flex;
+        width:100%;
     }
 
     .menu li{
         border:none;
         white-space:nowrap;
+        flex:1;
+        text-align:center;
     }
 }
 </style>
@@ -180,24 +188,28 @@ button:hover{
 <body>
 
 <div class="sidebar">
+
     <div class="logo">Ultra KH</div>
 
     <ul class="menu">
-        <li class="active" onclick="showPage('home',this)">🏠 ទំព័រដើម</li>
-        <li onclick="showPage('chat',this)">💬 សារ</li>
-        <li onclick="showPage('notify',this)">🔔 ការជូនដំណឹង</li>
-        <li onclick="showPage('profile',this)">👤 Profile</li>
+        <li class="active" onclick="showPage('home',this)">Home</li>
+        <li onclick="showPage('chat',this)">Chat</li>
+        <li onclick="showPage('notify',this)">Notifications</li>
+        <li onclick="showPage('profile',this)">Profile</li>
     </ul>
+
 </div>
 
 <div class="main">
 
     <div class="topbar">
-        <div id="pageTitle">ទំព័រដើម</div>
+
+        <div id="pageTitle">Home</div>
 
         <div>
-            <button onclick="toggleDark()">🌙 Dark</button>
+            <button onclick="toggleDark()">Dark Mode</button>
         </div>
+
     </div>
 
     <div class="content">
@@ -206,17 +218,21 @@ button:hover{
         <div id="homePage">
 
             <div class="card">
-                <h2>បង្ហោះព័ត៌មានថ្មី</h2>
 
-                <textarea id="postInput" placeholder="សរសេរអ្វីមួយ..."></textarea>
+                <h2>Create Post</h2>
 
-                <button onclick="addPost()">បង្ហោះ</button>
+                <textarea id="postInput" placeholder="Write something..."></textarea>
+
+                <button onclick="addPost()">Publish</button>
+
             </div>
 
             <div class="card">
-                <h2>ព័ត៌មានថ្មីៗ</h2>
+
+                <h2>Latest Posts</h2>
 
                 <div id="postList"></div>
+
             </div>
 
         </div>
@@ -225,27 +241,31 @@ button:hover{
         <div id="chatPage" class="hidden">
 
             <div class="card">
-                <h2>ប្រអប់សារ</h2>
+
+                <h2>Chat Box</h2>
 
                 <div class="chat-box" id="chatBox"></div>
 
-                <input type="text" id="chatInput" placeholder="វាយសារ...">
+                <input type="text" id="chatInput" placeholder="Type message...">
 
-                <button onclick="sendMessage()">ផ្ញើ</button>
+                <button onclick="sendMessage()">Send</button>
+
             </div>
 
         </div>
 
-        <!-- NOTIFICATION -->
+        <!-- NOTIFICATIONS -->
         <div id="notifyPage" class="hidden">
 
             <div class="card">
-                <h2>ការជូនដំណឹង</h2>
+
+                <h2>Notifications</h2>
 
                 <ul id="notifyList">
-                    <li>✅ ប្រព័ន្ធដំណើរការធម្មតា</li>
-                    <li>📢 សូមស្វាគមន៍មកកាន់ Ultra KH</li>
+                    <li>System running normally</li>
+                    <li>Welcome to Ultra KH</li>
                 </ul>
+
             </div>
 
         </div>
@@ -254,12 +274,15 @@ button:hover{
         <div id="profilePage" class="hidden">
 
             <div class="card">
-                <h2>ព័ត៌មានគណនី</h2>
 
-                <label>ឈ្មោះ</label>
+                <h2>Profile</h2>
+
+                <label>Username</label>
+
                 <input type="text" id="username" value="Admin">
 
-                <button onclick="saveProfile()">រក្សាទុក</button>
+                <button onclick="saveProfile()">Save</button>
+
             </div>
 
         </div>
@@ -270,7 +293,7 @@ button:hover{
 
 <script>
 
-function showPage(page,el){
+function showPage(page, element){
 
     document.getElementById("homePage").classList.add("hidden");
     document.getElementById("chatPage").classList.add("hidden");
@@ -281,80 +304,85 @@ function showPage(page,el){
         item.classList.remove("active");
     });
 
-    el.classList.add("active");
+    element.classList.add("active");
 
-    if(page==="home"){
+    if(page === "home"){
         document.getElementById("homePage").classList.remove("hidden");
-        document.getElementById("pageTitle").innerText="ទំព័រដើម";
+        document.getElementById("pageTitle").innerText = "Home";
     }
 
-    if(page==="chat"){
+    if(page === "chat"){
         document.getElementById("chatPage").classList.remove("hidden");
-        document.getElementById("pageTitle").innerText="សារ";
+        document.getElementById("pageTitle").innerText = "Chat";
     }
 
-    if(page==="notify"){
+    if(page === "notify"){
         document.getElementById("notifyPage").classList.remove("hidden");
-        document.getElementById("pageTitle").innerText="ការជូនដំណឹង";
+        document.getElementById("pageTitle").innerText = "Notifications";
     }
 
-    if(page==="profile"){
+    if(page === "profile"){
         document.getElementById("profilePage").classList.remove("hidden");
-        document.getElementById("pageTitle").innerText="Profile";
+        document.getElementById("pageTitle").innerText = "Profile";
     }
 }
 
 function addPost(){
 
-    let text=document.getElementById("postInput").value;
+    let text = document.getElementById("postInput").value;
 
-    if(text.trim()===""){
-        alert("សូមបញ្ចូលព័ត៌មាន");
+    if(text.trim() === ""){
+        alert("Please write something");
         return;
     }
 
-    let div=document.createElement("div");
-    div.className="post";
+    let post = document.createElement("div");
 
-    div.innerHTML=`
+    post.className = "post";
+
+    post.innerHTML = `
         <strong>Admin</strong>
         <p>${text}</p>
     `;
 
-    document.getElementById("postList").prepend(div);
+    document.getElementById("postList").prepend(post);
 
-    document.getElementById("postInput").value="";
+    document.getElementById("postInput").value = "";
 }
 
 function sendMessage(){
 
-    let input=document.getElementById("chatInput");
-    let text=input.value;
+    let input = document.getElementById("chatInput");
 
-    if(text.trim()===""){
+    let text = input.value;
+
+    if(text.trim() === ""){
         return;
     }
 
-    let msg=document.createElement("div");
-    msg.className="message";
-    msg.innerText=text;
+    let msg = document.createElement("div");
+
+    msg.className = "message";
+
+    msg.innerText = text;
 
     document.getElementById("chatBox").appendChild(msg);
 
-    input.value="";
+    input.value = "";
 
-    document.getElementById("chatBox").scrollTop=
+    document.getElementById("chatBox").scrollTop =
     document.getElementById("chatBox").scrollHeight;
 }
 
 function saveProfile(){
 
-    let name=document.getElementById("username").value;
+    let name = document.getElementById("username").value;
 
-    alert("បានរក្សាទុក: "+name);
+    alert("Profile saved: " + name);
 }
 
 function toggleDark(){
+
     document.body.classList.toggle("dark");
 }
 
