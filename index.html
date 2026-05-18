@@ -31,7 +31,7 @@
         <main class="flex-1 p-6">
             <div id="alert-banner" style="display: none;" class="mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm bg-red-500"></div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">                                
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">                                                
                 <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">Publish an Update</h2>
                     <textarea id="update-text" rows="5" placeholder="Type your broadcast update here..." class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50/50 resize-none transition shadow-inner text-sm"></textarea>
@@ -49,7 +49,7 @@
                             <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
                             Syncing Live Cloud...
                         </div>
-                    </div>                                
+                    </div>                                                
                 </div>
 
                 <div class="lg:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
@@ -57,108 +57,114 @@
                     <div id="feed-container" class="text-xs text-gray-400 text-center py-12 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/30 font-medium">
                         Syncing latest workspace updates...
                     </div>
-                </div>                        
-            </div>        
-        </main>    
+                </div>                                    
+            </div>                
+        </main>        
     </div>
 
-    <script type="module">        
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";        
+    <script type="module">                
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";                
         import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        const firebaseConfig = {                        
-            apiKey: "AIzaSyC7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",                        
-            authDomain: "ultra-kh.firebaseapp.com",                        
-            databaseURL: "https://ultra-kh-default-rtdb.firebaseio.com",                        
-            projectId: "ultra-kh",                        
-            storageBucket: "ultra-kh.firebasestorage.app",                        
-            messagingSenderId: "414518365494",                        
-            appId: "1:414518365494:web:accf5fa772831d1459b797",                        
-            measurementId: "G-6RXJMQF7HZ"                
+        const firebaseConfig = {                                    
+            apiKey: "AIzaSyC7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",                                    
+            authDomain: "ultra-kh.firebaseapp.com",                                    
+            databaseURL: "https://ultra-kh-default-rtdb.firebaseio.com",                                    
+            projectId: "ultra-kh",                                    
+            storageBucket: "ultra-kh.firebasestorage.app",                                    
+            messagingSenderId: "414518365494",                                    
+            appId: "1:414518365494:web:accf5fa772831d1459b797",                                    
+            measurementId: "G-6RXJMQF7HZ"                        
         };
 
-        const app = initializeApp(firebaseConfig);                
+        const app = initializeApp(firebaseConfig);                        
         const db = getDatabase(app);
 
-        const alertBanner = document.getElementById('alert-banner');        
-        const updateTextArea = document.getElementById('update-text');        
-        const connectionStatus = document.getElementById('connection-status');                
-        const feedContainer = document.getElementById('feed-container');        
+        const alertBanner = document.getElementById('alert-banner');                
+        const updateTextArea = document.getElementById('update-text');                
+        const connectionStatus = document.getElementById('connection-status');                        
+        const feedContainer = document.getElementById('feed-container');                
         const btnPublish = document.getElementById('btn-publish');
 
         const databaseFeedRef = ref(db, 'feed');
 
-        function displayAlert(msg, errorMode = true) {                        
-            if (!msg) {                                
-                alertBanner.style.display = 'none';                                
-                return;                        
-            }                        
-            alertBanner.className = `mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm transition ${errorMode ? 'bg-red-500' : 'bg-gray-800'}`;                        
-            alertBanner.textContent = msg;                        
-            alertBanner.style.display = 'block';                
+        // Helper function to prevent malicious html entry breaks
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
-        const connectedRef = ref(db, ".info/connected");                    
-        onValue(connectedRef, (snap) => {                            
-            if (snap.val() === true) {                                    
-                connectionStatus.className = "text-xs flex items-center gap-2 text-green-700 font-semibold bg-green-50 px-3 py-2 rounded-lg border border-green-100";                                    
-                connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span> Connected Live Cloud`;                            
-            } else {                                    
-                connectionStatus.className = "text-xs flex items-center gap-2 text-amber-600 font-semibold bg-amber-50 px-3 py-2 rounded-lg border border-amber-100";                                    
-                connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span> Syncing Live Cloud...`;                            
-            }                    
+        function displayAlert(msg, errorMode = true) {                                    
+            if (!msg) {                                                
+                alertBanner.style.display = 'none';                                                
+                return;                                    
+            }                                    
+            alertBanner.className = `mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm transition ${errorMode ? 'bg-red-500' : 'bg-gray-800'}`;                                    
+            alertBanner.textContent = msg;                                    
+            alertBanner.style.display = 'block';                        }
+
+        const connectedRef = ref(db, ".info/connected");                            
+        onValue(connectedRef, (snap) => {                                        
+            if (snap.val() === true) {                                                    
+                connectionStatus.className = "text-xs flex items-center gap-2 text-green-700 font-semibold bg-green-50 px-3 py-2 rounded-lg border border-green-100";                                                    
+                connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span> Connected Live Cloud`;                                        
+            } else {                                                    
+                connectionStatus.className = "text-xs flex items-center gap-2 text-amber-600 font-semibold bg-amber-50 px-3 py-2 rounded-lg border border-amber-100";                                                    
+                connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span> Syncing Live Cloud...`;                                        
+            }                            
         });
 
-        onValue(databaseFeedRef, (snapshot) => {                        
-            if (!snapshot.exists()) {                                
-                feedContainer.className = "text-xs text-gray-400 text-center py-12 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/30";                                
-                feedContainer.textContent = "No broadcast updates posted yet.";                                
-                return;                        
+        onValue(databaseFeedRef, (snapshot) => {                                    
+            if (!snapshot.exists()) {                                                
+                feedContainer.className = "text-xs text-gray-400 text-center py-12 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/30";                                                
+                feedContainer.textContent = "No broadcast updates posted yet.";                                                
+                return;                                    
             }
 
-            let htmlPayload = `<div class="space-y-3">`;                        
-            const records = snapshot.val();                                        
-            Object.keys(records).reverse().forEach(key => {                                
-                const row = records[key];                                
-                const timestampLabel = row.timestamp ? new Date(row.timestamp).toLocaleString() : 'Recent';                                
-                htmlPayload += `                                        
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 text-left shadow-sm">                                                
-                        <p class="text-gray-800 font-normal break-words text-sm">${row.text || ''}</p>                                                
-                        <span class="text-[10px] text-gray-400 font-mono block mt-2">${timestampLabel}</span>                                        
-                    </div>                                
-                `;                        
-            });                        
-            htmlPayload += `</div>`;                                        
-            feedContainer.className = "block";                        
-            feedContainer.innerHTML = htmlPayload;                
-        }, (err) => {                        
-            feedContainer.className = "text-sm text-red-500 text-center py-12 font-medium";                        
-            feedContainer.textContent = `Database sync layer dropped: ${err.message}`;                
+            let htmlPayload = `<div class="space-y-3">`;                                    
+            const records = snapshot.val();                                                    
+            Object.keys(records).reverse().forEach(key => {                                                
+                const row = records[key];                                                
+                const timestampLabel = row.timestamp ? new Date(row.timestamp).toLocaleString() : 'Recent';                                                
+                const cleanText = escapeHtml(row.text || '');
+                htmlPayload += `                                                            
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 text-left shadow-sm">                                                                        
+                        <p class="text-gray-800 font-normal break-words text-sm">${cleanText}</p>                                                                        
+                        <span class="text-[10px] text-gray-400 font-mono block mt-2">${timestampLabel}</span>                                                            
+                    </div>                                                
+                `;                                    
+            });                                    
+            htmlPayload += `</div>`;                                                    
+            feedContainer.className = "block";                                    
+            feedContainer.innerHTML = htmlPayload;                        
+        }, (err) => {                                    
+            feedContainer.className = "text-sm text-red-500 text-center py-12 font-medium";                                    
+            feedContainer.textContent = `Database sync layer dropped: ${err.message}`;                        
         });
 
-        btnPublish.addEventListener('click', async () => {                        
-            const bodyContent = updateTextArea.value.trim();                        
+        btnPublish.addEventListener('click', async () => {                                    
+            const bodyContent = updateTextArea.value.trim();                                    
             if (!bodyContent) return displayAlert("Cannot process empty text posts.");
 
-            btnPublish.disabled = true;                        
-            btnPublish.textContent = "Publishing...";                        
+            btnPublish.disabled = true;                                    
+            btnPublish.textContent = "Publishing...";                                    
             displayAlert(null);
 
-            try {                                
-                await push(databaseFeedRef, {                                        
-                    text: bodyContent,                                        
-                    timestamp: serverTimestamp()                                
-                });                                
-                updateTextArea.value = "";                                
-                displayAlert("Post broadcast updated successfully.", false);                        
-            } catch (err) {                                
-                console.error(err);                                
-                displayAlert(`Broadcast Fail: ${err.message}`, true);                        
-            } finally {                                
-                btnPublish.disabled = false;                                
-                btnPublish.textContent = "Publish Post";                        
-            }                
-        });        
+            try {                                                
+                await push(databaseFeedRef, {                                                            
+                    text: bodyContent,                                                            
+                    timestamp: serverTimestamp()                                                
+                });                                                
+                updateTextArea.value = "";                                                
+                displayAlert("Post broadcast updated successfully.", false);                                    
+            } catch (err) {                                                
+                console.error(err);                                                
+                displayAlert(`Broadcast Fail: ${err.message}`, true);                                    
+            } finally {                                                
+                btnPublish.disabled = false;                                                
+                btnPublish.textContent = "Publish Post";                                    
+            }                        
+        });            
     </script>
 </body>
 </html>
