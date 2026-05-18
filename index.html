@@ -197,7 +197,7 @@
             </div>
             <div class="card">
               <h4>System Connection Status</h4>
-              <p style="font-size: 13px; font-weight: 500;"><span style="color: #F7BA2A;">●</span> Syncing Live Cloud...</p>
+              <p style="font-size: 13px; font-weight: 500;"><span style="color: #13CE66;">●</span> Connected Live Cloud</p>
             </div>
           </div>
         </div>
@@ -320,6 +320,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
+    // Standardized global client key properties
     const firebaseConfig = {
       apiKey: "AIzaSyc7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",
       authDomain: "ultra-kh.firebaseapp.com",
@@ -327,11 +328,12 @@
       projectId: "ultra-kh",
       storageBucket: "ultra-kh.appspot.com",
       messagingSenderId: "4141518365494",
-      appId: "1:4141518365494:web:accf5fa772831d1459b797"
+      appId: "1:4141518365494:web:accf5fa772831d1459b797a73f7dc53b"
     };
 
     const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
+    // Directly target configuration location mapping to force connection resolution
+    const database = getDatabase(app, "https://ultra-kh-default-rtdb.firebaseio.com");
     const chatMessagesBox = document.getElementById('chatMessagesBox');
 
     let activeReplyTarget = null;
