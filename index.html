@@ -156,14 +156,21 @@
       top: 20px;
       right: 20px;
       z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .toast {
       padding: 12px 24px;
       background: #333;
       color: white;
       border-radius: 4px;
-      margin-bottom: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      animation: fadeIn 0.2s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .feed-container {
       max-height: 400px;
@@ -195,6 +202,16 @@
     .feed-delete:hover {
       opacity: 1;
     }
+    .feed-tag {
+      display: inline-block;
+      background: #E5E9F2;
+      color: var(--bit-text-them);
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 4px;
+      margin-top: 6px;
+    }
     .auth-toggle-text {
       font-size: 13px;
       color: var(--bit-blue-primary);
@@ -202,6 +219,17 @@
       text-align: center;
       display: block;
       margin-top: 15px;
+    }
+    .operators-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .operators-table th, .operators-table td {
+      text-align: left;
+      padding: 8px 4px;
+      border-bottom: 1px solid #E5E9F2;
     }
   </style>
 </head>
@@ -236,6 +264,10 @@
               <div class="form-group">
                 <textarea id="feedUpdateText" rows="3" placeholder="What is happening within your workspace channels?"></textarea>
               </div>
+              <div class="form-group">
+                <label class="form-label">Add Tags (comma separated)</label>
+                <input type="text" id="feedUpdateTags" class="form-input" placeholder="e.g. general, announcement, urgent">
+              </div>
               <button id="btnPublishPost" class="btn-submit">Publish Post</button>
             </div>
 
@@ -252,6 +284,24 @@
               <h4>Welcome to Ultra KH 🚀</h4>
               <p style="font-size: 13px; color: var(--bit-text-light); line-height: 1.5;">Welcome to our official platform tracker feed updates.</p>
             </div>
+            
+            <div class="card">
+              <h4 style="margin-top: 0; margin-bottom: 5px;">Active Operators</h4>
+              <table class="operators-table">
+                <thead>
+                  <tr>
+                    <th>Operator Handle</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="activeOperatorsList">
+                  <tr>
+                    <td colspan="2" style="color: var(--bit-text-light); font-size: 12px; text-align: center;">Connecting sync stream...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <div class="card">
               <h4>System Connection Status</h4>
               <p style="font-size: 13px; font-weight: 500;" id="cloudConnectionStatus"><span style="color: #13CE66;">●</span> Connected Live Cloud</p>
@@ -392,7 +442,12 @@
       if(type === 'success') toast.style.backgroundColor = '#13CE66';
       toast.innerText = message;
       container.appendChild(toast);
-      setTimeout(() => toast.remove(), 3500);
+      
+      // Auto-removal script avoids blocking interface layouts over time
+      setTimeout(() => {
+        toast.style.animation = 'fadeIn 0.2s ease reverse forwards';
+        setTimeout(() => toast.remove(), 200);
+      }, 3500);
     }
 
     function toggleAuthForms(showLogin) {
@@ -417,7 +472,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, set, push, onValue, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -436,6 +491,7 @@
 
     const chatMessagesBox = document.getElementById('chatMessagesBox');
     const workspaceFeedBox = document.getElementById('workspaceFeedBox');
+    const activeOperatorsList = document.getElementById('activeOperatorsList');
 
     let activeReplyTarget = null;
     const containerReply = document.getElementById('replyReferenceContainer');
@@ -450,7 +506,7 @@
     }
 
     // =================================================================
-    // AUTHENTICATION MANAGEMENT
+    // AUTHENTICATION & PRESENCE MANAGEMENT
     // =================================================================
     onAuthStateChanged(auth, (user) => {
       const topBarName = document.getElementById('topBarUserHandle');
@@ -458,31 +514,34 @@
       const topLogoutBtn = document.getElementById('btnTopLogout');
 
       if (user) {
-        // User logged in
         const nameToShow = user.displayName || user.email.split('@')[0];
         topBarName.innerText = nameToShow;
         statusDot.style.backgroundColor = '#13CE66';
         topLogoutBtn.style.display = 'inline-block';
 
-        // Update profile tab inputs
+        // Write real-time presence logging tracking object
+        const userPresenceRef = ref(database, 'presence/' + user.uid);
+        set(userPresenceRef, {
+          handle: nameToShow,
+          status: "Online"
+        });
+        onDisconnect(userPresenceRef).remove();
+
         document.getElementById('profEmailDisplay').value = user.email;
         document.getElementById('profUserHandle').value = user.displayName || '';
 
-        // Toggle UI component visibilities
         document.getElementById('homePublishCard').style.display = 'block';
         document.getElementById('chatLockedCard').style.display = 'none';
         document.getElementById('chatActiveCard').style.display = 'block';
         document.getElementById('profileLockedCard').style.display = 'none';
         document.getElementById('profileActiveCard').style.display = 'block';
 
-        // Set Auth Page status display
         document.getElementById('authLoginCard').style.display = 'none';
         document.getElementById('authRegisterCard').style.display = 'none';
         document.getElementById('authWelcomeUserText').innerText = `Logged in as: ${user.email}`;
         document.getElementById('authWelcomeCard').style.display = 'block';
         document.getElementById('nav-auth').innerText = "🔑 Session Profile";
       } else {
-        // User logged out
         topBarName.innerText = "Guest";
         statusDot.style.backgroundColor = '#FF4949';
         topLogoutBtn.style.display = 'none';
@@ -497,6 +556,26 @@
         document.getElementById('authWelcomeCard').style.display = 'none';
         document.getElementById('nav-auth').innerText = "🔑 Login / Register";
       }
+    });
+
+    // Sync Live Active Operators Table Card Node Stream
+    onValue(ref(database, 'presence'), (snapshot) => {
+      if (!activeOperatorsList) return;
+      activeOperatorsList.innerHTML = '';
+      const data = snapshot.val();
+      if (!data) {
+        activeOperatorsList.innerHTML = `<tr><td colspan="2" style="color: var(--bit-text-light); text-align:center;">No operators active</td></tr>`;
+        return;
+      }
+      Object.keys(data).forEach(uid => {
+        const op = data[uid];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${op.handle}</strong></td>
+          <td><span style="color: #13CE66;">●</span> ${op.status}</td>
+        `;
+        activeOperatorsList.appendChild(tr);
+      });
     });
 
     // Sign Up Event
@@ -529,6 +608,9 @@
 
     // Logout Trigger Functions
     const executeSignOut = () => {
+      if(auth.currentUser) {
+        remove(ref(database, 'presence/' + auth.currentUser.uid));
+      }
       signOut(auth).then(() => {
         showToast("Session closed.", "info");
         switchView('page-auth');
@@ -537,7 +619,7 @@
     document.getElementById('btnTopLogout')?.addEventListener('click', executeSignOut);
     document.getElementById('btnMainLogout')?.addEventListener('click', executeSignOut);
 
-    // Profile Metadata Custom Handle Modification Event
+    // Profile Custom Handle Setup Update
     document.getElementById('profileUpdateForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
       const user = auth.currentUser;
@@ -547,6 +629,10 @@
         updateProfile(user, { displayName: newHandle })
           .then(() => {
             document.getElementById('topBarUserHandle').innerText = newHandle;
+            set(ref(database, 'presence/' + user.uid), {
+              handle: newHandle,
+              status: "Online"
+            });
             showToast("Display nickname synced successfully.", "success");
           })
           .catch(err => showToast(err.message, "error"));
@@ -558,8 +644,14 @@
     // =================================================================
     document.getElementById('btnPublishPost')?.addEventListener('click', () => {
       const feedTextEl = document.getElementById('feedUpdateText');
+      const feedTagsEl = document.getElementById('feedUpdateTags');
       const text = feedTextEl.value.trim();
+      
       if (!text) return;
+
+      const tagArray = feedTagsEl ? feedTagsEl.value.split(',')
+                        .map(t => t.trim())
+                        .filter(t => t.length > 0) : [];
 
       const currentUser = document.getElementById("topBarUserHandle").innerText;
       const feedRef = ref(database, 'feed');
@@ -568,9 +660,11 @@
       set(newPostRef, {
         sender: currentUser,
         text: text,
+        tags: tagArray,
         timestamp: new Date().toLocaleString()
       }).then(() => {
         feedTextEl.value = '';
+        if (feedTagsEl) feedTagsEl.value = '';
         showToast("Dashboard broadcast feed updated live!", "success");
       }).catch(err => showToast("Broadcast Fail: " + err.message, "error"));
     });
@@ -592,12 +686,18 @@
         const isOwner = post.sender === currentUser;
         const deleteHTML = isOwner ? `<span class="feed-delete" data-key="${key}">✕ Remove</span>` : '';
 
+        let tagsHTML = '';
+        if(post.tags && post.tags.length > 0) {
+          tagsHTML = '<div>' + post.tags.map(t => `<span class="feed-tag">#${t}</span>`).join('') + '</div>';
+        }
+
         const postItem = document.createElement('div');
         postItem.className = 'feed-item';
         postItem.innerHTML = `
           ${deleteHTML}
           <div class="feed-meta">🛡️ <strong>${post.sender}</strong> • ${post.timestamp}</div>
           <div style="color: var(--bit-text-them); font-size: 14px; white-space: pre-wrap;">${post.text}</div>
+          ${tagsHTML}
         `;
         workspaceFeedBox.appendChild(postItem);
       });
