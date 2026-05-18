@@ -39,7 +39,7 @@
                 <h1 class="text-2xl font-bold mb-8 px-2 tracking-tight">Ultra KH</h1>
                 <nav class="space-y-1" id="main-nav">
                     <button data-target="view-home" class="nav-btn w-full text-left block px-4 py-2.5 rounded bg-blue-700 font-semibold shadow-inner transition">🏠 Home</button>
-                    <button data-target="view-chat" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">💬 Chat</button>
+                    <button data-target="view-chat" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">💬 Chat Room</button>
                     <button data-target="view-profile" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">👤 Profile</button>
                     <button data-target="view-accounts" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">🔑 Accounts</button>
                 </nav>
@@ -52,7 +52,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 p-6 overflow-y-auto">
+        <main class="flex-1 p-6 overflow-y-auto bg-gray-50">
             <div id="alert-banner" style="display: none;" class="mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm bg-red-500"></div>
             
             <div id="view-home" class="content-view grid grid-cols-1 lg:grid-cols-3 gap-6">                                                
@@ -84,16 +84,27 @@
                 </div>                                    
             </div>
 
-            <div id="view-chat" class="content-view hidden space-y-4 max-w-4xl mx-auto">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[550px]">
-                    <h2 class="text-lg font-bold text-gray-900 mb-2 tracking-tight">Global System Chat Room</h2>
-                    <p class="text-xs text-gray-500 mb-4">Internal workspace sync terminal communications.</p>
+            <div id="view-chat" class="content-view hidden max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col h-[600px] overflow-hidden">
+                    <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">🌐</div>
+                            <div>
+                                <h2 class="text-sm font-bold text-gray-900 tracking-tight">Global Operations Chat</h2>
+                                <p class="text-[11px] text-green-600 font-medium flex items-center gap-1">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span> Live Synced Terminal
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50 rounded-xl border border-gray-200 mb-4 space-y-3 text-sm scroll-smooth"></div>
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4 scroll-smooth flex flex-col"></div>
                     
-                    <div class="flex gap-2">
-                        <input type="text" id="chat-input" placeholder="Type an internal message..." class="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50 text-sm">
-                        <button id="btn-chat-send" class="px-6 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition active:scale-95 shadow-md">Send</button>
+                    <div class="p-4 bg-white border-t border-gray-100 flex gap-2 items-center">
+                        <input type="text" id="chat-input" placeholder="Type an encrypted team message..." class="flex-1 p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50 text-sm">
+                        <button id="btn-chat-send" class="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition active:scale-95 shadow-md shadow-blue-600/10 flex items-center justify-center">
+                            Send
+                        </button>
                     </div>
                 </div>
             </div>
@@ -183,7 +194,7 @@
         const chatInput = document.getElementById('chat-input');
         const btnChatSend = document.getElementById('btn-chat-send');
 
-        // Database Refs
+        // Database Route Paths
         const databaseFeedRef = ref(db, 'feed');
         const databaseChatRef = ref(db, 'chat_messages');
 
@@ -315,7 +326,7 @@
                 const cleanText = escapeHtml(row.text || '');
                 const userTag = escapeHtml(row.sender || 'System Operator').split('@')[0];
                 htmlPayload += `                                                            
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 text-left shadow-sm">
+                    <div class="p-4 bg-white rounded-xl border border-gray-200 text-left shadow-sm">
                         <div class="flex justify-between items-center mb-1">
                             <span class="font-bold text-xs text-blue-600 font-mono">${userTag}</span>
                             <span class="text-[10px] text-gray-400 font-mono">${timestampLabel}</span>
@@ -329,10 +340,10 @@
             feedContainer.innerHTML = htmlPayload;                        
         });
 
-        // Sync: Live Chat Engine
+        // Sync: Optimized Modern Chat Engine UI layout
         onValue(databaseChatRef, (snapshot) => {
             if (!snapshot.exists()) {
-                chatMessages.innerHTML = `<div class="text-gray-400 text-center py-8 italic text-xs">No terminal messages logged yet.</div>`;
+                chatMessages.innerHTML = `<div class="text-gray-400 text-center py-8 italic text-xs m-auto">No terminal messages logged yet.</div>`;
                 return;
             }
             
@@ -341,19 +352,43 @@
             Object.keys(logs).forEach(key => {
                 const entry = logs[key];
                 const timeStr = entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Now';
-                const userTag = escapeHtml(entry.sender || 'Operator').split('@')[0];
-                chatPayload += `
-                    <div class="p-2.5 bg-white border border-gray-200 rounded-lg shadow-sm">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold text-xs text-blue-600 font-mono">${userTag}</span>
-                            <span class="text-[9px] text-gray-400 font-mono">${timeStr}</span>
+                const senderEmail = entry.sender || 'Operator';
+                const userTag = escapeHtml(senderEmail).split('@')[0];
+                const initials = userTag.substring(0, 2).toUpperCase();
+                
+                // Style differentiation: Determine if message belongs to current session user
+                const isMe = (senderEmail === activeUserEmail);
+                
+                if (isMe) {
+                    // Right aligned blue chat bubble layout
+                    chatPayload += `
+                        <div class="flex items-end gap-2 justify-end ml-12">
+                            <div class="flex flex-col items-end">
+                                <span class="text-[10px] text-gray-400 font-mono mb-0.5">${timeStr}</span>
+                                <div class="bg-blue-600 text-white rounded-2xl rounded-br-none px-4 py-2.5 text-sm max-w-md shadow-sm">
+                                    <p class="break-words font-normal leading-snug">${escapeHtml(entry.message)}</p>
+                                </div>
+                            </div>
+                            <div class="h-7 w-7 rounded-full bg-blue-700 text-[10px] font-bold text-white flex items-center justify-center font-mono shrink-0 shadow-sm shadow-blue-600/20">${initials}</div>
                         </div>
-                        <p class="text-gray-700 break-words">${escapeHtml(entry.message)}</p>
-                    </div>
-                `;
+                    `;
+                } else {
+                    // Left aligned gray/white chat bubble layout for team members
+                    chatPayload += `
+                        <div class="flex items-end gap-2 mr-12">
+                            <div class="h-7 w-7 rounded-full bg-gray-300 text-[10px] font-bold text-gray-600 flex items-center justify-center font-mono shrink-0 shadow-sm">${initials}</div>
+                            <div class="flex flex-col items-start">
+                                <span class="text-[10px] text-gray-500 font-semibold font-mono mb-0.5 ml-1">${userTag} <span class="text-gray-400 font-normal font-sans ml-1">${timeStr}</span></span>
+                                <div class="bg-white border border-gray-200 text-gray-800 rounded-2xl rounded-bl-none px-4 py-2.5 text-sm max-w-md shadow-sm">
+                                    <p class="break-words font-normal leading-snug">${escapeHtml(entry.message)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
             });
             chatMessages.innerHTML = chatPayload;
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Keep view locked to the newest messages
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto anchor view layout to newest logs
         });
 
         // Action: Publish Broadcast
