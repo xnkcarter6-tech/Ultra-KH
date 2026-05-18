@@ -165,8 +165,8 @@
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
-        // --- AUTH CONTROLLER ---
-        onAuthStateChanged(auth, async (user) => {
+        // --- FIXED AUTH TRACKER ---
+        onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserId = user.uid;
                 activeUserName = user.email ? user.email.split('@')[0] : "Operator";
@@ -174,22 +174,13 @@
                 document.getElementById('session-badge').textContent = `ID: ${activeUserName}`;
                 authScreen.classList.add('hidden');
                 portalScreen.classList.remove('hidden');
-
-                // SAFE WRITE: Wrapped in try/catch to ensure database delay doesn't trigger UI breaks
-                try {
-                    await push(ref(db, 'presence'), {
-                        uid: user.uid,
-                        username: activeUserName,
-                        email: user.email || "No Email",
-                        status: "active",
-                        timestamp: serverTimestamp()
-                    });
-                } catch(err) {
-                    console.log("Presence non-critical warning: ", err.message);
-                }
                 
+                // CRITICAL FIX: Delay database interactions slightly to prevent immediate PERMISSION_DENIED on token check
                 if (!componentsBound) {
-                    initLiveSyncStreams();
+                    setTimeout(() => {
+                        initLiveSyncStreams();
+                        logPresence(user);
+                    }, 500);
                     componentsBound = true;
                 }
             } else {
@@ -200,7 +191,21 @@
             }
         });
 
-        // --- AUTH ACTIONS ---
+        async function logPresence(user) {
+            try {
+                await push(ref(db, 'presence'), {
+                    uid: user.uid,
+                    username: activeUserName,
+                    email: user.email || "No Email",
+                    status: "active",
+                    timestamp: serverTimestamp()
+                });
+            } catch(err) {
+                console.log("Presence non-critical warning: ", err.message);
+            }
+        }
+
+        // --- USER AUTH HANDLERS ---
         document.getElementById('btn-signup').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
