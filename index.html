@@ -8,27 +8,52 @@
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 antialiased">
 
-    <div id="top-status-bar" class="bg-green-600 text-white text-[10px] md:text-[11px] font-bold tracking-wider uppercase py-2 text-center shadow-sm px-4">
-        ✔ PORTAL CORE SYSTEM ACTIVE V2 (AUTHENTICATED SESSION)
+    <div id="auth-screen" class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 w-full max-w-md">
+            <h1 class="text-2xl font-bold text-gray-900 mb-1 tracking-tight text-center">Ultra KH Workspace</h1>
+            <p class="text-xs text-gray-500 text-center mb-6">Initialize operator session node credentials</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Username / ID</label>
+                    <input type="text" id="auth-username" placeholder="e.g., operator_01" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Reference</label>
+                    <input type="email" id="auth-email" placeholder="name@company.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+                </div>
+                
+                <div class="pt-2 space-y-2">
+                    <button id="btn-login" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition shadow-sm">
+                        Sign In Existing Session
+                    </button>
+                    <button id="btn-signup" class="w-full py-2.5 bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold rounded-lg transition shadow-sm">
+                        Create New Account Node
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="portal-screen" class="min-h-screen flex flex-col md:flex-row">
+    <div id="portal-screen" class="min-h-screen flex flex-col md:flex-row hidden">
         
         <aside class="w-full md:w-64 bg-blue-600 text-white flex flex-col justify-between p-4 shadow-lg shrink-0">
             <div>
                 <div class="flex items-center justify-between md:block mb-4 md:mb-8 px-2">
                     <h1 class="text-2xl font-bold tracking-tight">Ultra KH</h1>
-                    <span id="session-badge" class="text-[10px] bg-blue-700 px-2 py-1 rounded font-mono">Operator Node</span>
+                    <span id="session-badge" class="text-[10px] bg-blue-700 px-2 py-1 rounded font-mono">Active Session</span>
                 </div>
                 <nav class="grid grid-cols-2 gap-1 md:flex md:flex-col md:space-y-1" id="main-nav">
                     <button data-target="view-home" class="nav-btn text-left block px-3 md:px-4 py-2 rounded bg-blue-700 text-xs md:text-sm font-semibold shadow-inner transition">🏠 Home Feed</button>
-                    <button id="nav-chat-btn" data-target="view-chat" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">💬 Chat Hub</button>
-                    <button id="nav-profile-btn" data-target="view-profile" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">👤 Profile</button>
-                    <button id="nav-accounts-btn" data-target="view-accounts" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">🔑 Accounts</button>
+                    <button data-target="view-chat" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">💬 Chat Hub</button>
+                    <button data-target="view-profile" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">👤 Profile</button>
+                    <button data-target="view-accounts" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">🔑 Accounts</button>
                 </nav>
             </div>
-            <div class="hidden md:block text-xs opacity-75 border-t border-blue-500/30 pt-4 px-2 font-mono" id="connection-string">
-                Status: Connected Matrix
+            <div>
+                <button id="btn-logout" class="w-full text-left px-4 py-2 mt-4 text-xs bg-blue-700 hover:bg-red-600 rounded font-mono transition text-white">
+                    ➔ Disconnect Node
+                </button>
             </div>
         </aside>
 
@@ -37,20 +62,14 @@
             
             <div id="view-home" class="content-view grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">                                                
                 <div class="xl:col-span-2 bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200 self-start">
-                    
                     <div id="publish-module" class="mb-6">
                         <h2 class="text-md md:text-lg font-bold text-gray-900 mb-3 tracking-tight">Publish an Update</h2>
                         <textarea id="update-text" rows="3" placeholder="Type your broadcast update here..." class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50 resize-none transition text-sm"></textarea>
                         <button id="btn-publish" class="mt-2 w-full sm:w-auto px-6 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition shadow-sm">Publish Post</button>
                     </div>
-
-                    <div id="guest-welcome-notice" class="hidden mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-800">
-                        💡 <strong>Viewing as Guest:</strong> You can read all active platform updates live. To publish, comment, or access system channels, an authenticated operator account is required.
-                    </div>
                     
                     <h2 class="text-md md:text-lg font-bold text-gray-900 mt-2 mb-4 tracking-tight border-t border-gray-100 pt-4">Workspace Broadcast Feed</h2>
-                    <div id="feed-container" class="space-y-4">
-                        </div>
+                    <div id="feed-container" class="space-y-4"></div>
                 </div>
 
                 <div class="space-y-4 md:space-y-6">
@@ -58,13 +77,6 @@
                         <h3 class="font-bold text-gray-900 mb-1 text-sm tracking-tight">Welcome to Ultra KH 🚀</h3>
                         <p class="text-xs text-gray-500 leading-relaxed">Welcome to our official platform tracker feed updates.</p>
                     </div>
-                    <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200">
-                        <h3 class="font-bold text-gray-900 mb-2 text-sm tracking-tight">System Connection Status</h3>
-                        <div id="connection-status" class="text-xs flex items-center gap-2 text-green-700 font-semibold bg-green-50 px-3 py-2 rounded-lg border border-green-100">
-                            <span class="h-2 w-2 rounded-full bg-green-500"></span>
-                            Public Cloud Link Active
-                        </div>
-                    </div>                                                
                 </div>
             </div>
 
@@ -77,21 +89,19 @@
                         <button id="channel-global" class="whitespace-nowrap text-left px-3 py-2 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 flex items-center justify-between gap-2">
                             <span>🌐 Global Room</span>
                         </button>
-                        <div id="pm-operators-directory" class="flex sm:flex-col gap-1"></div>
                     </div>
                 </div>
 
                 <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col overflow-hidden">
                     <div class="bg-white border-b border-gray-200 p-3 flex items-center justify-between">
                         <div>
-                            <h2 class="text-xs md:text-sm font-bold text-gray-900 tracking-tight" id="active-chat-title">Global System Chat Room</h2>
-                            <p class="text-[9px] text-gray-400 font-mono" id="active-chat-target-node">Path: chat_messages</p>
+                            <h2 class="text-xs md:text-sm font-bold text-gray-900 tracking-tight">Global System Chat Room</h2>
                         </div>
                     </div>
                     <div id="chat-messages" class="flex-1 overflow-y-auto p-3 bg-gray-50 space-y-2.5 text-xs md:text-sm flex flex-col"></div>
                     <div class="p-2.5 bg-white border-t border-gray-100 flex gap-2">
-                        <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 p-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50 text-xs md:text-sm">
-                        <button id="btn-chat-send" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs md:text-sm font-semibold rounded-lg transition shadow-sm">Send</button>
+                        <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 p-2 border border-gray-200 rounded-lg text-xs md:text-sm bg-gray-50/50">
+                        <button id="btn-chat-send" class="px-4 py-2 bg-blue-600 text-white text-xs md:text-sm font-semibold rounded-lg">Send</button>
                     </div>
                 </div>
             </div>
@@ -102,13 +112,9 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Display Username</label>
-                            <input type="text" id="profile-display-name-input" value="System Operator" class="w-full p-2 border border-gray-200 rounded-lg text-xs md:text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <input type="text" id="profile-display-name-input" class="w-full p-2 border border-gray-200 rounded-lg text-xs md:text-sm bg-gray-50">
                         </div>
-                        <div>
-                            <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Status Bio Info</label>
-                            <input type="text" id="profile-bio-input" value="Active Monitoring Core" class="w-full p-2 border border-gray-200 rounded-lg text-xs md:text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        </div>
-                        <button id="btn-save-profile" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition">Save Matrix Profile</button>
+                        <button id="btn-save-profile" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save Matrix Profile</button>
                     </div>
                 </div>
             </div>
@@ -117,21 +123,18 @@
                 <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-md md:text-lg font-bold text-gray-900 mb-1 tracking-tight">Workspace Credentials Monitor</h2>
                     <p class="text-xs text-gray-500 mb-4">Active operational states across the cloud matrix nodes.</p>
-                    
                     <div class="hidden sm:block overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-gray-200 bg-gray-50 text-[10px] font-bold uppercase text-gray-500 tracking-wider font-mono">
                                     <th class="p-3">Reference Account</th>
                                     <th class="p-3">Permission Vector</th>
-                                    <th class="p-3">Tunnel Port</th>
-                                    <th class="p-3">Operational State</th>
+                                    <th class="p-3">Status</th>
                                 </tr>
                             </thead>
                             <tbody class="text-xs font-mono divide-y divide-gray-100 text-gray-700" id="accounts-table-body-desktop"></tbody>
                         </table>
                     </div>
-
                     <div class="sm:hidden space-y-3" id="accounts-cards-body-mobile"></div>
                 </div>
             </div>
@@ -140,7 +143,7 @@
 
     <script type="module">                
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";                
-        import { getDatabase, ref, push, onValue, onChildAdded, onChildChanged, onChildRemoved, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, get, onValue, onChildAdded, onChildChanged, onChildRemoved, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {                                    
             apiKey: "AIzaSyC7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",                                    
@@ -156,90 +159,127 @@
         const app = initializeApp(firebaseConfig);                        
         const db = getDatabase(app);
 
-        // --- AUTOMATED ACCOUNT VERIFICATION MATRIX ---
-        // Change to null or false to completely simulate an unauthenticated stranger browsing your site
-        let currentUserId = "xnk_master_node"; 
-        let activeUserName = "System Operator";
-        let isGuestUser = !currentUserId; 
+        let currentUserId = null;
+        let activeUserName = "";
 
-        const updateTextArea = document.getElementById('update-text');                
-        const feedContainer = document.getElementById('feed-container');                
-        const btnPublish = document.getElementById('btn-publish');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const btnChatSend = document.getElementById('btn-chat-send');
-        const pmOperatorsDirectory = document.getElementById('pm-operators-directory');
+        const authScreen = document.getElementById('auth-screen');
+        const portalScreen = document.getElementById('portal-screen');
         const alertBanner = document.getElementById('alert-banner');
-        const accountsTableBody = document.getElementById('accounts-table-body-desktop');
-        const accountsCardsMobile = document.getElementById('accounts-cards-body-mobile');
+
+        function showMessage(msg) {
+            alertBanner.textContent = msg;
+            alertBanner.style.display = "block";
+            setTimeout(() => { alertBanner.style.display = "none"; }, 4000);
+        }
 
         function escapeHtml(text) {
             const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
-        // Apply visual layout lockouts immediately if user has no account session
-        function verifyPermissionTheme() {
-            if (isGuestUser) {
-                document.getElementById('publish-module').classList.add('hidden');
-                document.getElementById('guest-welcome-notice').classList.remove('hidden');
-                document.getElementById('top-status-bar').className = "bg-amber-600 text-white text-[10px] md:text-[11px] font-bold tracking-wider uppercase py-2 text-center shadow-sm px-4";
-                document.getElementById('top-status-bar').textContent = "⚠️ VISITING SYSTEM IN PUBLIC READ-ONLY MODE (GUEST SESSION)";
-                document.getElementById('session-badge').textContent = "Guest Terminal";
-                document.getElementById('session-badge').className = "text-[10px] bg-amber-700 px-2 py-1 rounded font-mono";
-                document.getElementById('connection-string').textContent = "Status: Public Mirror";
-                
-                // Hide private operations tabs entirely from the public
-                document.getElementById('nav-chat-btn').classList.add('hidden');
-                document.getElementById('nav-profile-btn').classList.add('hidden');
-                document.getElementById('nav-accounts-btn').classList.add('hidden');
+        // --- AUTHENTICATION FLOW: SIGN UP & LOGIN ENGINE ---
+        document.getElementById('btn-signup').addEventListener('click', async () => {
+            const username = document.getElementById('auth-username').value.trim().toLowerCase();
+            const email = document.getElementById('auth-email').value.trim();
+
+            if (!username || !email) {
+                alert('Please fill out all credentials paths.');
+                return;
             }
-        }
-        verifyPermissionTheme();
 
-        document.getElementById('btn-save-profile').addEventListener('click', () => {
-            if(isGuestUser) return;
-            activeUserName = document.getElementById('profile-display-name-input').value.trim() || "System Operator";
-            alertBanner.textContent = "Profile display matrix metadata updated.";
-            alertBanner.style.display = "block";
-            setTimeout(() => { alertBanner.style.display = "none"; }, 3000);
-        });
+            const userRef = ref(db, `users/${username}`);
+            const snapshot = await get(userRef);
 
-        onValue(ref(db, 'users'), (snapshot) => {
-            if(!snapshot.exists() || isGuestUser) return;
-            let desktopHtml = "";
-            let mobileHtml = "";
-            const users = snapshot.val();
-            Object.keys(users).forEach(uid => {
-                const user = users[uid];
-                const refAccount = escapeHtml(user.email || uid);
-                const permissionVector = escapeHtml(user.permission || (uid === "xnk_master_node" || refAccount.includes('carter') ? "Master Core Access" : "Operator Access"));
-                const tunnelPort = escapeHtml(user.tunnel || (uid === "xnk_master_node" ? "443 -> SSL" : "8080 -> Bypass"));
-                const isIdle = user.status === "idle" || user.isIdle;
-                desktopHtml += `
-                    <tr class="${uid === currentUserId ? 'bg-blue-50/30' : ''}">
-                        <td class="p-3 text-blue-600 font-semibold break-all">${refAccount}</td>
-                        <td class="p-3 text-gray-700">${permissionVector}</td>
-                        <td class="p-3 text-gray-500 font-mono">${tunnelPort}</td>
-                        <td class="p-3 font-bold ${isIdle ? 'text-amber-600' : 'text-green-600'}">${isIdle ? '● Idle' : '● Active'}</td>
-                    </tr>`;
-                mobileHtml += `
-                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200/80 space-y-1.5 font-mono text-xs ${uid === currentUserId ? 'border-blue-300 bg-blue-50/20' : ''}">
-                        <div class="flex justify-between items-start border-b border-gray-200/50 pb-1.5">
-                            <span class="text-blue-600 font-bold break-all pr-2">${refAccount}</span>
-                            <span class="font-bold shrink-0 ${isIdle ? 'text-amber-600' : 'text-green-600'}">${isIdle ? '● Idle' : '● Active'}</span>
-                        </div>
-                    </div>`;
+            if (snapshot.exists()) {
+                alert('This User ID already exists inside the system matrix.');
+                return;
+            }
+
+            // Write account profile to real-time node instantly
+            await set(userRef, {
+                username: username,
+                email: email,
+                permission: username === "xnk_master_node" ? "Master Core Access" : "Operator Access",
+                status: "active",
+                timestamp: serverTimestamp()
             });
-            accountsTableBody.innerHTML = desktopHtml;
-            accountsCardsMobile.innerHTML = mobileHtml;
+
+            initializeAuthenticatedSession(username, username);
         });
 
-        function initChatEngineStream() {
-            if(isGuestUser) return;
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            const username = document.getElementById('auth-username').value.trim().toLowerCase();
+            if (!username) {
+                alert('Enter your Account User ID to connect.');
+                return;
+            }
+
+            const snapshot = await get(ref(db, `users/${username}`));
+            if (!snapshot.exists()) {
+                alert('Account ID not verified in system registry. Sign up instead.');
+                return;
+            }
+
+            const userData = snapshot.val();
+            initializeAuthenticatedSession(username, userData.username);
+        });
+
+        function initializeAuthenticatedSession(uid, displayName) {
+            currentUserId = uid;
+            activeUserName = displayName;
+
+            document.getElementById('session-badge').textContent = `ID: ${uid}`;
+            document.getElementById('profile-display-name-input').value = displayName;
+
+            authScreen.classList.add('hidden');
+            portalScreen.classList.remove('hidden');
+
+            set(ref(db, `users/${currentUserId}/status`), "active");
+
+            initLiveSyncStreams();
+            showMessage(`Welcome back online, session node: ${uid}`);
+        }
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            if (currentUserId) {
+                set(ref(db, `users/${currentUserId}/status`), "idle");
+            }
+            currentUserId = null;
+            portalScreen.classList.add('hidden');
+            authScreen.classList.remove('hidden');
+        });
+
+        // --- REAL-TIME LIVE MODULE DATA STREAM ENGINE ---
+        function initLiveSyncStreams() {
+            // Live Users Registry sync
+            onValue(ref(db, 'users'), (snapshot) => {
+                if(!snapshot.exists()) return;
+                let desktopHtml = ""; let mobileHtml = "";
+                const users = snapshot.val();
+                Object.keys(users).forEach(uid => {
+                    const user = users[uid];
+                    const accountName = escapeHtml(user.email || uid);
+                    const isIdle = user.status === "idle";
+                    desktopHtml += `
+                        <tr class="${uid === currentUserId ? 'bg-blue-50/50' : ''}">
+                            <td class="p-3 text-blue-600 font-semibold font-mono">${escapeHtml(uid)}</td>
+                            <td class="p-3 text-gray-600 text-xs">${user.permission || 'Operator Access'}</td>
+                            <td class="p-3 font-bold ${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? '● Idle' : '● Active'}</td>
+                        </tr>`;
+                    mobileHtml += `
+                        <div class="p-3 bg-gray-50 rounded-lg border text-xs font-mono">
+                            <div class="flex justify-between"><strong>${escapeHtml(uid)}</strong><span class="${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? 'Idle' : 'Active'}</span></div>
+                        </div>`;
+                });
+                document.getElementById('accounts-table-body-desktop').innerHTML = desktopHtml;
+                document.getElementById('accounts-cards-body-mobile').innerHTML = mobileHtml;
+            });
+
+            // Chat Messages sync
             onValue(ref(db, 'chat_messages'), (snapshot) => {
+                const chatMessages = document.getElementById('chat-messages');
                 if (!snapshot.exists()) {
-                    chatMessages.innerHTML = `<div class="text-gray-400 text-center py-8 italic text-xs m-auto">No logged communication down line.</div>`;
+                    chatMessages.innerHTML = `<div class="text-gray-400 text-center py-4 italic text-xs m-auto">No logs.</div>`;
                     return;
                 }
                 let chatPayload = "";
@@ -249,10 +289,10 @@
                     const timeStr = entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Now';
                     chatPayload += `
                         <div class="flex items-end gap-2 mb-1">
-                            <div class="flex flex-col items-start">
-                                <span class="text-[9px] md:text-[10px] text-gray-500 font-semibold font-mono mb-0.5">${escapeHtml(entry.senderName || 'Operator')} <span class="text-gray-400 font-normal font-sans ml-1">${timeStr}</span></span>
-                                <div class="bg-white border border-gray-200 text-gray-800 rounded-xl rounded-bl-none px-3 py-1.5 text-xs md:text-sm max-w-xs shadow-sm">
-                                    <p class="break-words font-normal leading-snug">${escapeHtml(entry.message)}</p>
+                            <div class="flex flex-col">
+                                <span class="text-[10px] text-gray-500 font-bold font-mono">${escapeHtml(entry.senderName)} <span class="text-gray-400 font-normal ml-1">${timeStr}</span></span>
+                                <div class="bg-white border text-gray-800 rounded-xl px-3 py-1.5 text-xs max-w-xs shadow-sm mt-0.5">
+                                    <p class="break-words">${escapeHtml(entry.message)}</p>
                                 </div>
                             </div>
                         </div>`;
@@ -261,125 +301,98 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             });
         }
-        initChatEngineStream();
 
+        // Send Chat Handling Actions
         async function sendChatMessage() {
-            if(isGuestUser) return;
-            const msgContent = chatInput.value.trim();
-            if(!msgContent) return;
-            await push(ref(db, 'chat_messages'), { message: msgContent, senderUid: currentUserId, senderName: activeUserName, timestamp: serverTimestamp() });
+            const chatInput = document.getElementById('chat-input');
+            const msg = chatInput.value.trim();
+            if(!msg || !currentUserId) return;
+            await push(ref(db, 'chat_messages'), { message: msg, senderUid: currentUserId, senderName: activeUserName, timestamp: serverTimestamp() });
             chatInput.value = "";
         }
-        if(btnChatSend) btnChatSend.addEventListener('click', sendChatMessage);
-        if(chatInput) chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
+        document.getElementById('btn-chat-send').addEventListener('click', sendChatMessage);
+        document.getElementById('chat-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
 
-        // CREATE SINGLE BROADCAST CARD NODE (Intelligently manages guest vs operator views)
+        // --- TIMELINE FEED EVENTS MANAGEMENT ---
         function createPostCardElement(postId, post) {
             const timeLabel = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
             const postLikesCount = post.likes ? Object.keys(post.likes).length : 0;
-            
             const card = document.createElement('div');
             card.id = `post-${postId}`;
-            card.className = "bg-white p-4 md:p-5 rounded-xl border border-gray-200 shadow-sm space-y-3 block text-left";
-            
-            // Adjust input blocks inside cards depending on guest authorization status
-            const interactionControls = isGuestUser 
-                ? `<div class="text-[11px] text-gray-400 font-medium italic bg-gray-100/50 p-2 rounded-lg text-center border border-gray-100">🔒 Account session required to react or comment</div>`
-                : `<div class="flex gap-4 items-center pt-2 border-t border-gray-100 text-xs">
-                    <button class="btn-like-toggle px-3 py-1 rounded-md bg-gray-100 font-bold hover:bg-red-50 hover:text-red-600 transition">👍 Like (<span class="like-count">${postLikesCount}</span>)</button>
-                   </div>
-                   <div class="space-y-2 pt-3 bg-gray-50 p-3 md:p-4 rounded-xl border border-gray-200/70">
-                    <div class="comments-list-container space-y-1.5"></div>
-                    <div class="flex flex-col sm:flex-row gap-2 mt-2 pt-2 border-t border-gray-100/40">
-                        <input type="text" placeholder="Write a comment..." class="comment-input-field flex-1 p-2 border border-gray-200 bg-white rounded-lg text-xs focus:outline-none">
-                        <button class="btn-submit-comment w-full sm:w-auto px-4 py-2 bg-gray-800 text-white font-bold rounded-lg text-[11px] hover:bg-gray-900 transition shrink-0">Comment</button>
-                    </div>
-                   </div>`;
-
+            card.className = "bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3 block text-left";
             card.innerHTML = `
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 w-full border-b border-gray-100 pb-2">
-                    <span class="font-bold text-xs md:text-sm text-blue-600 font-mono">${escapeHtml(post.authorName)}</span>
-                    <span class="text-[10px] md:text-[11px] text-gray-400 font-mono">${timeLabel}</span>
+                <div class="flex justify-between items-center border-b pb-2 text-xs">
+                    <span class="font-bold text-blue-600 font-mono">${escapeHtml(post.authorName)}</span>
+                    <span class="text-gray-400">${timeLabel}</span>
                 </div>
-                <div class="py-1">
-                    <p class="text-gray-800 text-xs md:text-sm font-normal break-words whitespace-pre-wrap leading-relaxed">${escapeHtml(post.text)}</p>
+                <p class="text-gray-800 text-xs md:text-sm break-words leading-relaxed">${escapeHtml(post.text)}</p>
+                <div class="flex gap-4 items-center pt-2 border-t text-xs">
+                    <button class="btn-like-toggle px-3 py-1 rounded bg-gray-100 font-bold hover:bg-red-50 hover:text-red-600 transition">👍 Like (<span class="like-count">${postLikesCount}</span>)</button>
                 </div>
-                ${interactionControls}`;
+                <div class="space-y-2 pt-2 bg-gray-50 p-3 rounded-lg border">
+                    <div class="comments-list-container space-y-1"></div>
+                    <div class="flex gap-2 mt-2 pt-2 border-t">
+                        <input type="text" placeholder="Write a comment..." class="comment-input-field flex-1 p-1.5 border bg-white rounded text-xs focus:outline-none">
+                        <button class="btn-submit-comment px-3 py-1 bg-gray-800 text-white font-bold rounded text-xs">Comment</button>
+                    </div>
+                </div>`;
 
-            if (!isGuestUser) {
-                card.querySelector('.btn-like-toggle').addEventListener('click', () => {
-                    runTransaction(ref(db, `social_feed/${postId}/likes/${currentUserId}`), (currentValue) => {
-                        return currentValue ? null : true;
-                    });
-                });
+            card.querySelector('.btn-like-toggle').addEventListener('click', () => {
+                runTransaction(ref(db, `social_feed/${postId}/likes/${currentUserId}`), (val) => val ? null : true);
+            });
 
-                card.querySelector('.btn-submit-comment').addEventListener('click', async () => {
-                    const input = card.querySelector('.comment-input-field');
-                    if(!input.value.trim()) return;
-                    await push(ref(db, `social_feed/${postId}/comments`), { text: input.value.trim(), author: activeUserName, authorUid: currentUserId });
-                    input.value = "";
-                });
+            card.querySelector('.btn-submit-comment').addEventListener('click', async () => {
+                const input = card.querySelector('.comment-input-field');
+                if(!input.value.trim()) return;
+                await push(ref(db, `social_feed/${postId}/comments`), { text: input.value.trim(), author: activeUserName });
+                input.value = "";
+            });
 
-                if (post.comments) {
-                    updateCommentsUIContainer(card.querySelector('.comments-list-container'), post.comments);
-                }
-            } else if (isGuestUser && post.comments) {
-                // Guests still get to read comments, just without input controls
-                const wrapper = document.createElement('div');
-                wrapper.className = "space-y-1.5 pt-2 border-t border-gray-50";
-                card.appendChild(wrapper);
-                updateCommentsUIContainer(wrapper, post.comments);
-            }
+            if (post.comments) updateCommentsUIContainer(card.querySelector('.comments-list-container'), post.comments);
             return card;
         }
 
         function updateCommentsUIContainer(containerElement, commentsObj) {
             let html = "";
             Object.keys(commentsObj).forEach(cId => {
-                const comment = commentsObj[cId];
-                html += `
-                    <div class="bg-gray-100 p-2 rounded-lg text-[11px] md:text-xs border border-gray-200/60">
-                        <span class="font-bold font-mono text-blue-600 block mb-0.5">${escapeHtml(comment.author)}</span>
-                        <p class="text-gray-700 font-normal break-words">${escapeHtml(comment.text)}</p>
-                    </div>`;
+                const c = commentsObj[cId];
+                html += `<div class="bg-gray-100 p-2 rounded text-[11px] border border-gray-200/60"><strong class="font-mono text-blue-600">${escapeHtml(c.author)}:</strong> <span class="text-gray-700">${escapeHtml(c.text)}</span></div>`;
             });
             containerElement.innerHTML = html;
         }
 
-        const socialFeedRef = ref(db, 'social_feed');
-        onChildAdded(socialFeedRef, (snapshot) => {
-            const card = createPostCardElement(snapshot.key, snapshot.val());
+        const feedContainer = document.getElementById('feed-container');
+        onChildAdded(ref(db, 'social_feed'), (snap) => {
+            const card = createPostCardElement(snap.key, snap.val());
             feedContainer.insertBefore(card, feedContainer.firstChild);
         });
 
-        onChildChanged(socialFeedRef, (snapshot) => {
-            const targetCard = document.getElementById(`post-${snapshot.key}`);
-            if (targetCard) {
-                const postData = snapshot.val();
-                const countNode = targetCard.querySelector('.like-count');
-                if(countNode) countNode.textContent = postData.likes ? Object.keys(postData.likes).length : 0;
-                const commentsContainer = targetCard.querySelector('.comments-list-container');
-                if (commentsContainer && postData.comments) updateCommentsUIContainer(commentsContainer, postData.comments);
+        onChildChanged(ref(db, 'social_feed'), (snap) => {
+            const card = document.getElementById(`post-${snap.key}`);
+            if (card) {
+                const post = snap.val();
+                card.querySelector('.like-count').textContent = post.likes ? Object.keys(post.likes).length : 0;
+                if (post.comments) updateCommentsUIContainer(card.querySelector('.comments-list-container'), post.comments);
             }
         });
 
-        onChildRemoved(socialFeedRef, (snapshot) => {
-            const targetCard = document.getElementById(`post-${snapshot.key}`);
-            if (targetCard) targetCard.remove();
+        document.getElementById('btn-publish').addEventListener('click', async () => {
+            const val = document.getElementById('update-text').value.trim();
+            if(!val || !currentUserId) return;
+            await push(ref(db, 'social_feed'), { text: val, authorUid: currentUserId, authorName: activeUserName, timestamp: serverTimestamp() });
+            document.getElementById('update-text').value = "";
         });
 
-        if(btnPublish) {
-            btnPublish.addEventListener('click', async () => {
-                if(isGuestUser) return;
-                const val = updateTextArea.value.trim();
-                if(!val) return;
-                btnPublish.disabled = true;
-                await push(ref(db, 'social_feed'), { text: val, authorUid: currentUserId, authorName: activeUserName, timestamp: serverTimestamp() });
-                updateTextArea.value = "";
-                btnPublish.disabled = false;
-            });
-        }
+        // Save Custom Name Profile Changes
+        document.getElementById('btn-save-profile').addEventListener('click', () => {
+            const updatedName = document.getElementById('profile-display-name-input').value.trim();
+            if (updatedName) {
+                activeUserName = updatedName;
+                showMessage("Display profile synced successfully.");
+            }
+        });
 
+        // Tab Views Navigators
         const navButtons = document.querySelectorAll('.nav-btn');
         const contentViews = document.querySelectorAll('.content-view');
         navButtons.forEach(btn => {
