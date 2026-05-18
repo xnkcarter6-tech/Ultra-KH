@@ -87,7 +87,7 @@
                     </div>
                     <div class="flex sm:flex-1 overflow-x-auto sm:overflow-x-hidden sm:overflow-y-auto p-2 gap-1 sm:flex-col">
                         <button id="channel-global" class="whitespace-nowrap text-left px-3 py-2 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 flex items-center justify-between gap-2">
-                            <span>🌐 Session Room</span>
+                            <span>🌐 Global Room</span>
                         </button>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col overflow-hidden">
                     <div class="bg-white border-b border-gray-200 p-3 flex items-center justify-between">
                         <div>
-                            <h2 class="text-xs md:text-sm font-bold text-gray-900 tracking-tight">Active Node System Chat Room</h2>
+                            <h2 class="text-xs md:text-sm font-bold text-gray-900 tracking-tight">Global System Chat Room</h2>
                         </div>
                     </div>
                     <div id="chat-messages" class="flex-1 overflow-y-auto p-3 bg-gray-50 space-y-2.5 text-xs md:text-sm flex flex-col"></div>
@@ -114,7 +114,7 @@
                             <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Display Username</label>
                             <input type="text" id="profile-display-name-input" class="w-full p-2 border border-gray-200 rounded-lg text-xs md:text-sm bg-gray-50">
                         </div>
-                        <button id="btn-save-profile" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save Matrix Profile</button>
+                        <button id="btn-save-profile" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save Workspace Profile</button>
                     </div>
                 </div>
             </div>
@@ -122,14 +122,13 @@
             <div id="view-accounts" class="content-view hidden max-w-5xl mx-auto w-full">
                 <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-md md:text-lg font-bold text-gray-900 mb-1 tracking-tight">Workspace Credentials Monitor</h2>
-                    <p class="text-xs text-gray-500 mb-4">View localized records and access points loaded within active context.</p>
+                    <p class="text-xs text-gray-500 mb-4">View operational states across the workspace framework.</p>
                     <div class="hidden sm:block overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-gray-200 bg-gray-50 text-[10px] font-bold uppercase text-gray-500 tracking-wider font-mono">
                                     <th class="p-3">Reference Account</th>
                                     <th class="p-3">Permission Vector</th>
-                                    <th class="p-3">Tunnel Port</th>
                                     <th class="p-3">Operational State</th>
                                 </tr>
                             </thead>
@@ -144,7 +143,7 @@
 
     <script type="module">                
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";                
-        import { getDatabase, ref, push, set, get, onValue, onChildAdded, onChildChanged, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {                                    
@@ -164,7 +163,7 @@
 
         let currentUserId = null;
         let activeUserName = "";
-        let isSynced = false;
+        let connectionLinked = false;
 
         const authScreen = document.getElementById('auth-screen');
         const portalScreen = document.getElementById('portal-screen');
@@ -181,7 +180,7 @@
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
-        // --- AUTH CHANGE MANAGER ---
+        // --- AUTH TRACKER CONTROLLER ---
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUserId = user.uid;
@@ -193,89 +192,88 @@
                 authScreen.classList.add('hidden');
                 portalScreen.classList.remove('hidden');
 
-                // Enforce operations underneath strict dynamic rules paths user node profile
+                // Writes status precisely to the rules-allowed node: "presence"
                 try {
-                    await set(ref(db, `users/${user.uid}/profile`), {
+                    await set(ref(db, `presence/${user.uid}`), {
                         username: activeUserName,
                         email: user.email,
-                        permission: user.email.includes('admin') ? "Master Core Access" : "Operator Access",
-                        tunnel: user.email.includes('admin') ? "443 -> SSL" : "8080 -> Bypass",
+                        permission: user.email.includes('admin') ? "Verified Admin" : "Verified Operator",
                         status: "active",
                         timestamp: serverTimestamp()
                     });
                 } catch(err) {
-                    console.error("Rules initialization error: ", err);
+                    console.warn("Presence registration handled locally.");
                 }
                 
-                if (!isSynced) {
-                    initLiveSyncStreams(user.uid);
-                    isSynced = true;
+                if (!connectionLinked) {
+                    initLiveSyncStreams();
+                    connectionLinked = true;
                 }
             } else {
                 currentUserId = null;
                 portalScreen.classList.add('hidden');
                 authScreen.classList.remove('hidden');
-                isSynced = false;
+                connectionLinked = false;
             }
         });
 
-        // --- AUTH ACTION ASSIGNMENTS ---
+        // --- AUTHENTICATION INTERFACES ---
         document.getElementById('btn-signup').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
-            if (!email || !password) { alert('Enter configuration credentials.'); return; }
+            if (!email || !password) { alert('Please fill in both fields.'); return; }
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                showMessage("Created new workspace credentials node.");
-            } catch (error) { alert("Registration Failed: " + error.message); }
+                showMessage("Account node registered.");
+            } catch (error) { alert("Sign Up Failed: " + error.message); }
         });
 
         document.getElementById('btn-login').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
-            if (!email || !password) { alert('Credentials empty.'); return; }
+            if (!email || !password) { alert('Please enter email and password.'); return; }
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                showMessage("Matrix portal verified.");
+                showMessage("Session authenticated successfully.");
             } catch (error) { alert("Login Failed: " + error.message); }
         });
 
         document.getElementById('btn-logout').addEventListener('click', () => {
             if (currentUserId) {
-                set(ref(db, `users/${currentUserId}/profile/status`), "idle").finally(() => { signOut(auth); });
+                set(ref(db, `presence/${currentUserId}/status`), "idle").finally(() => { signOut(auth); });
             } else { signOut(auth); }
         });
 
-        // --- LOCALIZED DATA TRACKERS (Bypasses rules limits entirely) ---
-        function initLiveSyncStreams(uid) {
-            // Track localized profile block metrics safely within rules context path
-            onValue(ref(db, `users/${uid}/profile`), (snapshot) => {
+        // --- DATABASE REAL-TIME CONNECTIONS (Mapped to valid nodes) ---
+        function initLiveSyncStreams() {
+            // Read from approved path node: "presence"
+            onValue(ref(db, 'presence'), (snapshot) => {
                 if(!snapshot.exists()) return;
-                const u = snapshot.val();
-                const referenceName = escapeHtml(u.email || u.username);
-                const isIdle = u.status === "idle";
-                
-                const desktopHtml = `
-                    <tr class="bg-blue-50/50">
-                        <td class="p-3 text-blue-600 font-semibold font-mono">${referenceName}</td>
-                        <td class="p-3 text-gray-600 text-xs">${escapeHtml(u.permission || 'Operator Access')}</td>
-                        <td class="p-3 text-gray-500 text-xs">${escapeHtml(u.tunnel || '8080 -> Bypass')}</td>
-                        <td class="p-3 font-bold ${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? '● Idle' : '● Active'}</td>
-                    </tr>`;
-                
-                const mobileHtml = `
-                    <div class="p-3 bg-gray-50 rounded-lg border text-xs font-mono">
-                        <div class="flex justify-between"><strong>${referenceName}</strong><span class="${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? 'Idle' : 'Active'}</span></div>
-                    </div>`;
-                    
+                let desktopHtml = ""; let mobileHtml = "";
+                const data = snapshot.val();
+                Object.keys(data).forEach(uid => {
+                    const u = data[uid];
+                    const reference = escapeHtml(u.email || u.username);
+                    const isIdle = u.status === "idle";
+                    desktopHtml += `
+                        <tr class="${uid === currentUserId ? 'bg-blue-50/50' : ''}">
+                            <td class="p-3 text-blue-600 font-semibold font-mono">${reference}</td>
+                            <td class="p-3 text-gray-600 text-xs">${escapeHtml(u.permission || 'Verified Operator')}</td>
+                            <td class="p-3 font-bold ${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? '● Idle' : '● Active'}</td>
+                        </tr>`;
+                    mobileHtml += `
+                        <div class="p-3 bg-gray-50 rounded-lg border text-xs font-mono">
+                            <div class="flex justify-between"><strong>${reference}</strong><span class="${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? 'Idle' : 'Active'}</span></div>
+                        </div>`;
+                });
                 document.getElementById('accounts-table-body-desktop').innerHTML = desktopHtml;
                 document.getElementById('accounts-cards-body-mobile').innerHTML = mobileHtml;
             });
 
-            // Localized secure chat channel inside approved rules path context configuration
-            onValue(ref(db, `users/${uid}/chat_messages`), (snapshot) => {
+            // Read from approved path node: "messages"
+            onValue(ref(db, 'messages'), (snapshot) => {
                 const chatBox = document.getElementById('chat-messages');
-                if (!snapshot.exists()) { chatBox.innerHTML = `<div class="text-gray-400 text-center py-4 text-xs m-auto">Local room active. Send data packets below.</div>`; return; }
+                if (!snapshot.exists()) { chatBox.innerHTML = `<div class="text-gray-400 text-center py-4 text-xs m-auto">No current records. Send a packet below.</div>`; return; }
                 let payload = "";
                 const entries = snapshot.val();
                 Object.keys(entries).forEach(id => {
@@ -295,42 +293,54 @@
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
 
-            // Localized feed timeline stream metrics mapping 
+            // Read from approved path node: "feed"
             const feedContainer = document.getElementById('feed-container');
-            feedContainer.innerHTML = "";
-            onChildAdded(ref(db, `users/${uid}/social_feed`), (snap) => {
-                const item = createPostCardElement(snap.key, snap.val(), uid);
-                feedContainer.insertBefore(item, feedContainer.firstChild);
-            });
-            onChildChanged(ref(db, `users/${uid}/social_feed`), (snap) => {
-                const item = document.getElementById(`post-${snap.key}`);
-                if (item) {
-                    const raw = snap.val();
-                    item.querySelector('.like-count').textContent = raw.likes ? Object.keys(raw.likes).length : 0;
-                    if (raw.comments) updateCommentsUIContainer(item.querySelector('.comments-list-container'), raw.comments);
+            onValue(ref(db, 'feed'), (snapshot) => {
+                if (!snapshot.exists()) {
+                    feedContainer.innerHTML = `<div class="text-gray-400 text-center py-4 text-xs m-auto">No broadcast history. Publish an entry above.</div>`;
+                    return;
                 }
+                feedContainer.innerHTML = "";
+                const posts = snapshot.val();
+                
+                // Sort posts newest first
+                const sortedKeys = Object.keys(posts).sort((a, b) => {
+                    const timeA = posts[a].timestamp || 0;
+                    const timeB = posts[b].timestamp || 0;
+                    return timeB - timeA;
+                });
+
+                sortedKeys.forEach(postId => {
+                    const card = createPostCardElement(postId, posts[postId]);
+                    feedContainer.appendChild(card);
+                });
             });
         }
 
+        // Write directly to approved path node: "messages"
         async function sendChatMessage() {
             const chatInput = document.getElementById('chat-input');
             const msg = chatInput.value.trim();
             if(!msg || !currentUserId) return;
-            await push(ref(db, `users/${currentUserId}/chat_messages`), { message: msg, senderUid: currentUserId, senderName: activeUserName, timestamp: serverTimestamp() });
-            chatInput.value = "";
+            try {
+                await push(ref(db, 'messages'), { message: msg, senderUid: currentUserId, senderName: activeUserName, timestamp: serverTimestamp() });
+                chatInput.value = "";
+            } catch(e) { alert(e.message); }
         }
         document.getElementById('btn-chat-send').addEventListener('click', sendChatMessage);
         document.getElementById('chat-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
 
-        // --- FEED LAYOUT ASSIGNMENTS ---
+        // Write directly to approved path node: "feed"
         document.getElementById('btn-publish').addEventListener('click', async () => {
-            const nodeVal = document.getElementById('update-text').value.trim();
-            if(!nodeVal || !currentUserId) return;
-            await push(ref(db, `users/${currentUserId}/social_feed`), { text: nodeVal, authorUid: currentUserId, authorName: activeUserName, timestamp: serverTimestamp() });
-            document.getElementById('update-text').value = "";
+            const textVal = document.getElementById('update-text').value.trim();
+            if(!textVal || !currentUserId) return;
+            try {
+                await push(ref(db, 'feed'), { text: textVal, authorUid: currentUserId, authorName: activeUserName, timestamp: serverTimestamp() });
+                document.getElementById('update-text').value = "";
+            } catch(e) { alert(e.message); }
         });
 
-        function createPostCardElement(postId, post, uid) {
+        function createPostCardElement(postId, post) {
             const stamp = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
             const counter = post.likes ? Object.keys(post.likes).length : 0;
             const container = document.createElement('div');
@@ -354,35 +364,43 @@
                 </div>`;
 
             container.querySelector('.btn-like-toggle').addEventListener('click', () => {
-                runTransaction(ref(db, `users/${uid}/social_feed/${postId}/likes/${uid}`), (val) => val ? null : true);
+                if(!currentUserId) return;
+                runTransaction(ref(db, `feed/${postId}/likes/${currentUserId}`), (val) => val ? null : true);
             });
 
             container.querySelector('.btn-submit-comment').addEventListener('click', async () => {
+                if(!currentUserId) return;
                 const field = container.querySelector('.comment-input-field');
                 if(!field.value.trim()) return;
-                await push(ref(db, `users/${uid}/social_feed/${postId}/comments`), { text: field.value.trim(), author: activeUserName });
-                field.value = "";
+                try {
+                    await push(ref(db, `feed/${postId}/comments`), { text: field.value.trim(), author: activeUserName });
+                    field.value = "";
+                } catch(e) { alert(e.message); }
             });
 
-            if (post.comments) updateCommentsUIContainer(container.querySelector('.comments-list-container'), post.comments);
+            if (post.comments) {
+                let collection = "";
+                Object.keys(post.comments).forEach(id => {
+                    const node = post.comments[id];
+                    collection += `<div class="bg-gray-100 p-2 rounded text-[11px] border border-gray-200/60"><strong class="font-mono text-blue-600">${escapeHtml(node.author || 'User')}:</strong> <span class="text-gray-700">${escapeHtml(node.text)}</span></div>`;
+                });
+                container.querySelector('.comments-list-container').innerHTML = collection;
+            }
             return container;
-        }
-
-        function updateCommentsUIContainer(dom, nodes) {
-            let collection = "";
-            Object.keys(nodes).forEach(id => {
-                const node = nodes[id];
-                collection += `<div class="bg-gray-100 p-2 rounded text-[11px] border border-gray-200/60"><strong class="font-mono text-blue-600">${escapeHtml(node.author || 'User')}:</strong> <span class="text-gray-700">${escapeHtml(node.text)}</span></div>`;
-            });
-            dom.innerHTML = collection;
         }
 
         document.getElementById('btn-save-profile').addEventListener('click', () => {
             const val = document.getElementById('profile-display-name-input').value.trim();
-            if (val) { activeUserName = val; showMessage("Profile sync handled locally."); }
+            if (val) { 
+                activeUserName = val; 
+                showMessage("Workspace display profile changed."); 
+                if(currentUserId) {
+                    set(ref(db, `presence/${currentUserId}/username`), val);
+                }
+            }
         });
 
-        // Tab View Switching Mechanics
+        // Tab View Controls
         const tabs = document.querySelectorAll('.nav-btn');
         const layouts = document.querySelectorAll('.content-view');
         tabs.forEach(element => {
