@@ -58,4 +58,288 @@
             </div>
 
             <div id="view-chat" class="content-view hidden flex-1 max-w-5xl w-full mx-auto flex gap-4 h-[600px]">
-                <div class="w-64 bg-white border border-gray-200 rounded-2
+                <div class="w-64 bg-white border border-gray-200 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+                    <div class="p-3 border-b border-gray-100 bg-gray-50/70">
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Channels</span>
+                    </div>
+                    <div class="flex-1 overflow-y-auto p-2 space-y-1">
+                        <button id="channel-global" class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold bg-blue-50 text-blue-700 flex items-center justify-between">
+                            <span>🌐 Global Room</span>
+                        </button>
+                        <div class="pt-3 pb-1 px-2 border-t border-gray-100 mt-2">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Operators</span>
+                        </div>
+                        <div id="pm-operators-directory" class="space-y-1"></div>
+                    </div>
+                </div>
+
+                <div class="flex-1 bg-white rounded-2xl shadow-sm border border-gray-200 flex flex-col overflow-hidden">
+                    <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-sm font-bold text-gray-900 tracking-tight" id="active-chat-title">Global System Chat Room</h2>
+                            <p class="text-[10px] text-gray-400 font-mono" id="active-chat-target-node">Path: chat_messages</p>
+                        </div>
+                    </div>
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3 text-sm flex flex-col"></div>
+                    <div class="p-3 bg-white border-t border-gray-100 flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 p-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50 text-sm">
+                        <button id="btn-chat-send" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition shadow-sm">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-profile" class="content-view hidden max-w-2xl mx-auto w-full">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6 tracking-tight">Social Profile Customization</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Display Username</label>
+                            <input type="text" id="profile-display-name-input" value="System Operator" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Status Bio Info</label>
+                            <input type="text" id="profile-bio-input" value="Active Monitoring Core" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+                        <button id="btn-save-profile" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition">Save Matrix Profile</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-accounts" class="content-view hidden max-w-5xl mx-auto w-full">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-900 mb-1 tracking-tight">Workspace Credentials Monitor</h2>
+                    <p class="text-xs text-gray-500 mb-4">Active operational states across the cloud matrix nodes.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-200 bg-gray-50 text-[11px] font-bold uppercase text-gray-500 tracking-wider font-mono">
+                                    <th class="p-3">Reference Account</th>
+                                    <th class="p-3">Permission Vector</th>
+                                    <th class="p-3">Tunnel Port</th>
+                                    <th class="p-3">Operational State</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs font-mono divide-y divide-gray-100 text-gray-700" id="accounts-table-body">
+                                <tr>
+                                    <td class="p-3 text-blue-600 font-semibold">xnkcarter6@gmail.com</td>
+                                    <td class="p-3">Master Core Access</td>
+                                    <td class="p-3">443 -&gt; SSL</td>
+                                    <td class="p-3 text-green-600 font-bold">● Active</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-blue-600 font-semibold">guest_terminal_01</td>
+                                    <td class="p-3">Read-Only Broadcast</td>
+                                    <td class="p-3">8080 -&gt; Bypass</td>
+                                    <td class="p-3 text-green-600 font-bold">● Active</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-blue-600 font-semibold">system_automated_sync</td>
+                                    <td class="p-3">DB Server Access</td>
+                                    <td class="p-3">Firebase Node</td>
+                                    <td class="p-3 text-amber-600 font-bold">● Idle</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>        
+    </div>
+
+    <script type="module">                
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";                
+        import { getDatabase, ref, push, onValue, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {                                    
+            apiKey: "AIzaSyC7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",                                    
+            authDomain: "ultra-kh.firebaseapp.com",                                    
+            databaseURL: "https://ultra-kh-default-rtdb.firebaseio.com",                                    
+            projectId: "ultra-kh",                                    
+            storageBucket: "ultra-kh.firebasestorage.app",                                    
+            messagingSenderId: "414518365494",                                    
+            appId: "1:414518365494:web:accf5fa772831d1459b797",                                    
+            measurementId: "G-6RXJMQF7HZ"                        
+        };
+
+        const app = initializeApp(firebaseConfig);                        
+        const db = getDatabase(app);
+
+        let currentUserId = "xnk_master_node";
+        let activeUserName = "System Operator";
+
+        const updateTextArea = document.getElementById('update-text');                
+        const feedContainer = document.getElementById('feed-container');                
+        const btnPublish = document.getElementById('btn-publish');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const btnChatSend = document.getElementById('btn-chat-send');
+        const pmOperatorsDirectory = document.getElementById('pm-operators-directory');
+        const alertBanner = document.getElementById('alert-banner');
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return String(text).replace(/[&<>"']/g, m => map[m]);
+        }
+
+        document.getElementById('btn-save-profile').addEventListener('click', () => {
+            activeUserName = document.getElementById('profile-display-name-input').value.trim() || "System Operator";
+            alertBanner.textContent = "Profile display matrix metadata updated.";
+            alertBanner.style.display = "block";
+            setTimeout(() => { alertBanner.style.display = "none"; }, 3000);
+        });
+
+        pmOperatorsDirectory.innerHTML = `
+            <button class="w-full text-left px-3 py-2 rounded-xl text-xs hover:bg-gray-100 flex items-center justify-between text-gray-700 transition" onclick="alert('Private channel initialized successfully.')">
+                <span>👤 guest_terminal_01</span>
+                <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+            </button>
+        `;
+
+        function initChatEngineStream() {
+            onValue(ref(db, 'chat_messages'), (snapshot) => {
+                if (!snapshot.exists()) {
+                    chatMessages.innerHTML = `<div class="text-gray-400 text-center py-8 italic text-xs m-auto">No logged communication down line.</div>`;
+                    return;
+                }
+                let chatPayload = "";
+                const logs = snapshot.val();
+                Object.keys(logs).forEach(key => {
+                    const entry = logs[key];
+                    const timeStr = entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Now';
+                    
+                    chatPayload += `
+                        <div class="flex items-end gap-2 mb-2">
+                            <div class="flex flex-col items-start">
+                                <span class="text-[10px] text-gray-500 font-semibold font-mono mb-0.5">${escapeHtml(entry.senderName || 'Operator')} <span class="text-gray-400 font-normal font-sans ml-1">${timeStr}</span></span>
+                                <div class="bg-white border border-gray-200 text-gray-800 rounded-2xl rounded-bl-none px-4 py-2 text-sm max-w-md shadow-sm">
+                                    <p class="break-words font-normal leading-snug">${escapeHtml(entry.message)}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                chatMessages.innerHTML = chatPayload;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+        }
+        initChatEngineStream();
+
+        async function sendChatMessage() {
+            const msgContent = chatInput.value.trim();
+            if(!msgContent) return;
+            await push(ref(db, 'chat_messages'), {
+                message: msgContent,
+                senderUid: currentUserId,
+                senderName: activeUserName,
+                timestamp: serverTimestamp()
+            });
+            chatInput.value = "";
+        }
+        btnChatSend.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
+
+        // DYNAMIC SOCIAL FEED SYNCHRONIZATION LOOP
+        onValue(ref(db, 'social_feed'), (snapshot) => {
+            if(!snapshot.exists()) {
+                feedContainer.innerHTML = `<div class="text-xs text-gray-400 text-center py-12 border border-dashed rounded-xl bg-gray-50">No updates posted yet.</div>`;
+                return;
+            }
+            let feedHtml = "";
+            const posts = snapshot.val();
+            
+            Object.keys(posts).reverse().forEach(postId => {
+                const post = posts[postId];
+                const timeLabel = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
+                const postLikesCount = post.likes ? Object.keys(post.likes).length : 0;
+                
+                let commentsHtml = "";
+                if(post.comments) {
+                    Object.keys(post.comments).forEach(cId => {
+                        const comment = post.comments[cId];
+                        commentsHtml += `
+                            <div class="bg-gray-100 p-2.5 rounded-lg text-xs border border-gray-200/60 mb-1.5">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-bold font-mono text-blue-600">${escapeHtml(comment.author)}</span>
+                                </div>
+                                <p class="text-gray-700 font-normal">${escapeHtml(comment.text)}</p>
+                            </div>`;
+                    });
+                }
+                
+                feedHtml += `
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-3 block text-left">
+                        <div class="flex justify-between items-center w-full border-b border-gray-100 pb-2">
+                            <span class="font-bold text-sm text-blue-600 font-mono">${escapeHtml(post.authorName)}</span>
+                            <span class="text-[11px] text-gray-400 font-mono">${timeLabel}</span>
+                        </div>
+                        <div class="py-1">
+                            <p class="text-gray-800 text-sm font-normal break-words whitespace-pre-wrap leading-relaxed">${escapeHtml(post.text)}</p>
+                        </div>
+                        <div class="flex gap-4 items-center pt-2 border-t border-gray-100 text-xs">
+                            <button data-postid="${postId}" class="btn-like-toggle px-3 py-1 rounded-md bg-gray-100 font-bold hover:bg-red-50 hover:text-red-600 transition">👍 Like (${postLikesCount})</button>
+                        </div>
+                        <div class="space-y-2 pt-3 bg-gray-50 p-4 rounded-xl border border-gray-200/70">
+                            <div class="space-y-1.5">${commentsHtml}</div>
+                            <div class="flex gap-2 mt-2 pt-2 border-t border-gray-200/40">
+                                <input type="text" placeholder="Write a comment..." data-postid="${postId}" class="comment-input-field flex-1 p-2 border border-gray-200 bg-white rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                <button data-postid="${postId}" class="btn-submit-comment px-4 py-2 bg-gray-800 text-white font-bold rounded-lg text-[11px] hover:bg-gray-900 transition shadow-sm">Comment</button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            feedContainer.innerHTML = feedHtml;
+
+            document.querySelectorAll('.btn-like-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pId = btn.getAttribute('data-postid');
+                    runTransaction(ref(db, `social_feed/${pId}/likes/${currentUserId}`), (currentValue) => {
+                        return currentValue ? null : true;
+                    });
+                });
+            });
+
+            document.querySelectorAll('.btn-submit-comment').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const pId = btn.getAttribute('data-postid');
+                    const input = document.querySelector(`.comment-input-field[data-postid="${pId}"]`);
+                    if(!input.value.trim()) return;
+                    await push(ref(db, `social_feed/${pId}/comments`), {
+                        text: input.value.trim(),
+                        author: activeUserName,
+                        authorUid: currentUserId
+                    });
+                    input.value = "";
+                });
+            });
+        });
+
+        btnPublish.addEventListener('click', async () => {
+            const val = updateTextArea.value.trim();
+            if(!val) return;
+            btnPublish.disabled = true;
+            await push(ref(db, 'social_feed'), {
+                text: val,
+                authorUid: currentUserId,
+                authorName: activeUserName,
+                timestamp: serverTimestamp()
+            });
+            updateTextArea.value = "";
+            btnPublish.disabled = false;
+            alertBanner.textContent = "Post broadcast updated successfully.";
+            alertBanner.style.display = "block";
+            setTimeout(() => { alertBanner.style.display = "none"; }, 3000);
+        });
+
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const contentViews = document.querySelectorAll('.content-view');
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetViewId = btn.getAttribute('data-target');
+                contentViews.forEach(view => { view.id === targetViewId ? view.classList.remove('hidden') : view.classList.add('hidden'); });
+                navButtons.forEach(b => { b.className = "nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition"; });
+                btn.className = "nav-btn w-full text-left block px-4 py-2.5 rounded bg-blue-700 font-semibold shadow-inner transition";
+            });
+        });
+    </script>
+</body>
+</html>
