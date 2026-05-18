@@ -13,14 +13,14 @@
     </div>
 
     <div id="workspace-screen" class="min-h-screen flex">
-        <aside class="w-64 bg-blue-600 text-white flex flex-col justify-between p-4 shadow-lg">
+        <aside class="w-64 bg-blue-600 text-white flex flex-col justify-between p-4 shadow-lg shrink-0">
             <div>
                 <h1 class="text-2xl font-bold mb-8 px-2 tracking-tight">Ultra KH</h1>
-                <nav class="space-y-1">
-                    <a href="#" class="block px-4 py-2.5 rounded bg-blue-700 font-semibold shadow-inner">🏠 Home</a>
-                    <a href="#" class="block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">💬 Chat</a>
-                    <a href="#" class="block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">👤 Profile</a>
-                    <a href="#" class="block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">🔑 Accounts</a>
+                <nav class="space-y-1" id="main-nav">
+                    <button data-target="view-home" class="nav-btn w-full text-left block px-4 py-2.5 rounded bg-blue-700 font-semibold shadow-inner transition">🏠 Home</button>
+                    <button data-target="view-chat" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">💬 Chat</button>
+                    <button data-target="view-profile" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">👤 Profile</button>
+                    <button data-target="view-accounts" class="nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition">🔑 Accounts</button>
                 </nav>
             </div>
             <div class="text-xs opacity-75 border-t border-blue-500/30 pt-4 px-2 font-mono">
@@ -28,10 +28,10 @@
             </div>
         </aside>
 
-        <main class="flex-1 p-6">
+        <main class="flex-1 p-6 overflow-y-auto">
             <div id="alert-banner" style="display: none;" class="mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm bg-red-500"></div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">                                                
+            <div id="view-home" class="content-view grid grid-cols-1 lg:grid-cols-3 gap-6">                                                
                 <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">Publish an Update</h2>
                     <textarea id="update-text" rows="5" placeholder="Type your broadcast update here..." class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50/50 resize-none transition shadow-inner text-sm"></textarea>
@@ -58,7 +58,89 @@
                         Syncing latest workspace updates...
                     </div>
                 </div>                                    
-            </div>                
+            </div>
+
+            <div id="view-chat" class="content-view hidden space-y-4 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col h-[500px]">
+                    <h2 class="text-lg font-bold text-gray-900 mb-2 tracking-tight">Global System Chat Room</h2>
+                    <p class="text-xs text-gray-500 mb-4">Internal workspace sync terminal communications.</p>
+                    
+                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-gray-50 rounded-xl border border-gray-200 mb-4 space-y-3 text-sm">
+                        </div>
+                    
+                    <div class="flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Type an internal encrypted message..." class="flex-1 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50/50 text-sm">
+                        <button id="btn-chat-send" class="px-6 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition active:scale-95 shadow-md">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-profile" class="content-view hidden max-w-2xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex items-center gap-4 border-b border-gray-100 pb-6 mb-6">
+                        <div class="h-16 w-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl font-bold">UK</div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900">Workspace Operator</h2>
+                            <p class="text-xs text-gray-400 font-mono">ID: SEC-OP-006</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Authenticated Account Email</label>
+                            <input type="text" readonly value="xnkcarter6@gmail.com" class="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg font-mono text-sm text-gray-700 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Access Designation Group</label>
+                            <div class="inline-block px-3 py-1 bg-green-50 text-green-700 border border-green-100 text-xs font-bold rounded-md">System Administrator Bypass</div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Active Cloud Database Node</label>
+                            <p class="text-xs font-mono text-gray-600 bg-gray-50 p-2.5 rounded-lg border border-gray-200 break-all">https://ultra-kh-default-rtdb.firebaseio.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-accounts" class="content-view hidden max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-900 mb-2 tracking-tight">Workspace Credentials Monitor</h2>
+                    <p class="text-xs text-gray-500 mb-4">View localized records and access points loaded within active context.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-200 bg-gray-50 text-[11px] font-bold uppercase text-gray-500 tracking-wider font-mono">
+                                    <th class="p-3">Reference Account</th>
+                                    <th class="p-3">Permission Vector</th>
+                                    <th class="p-3">Tunnel Port</th>
+                                    <th class="p-3">Operational State</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs font-mono divide-y divide-gray-100 text-gray-700">
+                                <tr>
+                                    <td class="p-3 font-semibold text-blue-600">xnkcarter6@gmail.com</td>
+                                    <td class="p-3">Master Core Access</td>
+                                    <td class="p-3">443 -> SSL</td>
+                                    <td class="p-3 text-green-600 font-bold">● Active</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-gray-500">guest_terminal_01</td>
+                                    <td class="p-3">Read-Only Broadcast</td>
+                                    <td class="p-3">8080 -> Bypass</td>
+                                    <td class="p-3 text-green-600 font-bold">● Active</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-gray-500">system_automated_sync</td>
+                                    <td class="p-3">DB Server Access</td>
+                                    <td class="p-3">Firebase Node</td>
+                                    <td class="p-3 text-amber-500 font-bold">● Idle</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </main>        
     </div>
 
@@ -80,19 +162,52 @@
         const app = initializeApp(firebaseConfig);                        
         const db = getDatabase(app);
 
+        // Core UI DOM Connections
         const alertBanner = document.getElementById('alert-banner');                
         const updateTextArea = document.getElementById('update-text');                
         const connectionStatus = document.getElementById('connection-status');                        
         const feedContainer = document.getElementById('feed-container');                
         const btnPublish = document.getElementById('btn-publish');
+        
+        // Chat DOM Connections
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const btnChatSend = document.getElementById('btn-chat-send');
 
+        // Database References
         const databaseFeedRef = ref(db, 'feed');
+        const databaseChatRef = ref(db, 'chat_messages');
 
+        // HTML Sanitizer to secure entries
         function escapeHtml(text) {
             const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
+        // Single-Page View Toggle Switcher
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const contentViews = document.querySelectorAll('.content-view');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetViewId = btn.getAttribute('data-target');
+                
+                contentViews.forEach(view => {
+                    if(view.id === targetViewId) {
+                        view.classList.remove('hidden');
+                    } else {
+                        view.classList.add('hidden');
+                    }
+                });
+
+                navButtons.forEach(b => {
+                    b.className = "nav-btn w-full text-left block px-4 py-2.5 rounded hover:bg-blue-700/50 transition";
+                });
+                btn.className = "nav-btn w-full text-left block px-4 py-2.5 rounded bg-blue-700 font-semibold shadow-inner transition";
+            });
+        });
+
+        // Banner Alert Controller
         function displayAlert(msg, errorMode = true) {                                    
             if (!msg) {                                                
                 alertBanner.style.display = 'none';                                                
@@ -103,6 +218,7 @@
             alertBanner.style.display = 'block';                        
         }
 
+        // Live Cloud Synchronization Status Monitor
         const connectedRef = ref(db, ".info/connected");                            
         onValue(connectedRef, (snap) => {                                        
             if (snap.val() === true) {                                                    
@@ -114,6 +230,7 @@
             }                            
         });
 
+        // Sync Node A: Home Workspace Updates Stream Feed
         onValue(databaseFeedRef, (snapshot) => {                                    
             if (!snapshot.exists()) {                                                
                 feedContainer.className = "text-xs text-gray-400 text-center py-12 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/30";                                                
@@ -142,6 +259,33 @@
             feedContainer.textContent = `Database sync layer dropped: ${err.message}`;                        
         });
 
+        // Sync Node B: Global Chat Stream Engine
+        onValue(databaseChatRef, (snapshot) => {
+            if (!snapshot.exists()) {
+                chatMessages.innerHTML = `<div class="text-gray-400 text-center py-8 italic text-xs">No terminal messages logged yet.</div>`;
+                return;
+            }
+            
+            let chatPayload = "";
+            const logs = snapshot.val();
+            Object.keys(logs).forEach(key => {
+                const entry = logs[key];
+                const timeStr = entry.timestamp ? new Date(entry.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Now';
+                chatPayload += `
+                    <div class="p-2.5 bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-xs text-blue-600 font-mono">Operator</span>
+                            <span class="text-[9px] text-gray-400 font-mono">${timeStr}</span>
+                        </div>
+                        <p class="text-gray-700 break-words">${escapeHtml(entry.message)}</p>
+                    </div>
+                `;
+            });
+            chatMessages.innerHTML = chatPayload;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        // Handler: Publish Update Post
         btnPublish.addEventListener('click', async () => {                                    
             const bodyContent = updateTextArea.value.trim();                                    
             if (!bodyContent) return displayAlert("Cannot process empty text posts.");
@@ -165,6 +309,31 @@
                 btnPublish.textContent = "Publish Post";                                    
             }                        
         });            
+
+        // Handler: Chat Message Submission
+        async function sendChatMessage() {
+            const msgContent = chatInput.value.trim();
+            if(!msgContent) return;
+
+            btnChatSend.disabled = true;
+            try {
+                await push(databaseChatRef, {
+                    message: msgContent,
+                    timestamp: serverTimestamp()
+                });
+                chatInput.value = "";
+            } catch(e) {
+                console.error("Chat sync exception: ", e);
+            } finally {
+                btnChatSend.disabled = false;
+            }
+        }
+
+        btnChatSend.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendChatMessage();
+        });
+
     </script>
 </body>
 </html>
