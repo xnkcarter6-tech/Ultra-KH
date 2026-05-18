@@ -3,42 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra KH - Workspace</title>
+    <title>Ultra KH - Workspace Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         .sidebar { background-color: #2563eb; }
-        .error-banner { background-color: #ef4444; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-    <div class="flex min-h-screen">
-        <aside class="w-64 sidebar text-white flex flex-col justify-between p-4">
+    <div id="auth-screen" class="hidden min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full border border-gray-200">
+            <h2 class="text-xl font-bold text-center mb-6 text-gray-900">Register / Login Workspace Operator</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="auth-email" placeholder="operator@gmail.com" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="auth-password" placeholder="••••••••" class="w-full p-2.5 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button id="btn-login" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition">Sign In</button>
+                <button id="btn-register" class="w-full py-2.5 border border-blue-600 text-blue-600 hover:bg-blue-50 text-white font-medium rounded transition text-sm">Create Operator Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="workspace-screen" class="hidden min-h-screen flex">
+        <aside class="w-64 sidebar text-white flex flex-col justify-between p-4 shadow-lg">
             <div>
                 <h1 class="text-2xl font-bold mb-8 px-2">Ultra KH</h1>
                 <nav class="space-y-2">
-                    <a href="#" class="block px-4 py-2 rounded hover:bg-blue-700">🏠 Home</a>
+                    <a href="#" class="block px-4 py-2 rounded hover:bg-blue-700 font-semibold bg-blue-800">🏠 Home</a>
                     <a href="#" class="block px-4 py-2 rounded hover:bg-blue-700">💬 Chat</a>
                     <a href="#" class="block px-4 py-2 rounded hover:bg-blue-700">👤 Profile</a>
-                    <a href="#" class="block px-4 py-2 rounded hover:bg-blue-700 font-semibold bg-blue-800">🔑 Accounts</a>
+                    <button id="btn-logout" class="w-full text-left block px-4 py-2 rounded hover:bg-red-700 transition mt-4 text-sm text-red-200">🚪 Sign Out</button>
                 </nav>
             </div>
-            <div class="text-xs opacity-70 px-2">Dashboard / Workspace</div>
+            <div class="text-xs opacity-70 px-2" id="user-display">Operator: Loading...</div>
         </aside>
 
         <main class="flex-1 p-6 relative">
-            <div id="notification-zone" class="absolute top-4 right-4 z-50 space-y-2 w-96"></div>
+            <div id="alert-banner" class="hidden mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm bg-red-500 transition"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h2 class="text-lg font-bold mb-4">Publish an Update</h2>
-                    <textarea id="update-text" rows="5" placeholder="Write your update details here..." class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+                    <textarea id="update-text" rows="5" placeholder="Test" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
                     <button id="btn-publish" class="mt-4 px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">Publish Post</button>
                 </div>
 
                 <div class="space-y-6">
                     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                        <h3 class="font-bold flex items-center gap-2 text-gray-900 mb-2">Welcome to Ultra KH 🚀</h3>
+                        <h3 class="font-bold text-gray-900 mb-2">Welcome to Ultra KH 🚀</h3>
                         <p class="text-sm text-gray-500">Welcome to our official platform tracker feed updates.</p>
                     </div>
 
@@ -46,14 +63,14 @@
                         <h3 class="font-bold text-gray-900 mb-4">System Connection Status</h3>
                         <div id="connection-status" class="text-sm flex items-center gap-2 text-amber-600 font-medium">
                             <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
-                            Connecting to System...
+                            Syncing Live Cloud...
                         </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                     <h2 class="text-lg font-bold mb-4">Workspace Broadcast Feed</h2>
-                    <div id="feed-container" class="text-sm text-gray-400 text-center py-8">
+                    <div id="feed-container" class="text-sm text-gray-400 text-center py-8 border border-dashed border-gray-100 rounded-lg">
                         Syncing latest workspace updates...
                     </div>
                 </div>
@@ -63,9 +80,10 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Verified Configuration block
+        // Verified valid config credentials Block
         const firebaseConfig = {
             apiKey: "AIzaSyC7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",
             authDomain: "ultra-kh.firebaseapp.com",
@@ -77,98 +95,153 @@
             measurementId: "G-6RXJMQF7HZ"
         };
 
-        // Initialize App & Database instances
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // UI Element References
-        const btnPublish = document.getElementById('btn-publish');
-        const updateTextArea = document.getElementById('update-text');
-        const feedContainer = document.getElementById('feed-container');
-        const connectionStatus = document.getElementById('connection-status');
-        const notificationZone = document.getElementById('notification-zone');
+        // Core View Blocks
+        const authScreen = document.getElementById('auth-screen');
+        const workspaceScreen = document.getElementById('workspace-screen');
+        const alertBanner = document.getElementById('alert-banner');
 
-        // Helper for displaying native notifications matching UI
-        function showNotification(message, isError = false) {
-            const banner = document.createElement('div');
-            banner.className = `p-3 text-sm text-white font-medium rounded shadow-md ${isError ? 'bg-red-500' : 'bg-gray-800'}`;
-            banner.textContent = message;
-            notificationZone.appendChild(banner);
-            setTimeout(() => banner.remove(), 4000);
+        // Form fields references
+        const emailInput = document.getElementById('auth-email');
+        const passwordInput = document.getElementById('auth-password');
+        const updateTextArea = document.getElementById('update-text');
+
+        // Dynamic Text Fields References
+        const userDisplay = document.getElementById('user-display');
+        const connectionStatus = document.getElementById('connection-status');
+        const feedContainer = document.getElementById('feed-container');
+
+        // Buttons References
+        const btnLogin = document.getElementById('btn-login');
+        const btnRegister = document.getElementById('btn-register');
+        const btnLogout = document.getElementById('btn-logout');
+        const btnPublish = document.getElementById('btn-publish');
+
+        // TARGET RULE PATH: Switched explicitly to match your active rule layout configuration node
+        const databaseFeedRef = ref(db, 'feed');
+
+        // Feedback Banner Handler Helper
+        function displayAlert(msg, errorMode = true) {
+            if (!msg) {
+                alertBanner.classList.add('hidden');
+                return;
+            }
+            alertBanner.className = `mb-4 p-4 text-white text-sm font-medium rounded-lg shadow-sm transition ${errorMode ? 'bg-red-500' : 'bg-gray-800'}`;
+            alertBanner.textContent = msg;
+            alertBanner.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Monitor Realtime Database Connection state
-        const connectedRef = ref(db, ".info/connected");
-        onValue(connectedRef, (snap) => {
-            if (snap.val() === true) {
-                connectionStatus.className = "text-sm flex items-center gap-2 text-green-600 font-medium";
-                connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span> Connected Live Cloud`;
+        // Persistent Auth Listener Interface
+        onAuthStateChanged(auth, (user) => {
+            displayAlert(null);
+            if (user) {
+                authScreen.classList.add('hidden');
+                workspaceScreen.classList.remove('hidden');
+                userDisplay.textContent = `Operator: ${user.email}`;
+                initDatabaseListeners();
             } else {
-                connectionStatus.className = "text-sm flex items-center gap-2 text-amber-600 font-medium";
-                connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span> Syncing Live Cloud...`;
+                workspaceScreen.classList.add('hidden');
+                authScreen.classList.remove('hidden');
             }
         });
 
-        // FIXED: Targeted path explicitly changed from 'broadcast' to 'feed' to match your rules JSON
-        const databaseFeedRef = ref(db, 'feed');
-
-        // Handle Form Submissions
-        btnPublish.addEventListener('click', async () => {
-            const content = updateTextArea.value.trim();
-            if (!content) {
-                showNotification("Please type a status message before pushing.", true);
-                return;
+        // Interface triggers for Identity Engine operations
+        btnLogin.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            const pass = passwordInput.value.trim();
+            if(!email || !pass) return displayAlert("Authentication arguments missing.");
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                displayAlert(err.message);
             }
+        });
+
+        btnRegister.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            const pass = passwordInput.value.trim();
+            if(!email || !pass) return displayAlert("Registration fields cannot be left blank.");
+            try {
+                await createUserWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                displayAlert(err.message);
+            }
+        });
+
+        btnLogout.addEventListener('click', () => signOut(auth));
+
+        // Core execution sequence once User credentials have initialized correctly
+        function initDatabaseListeners() {
+            // Monitor Online Connection status state change loops
+            const connectedRef = ref(db, ".info/connected");
+            onValue(connectedRef, (snap) => {
+                if (snap.val() === true) {
+                    connectionStatus.className = "text-sm flex items-center gap-2 text-green-600 font-medium";
+                    connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-green-500"></span> Connected Live Cloud`;
+                } else {
+                    connectionStatus.className = "text-sm flex items-center gap-2 text-amber-600 font-medium";
+                    connectionStatus.innerHTML = `<span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span> Syncing Live Cloud...`;
+                }
+            });
+
+            // Clean real-time tracking feed loader execution block
+            onValue(databaseFeedRef, (snapshot) => {
+                if (!snapshot.exists()) {
+                    feedContainer.className = "text-sm text-gray-400 text-center py-8 border border-dashed border-gray-100 rounded-lg";
+                    feedContainer.textContent = "No broadcast updates posted yet.";
+                    return;
+                }
+
+                let htmlPayload = `<div class="space-y-4">`;
+                const records = snapshot.val();
+                
+                Object.keys(records).reverse().forEach(key => {
+                    const row = records[key];
+                    const timestampLabel = row.timestamp ? new Date(row.timestamp).toLocaleString() : 'Recent';
+                    htmlPayload += `
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 text-left">
+                            <p class="text-gray-800 font-normal break-words">${row.text || ''}</p>
+                            <span class="text-xs text-gray-400 block mt-2">${timestampLabel}</span>
+                        </div>
+                    `;
+                });
+                htmlPayload += `</div>`;
+                
+                feedContainer.className = "block";
+                feedContainer.innerHTML = htmlPayload;
+            }, (err) => {
+                feedContainer.className = "text-sm text-red-500 text-center py-8 font-medium";
+                feedContainer.textContent = `Failed to sync stream layout: ${err.message}`;
+            });
+        }
+
+        // Active UI controller payload submission handling
+        btnPublish.addEventListener('click', async () => {
+            const bodyContent = updateTextArea.value.trim();
+            if (!bodyContent) return displayAlert("Cannot process empty text posts.");
 
             btnPublish.disabled = true;
             btnPublish.textContent = "Publishing...";
+            displayAlert(null);
 
             try {
                 await push(databaseFeedRef, {
-                    text: content,
+                    text: bodyContent,
                     timestamp: serverTimestamp()
                 });
                 updateTextArea.value = "";
-                showNotification("Post broadcast updated successfully.");
-            } catch (error) {
-                console.error(error);
-                // Displays the specific permission error string if data formatting goes out of bounds
-                showNotification(`Broadcast Fail: ${error.message}`, true);
+                displayAlert("Post broadcast updated successfully.", false);
+            } catch (err) {
+                console.error(err);
+                displayAlert(`Broadcast Fail: ${err.message}`, true);
             } finally {
                 btnPublish.disabled = false;
                 btnPublish.textContent = "Publish Post";
             }
-        });
-
-        // Stream modifications down into the workspace container UI
-        onValue(databaseFeedRef, (snapshot) => {
-            if (!snapshot.exists()) {
-                feedContainer.className = "text-sm text-gray-400 text-center py-8";
-                feedContainer.textContent = "No broadcast updates posted yet.";
-                return;
-            }
-
-            let htmlPayload = `<div class="space-y-4">`;
-            const data = snapshot.val();
-            
-            // Loop through entries chronologically reverse
-            Object.keys(data).reverse().forEach(key => {
-                const item = data[key];
-                const dateString = item.timestamp ? new Date(item.timestamp).toLocaleString() : 'Recent';
-                htmlPayload += `
-                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                        <p class="text-gray-800 font-normal break-words">${item.text}</p>
-                        <span class="text-xs text-gray-400 block mt-2">${dateString}</span>
-                    </div>
-                `;
-            });
-            htmlPayload += `</div>`;
-            
-            feedContainer.className = "text-left";
-            feedContainer.innerHTML = htmlPayload;
-        }, (error) => {
-            feedContainer.className = "text-sm text-red-500 text-center py-8";
-            feedContainer.textContent = `Failed to read workspace tracker feed: ${error.message}`;
         });
     </script>
 </body>
