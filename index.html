@@ -96,6 +96,7 @@
       border: 1px solid #D3DCE6;
       border-radius: 6px;
       box-sizing: border-box;
+      font-family: inherit;
     }
     .btn-submit, .btn-send {
       background: var(--bit-blue-primary);
@@ -155,6 +156,36 @@
       margin-bottom: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
+    .feed-container {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-top: 15px;
+    }
+    .feed-item {
+      border-left: 4px solid var(--bit-blue-primary);
+      background: #F8F9FA;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .feed-meta {
+      font-size: 11px;
+      color: var(--bit-text-light);
+      margin-bottom: 4px;
+    }
+    .feed-delete {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      color: var(--bit-danger);
+      font-size: 11px;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .feed-delete:hover {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -187,9 +218,17 @@
               <div class="form-group">
                 <textarea id="feedUpdateText" rows="3" placeholder="What is happening within your workspace channels?"></textarea>
               </div>
-              <button class="btn-submit" onclick="showToast('Feature routing setup in progress...', 'info')">Publish Post</button>
+              <button id="btnPublishPost" class="btn-submit">Publish Post</button>
+            </div>
+
+            <div class="card">
+              <h3 style="margin-top: 0;">Workspace Broadcast Feed</h3>
+              <div class="feed-container" id="workspaceFeedBox">
+                <div style="text-align: center; color: var(--bit-text-light); font-size: 12px;">Syncing latest workspace updates...</div>
+              </div>
             </div>
           </div>
+
           <div style="flex: 1;">
             <div class="card">
               <h4>Welcome to Ultra KH 🚀</h4>
@@ -320,7 +359,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Standardized global client key properties
     const firebaseConfig = {
       apiKey: "AIzaSyc7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",
       authDomain: "ultra-kh.firebaseapp.com",
@@ -332,9 +370,10 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    // Directly target configuration location mapping to force connection resolution
     const database = getDatabase(app, "https://ultra-kh-default-rtdb.firebaseio.com");
+    
     const chatMessagesBox = document.getElementById('chatMessagesBox');
+    const workspaceFeedBox = document.getElementById('workspaceFeedBox');
 
     let activeReplyTarget = null;
     const containerReply = document.getElementById('replyReferenceContainer');
@@ -348,6 +387,73 @@
       });
     }
 
+    // =================================================================
+    // HOME WORKSPACE BROADCAST FEED LOGIC
+    // =================================================================
+    document.getElementById('btnPublishPost')?.addEventListener('click', () => {
+      const feedTextEl = document.getElementById('feedUpdateText');
+      const text = feedTextEl.value.trim();
+      if (!text) {
+        showToast("Please write a post content update first.", "error");
+        return;
+      }
+
+      const currentUser = document.getElementById("topBarUserHandle").innerText;
+      const feedRef = ref(database, 'feed');
+      const newPostRef = push(feedRef);
+
+      set(newPostRef, {
+        sender: currentUser,
+        text: text,
+        timestamp: new Date().toLocaleString()
+      }).then(() => {
+        feedTextEl.value = '';
+        showToast("Dashboard broadcast feed updated live!", "success");
+      }).catch(err => showToast("Broadcast Fail: " + err.message, "error"));
+    });
+
+    onValue(ref(database, 'feed'), (snapshot) => {
+      if (!workspaceFeedBox) return;
+      workspaceFeedBox.innerHTML = '';
+      const data = snapshot.val();
+
+      if (!data) {
+        workspaceFeedBox.innerHTML = '<div style="text-align: center; color: var(--bit-text-light); font-size: 12px;">No dashboard updates found. Use the box above to publish one.</div>';
+        return;
+      }
+
+      const currentUser = document.getElementById("topBarUserHandle").innerText;
+
+      // Render posts in reverse order (newest first)
+      Object.keys(data).reverse().forEach((key) => {
+        const post = data[key];
+        const isOwner = post.sender === currentUser;
+        const deleteHTML = isOwner ? `<span class="feed-delete" data-key="${key}">✕ Remove</span>` : '';
+
+        const postItem = document.createElement('div');
+        postItem.className = 'feed-item';
+        postItem.innerHTML = `
+          ${deleteHTML}
+          <div class="feed-meta">🛡️ <strong>${post.sender}</strong> • ${post.timestamp}</div>
+          <div style="color: var(--bit-text-them); font-size: 14px; white-space: pre-wrap;">${post.text}</div>
+        `;
+        workspaceFeedBox.appendChild(postItem);
+      });
+    });
+
+    workspaceFeedBox?.addEventListener('click', (e) => {
+      if (e.target.classList.contains('feed-delete')) {
+        const key = e.target.getAttribute('data-key');
+        remove(ref(database, 'feed/' + key))
+          .then(() => showToast("Broadcast post dropped successfully.", "success"))
+          .catch(err => showToast("Removal error: " + err.message, "error"));
+      }
+    });
+
+
+    // =================================================================
+    // OPERATIONAL LIVE CHAT STREAM LOGIC
+    // =================================================================
     function triggerSendMessage() {
       const textInput = document.getElementById('chatTextInput');
       const text = textInput.value.trim();
@@ -382,8 +488,7 @@
       if(e.key === 'Enter') triggerSendMessage();
     });
 
-    const chatDatabaseRef = ref(database, 'messages');
-    onValue(chatDatabaseRef, (snapshot) => {
+    onValue(ref(database, 'messages'), (snapshot) => {
       if (!chatMessagesBox) return;
       chatMessagesBox.innerHTML = '';
       const data = snapshot.val();
@@ -465,7 +570,7 @@
     });
 
     // =================================================================
-    // VOICE NOTE RECORDING & STREAMING ENGINE
+    // VOICE NOTE RECORDING ENGINE
     // =================================================================
     const btnVoiceRecord = document.getElementById("btnVoiceRecord");
     let mediaRecorder = null;
