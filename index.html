@@ -11,15 +11,15 @@
     <div id="auth-screen" class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 w-full max-w-md">
             <h1 class="text-2xl font-bold text-gray-900 mb-1 tracking-tight text-center">Ultra KH Workspace</h1>
-            <p class="text-xs text-gray-500 text-center mb-6">Initialize operator session node credentials</p>
+            <p class="text-xs text-gray-500 text-center mb-6">Initialize operator session credentials</p>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Reference</label>
-                    <input type="email" id="auth-email" placeholder="admin1carter@gmail.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
+                    <input type="email" id="auth-email" placeholder="admincarter@gmail.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Security Password</label>
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Password</label>
                     <input type="password" id="auth-password" placeholder="••••••••" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
                 
@@ -46,7 +46,6 @@
                 <nav class="grid grid-cols-2 gap-1 md:flex md:flex-col md:space-y-1" id="main-nav">
                     <button data-target="view-home" class="nav-btn text-left block px-3 md:px-4 py-2 rounded bg-blue-700 text-xs md:text-sm font-semibold shadow-inner transition">🏠 Home</button>
                     <button data-target="view-chat" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">💬 Chat</button>
-                    <button data-target="view-profile" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">👤 Profile</button>
                     <button data-target="view-accounts" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">🔑 Accounts</button>
                 </nav>
             </div>
@@ -86,7 +85,7 @@
                         <span class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Channels</span>
                     </div>
                     <div class="flex sm:flex-1 overflow-x-auto sm:overflow-x-hidden sm:overflow-y-auto p-2 gap-1 sm:flex-col">
-                        <button id="channel-global" class="whitespace-nowrap text-left px-3 py-2 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 flex items-center justify-between gap-2">
+                        <button class="whitespace-nowrap text-left px-3 py-2 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 flex items-center justify-between gap-2">
                             <span>🌐 Global Room</span>
                         </button>
                     </div>
@@ -106,19 +105,6 @@
                 </div>
             </div>
 
-            <div id="view-profile" class="content-view hidden max-w-2xl mx-auto w-full">
-                <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200">
-                    <h2 class="text-md md:text-lg font-bold text-gray-900 mb-4 tracking-tight">Social Profile Customization</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Display Username</label>
-                            <input type="text" id="profile-display-name-input" class="w-full p-2 border border-gray-200 rounded-lg text-xs md:text-sm bg-gray-50">
-                        </div>
-                        <button id="btn-save-profile" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold">Save Workspace Profile</button>
-                    </div>
-                </div>
-            </div>
-
             <div id="view-accounts" class="content-view hidden max-w-5xl mx-auto w-full">
                 <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-md md:text-lg font-bold text-gray-900 mb-1 tracking-tight">Workspace Credentials Monitor</h2>
@@ -128,7 +114,6 @@
                             <thead>
                                 <tr class="border-b border-gray-200 bg-gray-50 text-[10px] font-bold uppercase text-gray-500 tracking-wider font-mono">
                                     <th class="p-3">Reference Account</th>
-                                    <th class="p-3">Permission Vector</th>
                                     <th class="p-3">Operational State</th>
                                 </tr>
                             </thead>
@@ -143,7 +128,7 @@
 
     <script type="module">                
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";                
-        import { getDatabase, ref, push, set, onValue, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {                                    
@@ -180,31 +165,27 @@
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
-        // --- AUTH LOGIC CONTROLLER ---
+        // --- AUTH CONTROLLER ---
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUserId = user.uid;
                 activeUserName = user.email.split('@')[0];
 
                 document.getElementById('session-badge').textContent = `ID: ${activeUserName}`;
-                document.getElementById('profile-display-name-input').value = activeUserName;
-
                 authScreen.classList.add('hidden');
                 portalScreen.classList.remove('hidden');
 
-                // FIX: Write directly using push() onto the allowed root node path "presence" 
-                // to completely bypass nested permission rules limitations.
+                // COMPLIANT: Push directly into flat node 'presence' without creating sub-paths
                 try {
                     await push(ref(db, 'presence'), {
                         uid: user.uid,
                         username: activeUserName,
                         email: user.email,
-                        permission: user.email.includes('admin') ? "Master Admin" : "Standard Operator",
                         status: "active",
                         timestamp: serverTimestamp()
                     });
                 } catch(err) {
-                    console.error("Rules handshake failed: ", err);
+                    console.error(err);
                 }
                 
                 if (!componentsBound) {
@@ -219,11 +200,11 @@
             }
         });
 
-        // --- SUBMISSION BINDINGS ---
+        // --- AUTH ACTIONS ---
         document.getElementById('btn-signup').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
-            if (!email || !password) { alert('Credentials fields cannot be empty.'); return; }
+            if (!email || !password) { alert('Please enter both email and password.'); return; }
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
                 showMessage("Account instance created successfully.");
@@ -233,7 +214,7 @@
         document.getElementById('btn-login').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
-            if (!email || !password) { alert('Please execute with full inputs.'); return; }
+            if (!email || !password) { alert('Please enter both email and password.'); return; }
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 showMessage("Workspace connection initialized.");
@@ -244,15 +225,14 @@
             signOut(auth);
         });
 
-        // --- REAL-TIME FLAT CHANNELS FLOWS ---
+        // --- DATA READ STREAMS ---
         function initLiveSyncStreams() {
-            // Read structural data arrays from approved top route node: "presence"
+            // Read from allowed top route node: "presence"
             onValue(ref(db, 'presence'), (snapshot) => {
                 if(!snapshot.exists()) return;
                 let desktopHtml = ""; let mobileHtml = "";
                 const data = snapshot.val();
                 
-                // Track unique active user arrays
                 const uniqueUsers = {};
                 Object.keys(data).forEach(key => {
                     const entry = data[key];
@@ -262,26 +242,24 @@
                 Object.keys(uniqueUsers).forEach(uid => {
                     const u = uniqueUsers[uid];
                     const reference = escapeHtml(u.email || u.username);
-                    const stateIdle = u.status === "idle";
                     desktopHtml += `
                         <tr class="${uid === currentUserId ? 'bg-blue-50/50' : ''}">
                             <td class="p-3 text-blue-600 font-semibold font-mono">${reference}</td>
-                            <td class="p-3 text-gray-600 text-xs">${escapeHtml(u.permission || 'Standard Operator')}</td>
-                            <td class="p-3 font-bold ${stateIdle ? 'text-amber-500' : 'text-green-600'}">${stateIdle ? '● Idle' : '● Active'}</td>
+                            <td class="p-3 font-bold text-green-600">● Active</td>
                         </tr>`;
                     mobileHtml += `
                         <div class="p-3 bg-gray-50 rounded-lg border text-xs font-mono">
-                            <div class="flex justify-between"><strong>${reference}</strong><span class="${stateIdle ? 'text-amber-500' : 'text-green-600'}">${stateIdle ? 'Idle' : 'Active'}</span></div>
+                            <div class="flex justify-between"><strong>${reference}</strong><span class="text-green-600">Active</span></div>
                         </div>`;
                 });
                 document.getElementById('accounts-table-body-desktop').innerHTML = desktopHtml;
                 document.getElementById('accounts-cards-body-mobile').innerHTML = mobileHtml;
             });
 
-            // Read structural entries from approved top route node: "messages"
+            // Read from allowed top route node: "messages"
             onValue(ref(db, 'messages'), (snapshot) => {
                 const chatBox = document.getElementById('chat-messages');
-                if (!snapshot.exists()) { chatBox.innerHTML = `<div class="text-gray-400 text-center py-4 text-xs m-auto">Telemetry array empty. Send data packets below.</div>`; return; }
+                if (!snapshot.exists()) { chatBox.innerHTML = `<div class="text-gray-400 text-center py-4 text-xs m-auto">No messages yet. Send a packet below.</div>`; return; }
                 let payload = "";
                 const entries = snapshot.val();
                 Object.keys(entries).forEach(id => {
@@ -301,7 +279,7 @@
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
 
-            // Read updates history array directly via the approved path node: "feed"
+            // Read from allowed top route node: "feed"
             const feedContainer = document.getElementById('feed-container');
             onValue(ref(db, 'feed'), (snapshot) => {
                 if (!snapshot.exists()) {
@@ -324,7 +302,7 @@
             });
         }
 
-        // Writes onto matching top node route: "messages"
+        // Write directly onto matching flat top node route: "messages"
         async function sendChatMessage() {
             const chatInput = document.getElementById('chat-input');
             const msg = chatInput.value.trim();
@@ -337,7 +315,7 @@
         document.getElementById('btn-chat-send').addEventListener('click', sendChatMessage);
         document.getElementById('chat-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
 
-        // Writes onto matching top node route: "feed"
+        // Write directly onto matching flat top node route: "feed"
         document.getElementById('btn-publish').addEventListener('click', async () => {
             const textVal = document.getElementById('update-text').value.trim();
             if(!textVal || !currentUserId) return;
@@ -349,7 +327,6 @@
 
         function createPostCardElement(postId, post) {
             const stamp = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
-            const counter = post.likes ? Object.keys(post.likes).length : 0;
             const container = document.createElement('div');
             container.id = `post-${postId}`;
             container.className = "bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-3 block text-left";
@@ -358,53 +335,11 @@
                     <span class="font-bold text-blue-600 font-mono">${escapeHtml(post.authorName || 'Anonymous')}</span>
                     <span class="text-gray-400">${stamp}</span>
                 </div>
-                <p class="text-gray-800 text-xs md:text-sm break-words leading-relaxed">${escapeHtml(post.text)}</p>
-                <div class="flex gap-4 items-center pt-2 border-t text-xs">
-                    <button class="btn-like-toggle px-3 py-1 rounded bg-gray-100 font-bold hover:bg-red-50 hover:text-red-600 transition">👍 Like (<span class="like-count">${counter}</span>)</button>
-                </div>
-                <div class="space-y-2 pt-2 bg-gray-50 p-3 rounded-lg border">
-                    <div class="comments-list-container space-y-1"></div>
-                    <div class="flex gap-2 mt-2 pt-2 border-t">
-                        <input type="text" placeholder="Write a comment..." class="comment-input-field flex-1 p-1.5 border bg-white rounded text-xs focus:outline-none">
-                        <button class="btn-submit-comment px-3 py-1 bg-gray-800 text-white font-bold rounded text-xs">Comment</button>
-                    </div>
-                </div>`;
-
-            container.querySelector('.btn-like-toggle').addEventListener('click', () => {
-                if(!currentUserId) return;
-                runTransaction(ref(db, `feed/${postId}/likes/${currentUserId}`), (val) => val ? null : true);
-            });
-
-            container.querySelector('.btn-submit-comment').addEventListener('click', async () => {
-                if(!currentUserId) return;
-                const field = container.querySelector('.comment-input-field');
-                if(!field.value.trim()) return;
-                try {
-                    await push(ref(db, `feed/${postId}/comments`), { text: field.value.trim(), author: activeUserName });
-                    field.value = "";
-                } catch(e) { alert("Comment Error: " + e.message); }
-            });
-
-            if (post.comments) {
-                let collection = "";
-                Object.keys(post.comments).forEach(id => {
-                    const node = post.comments[id];
-                    collection += `<div class="bg-gray-100 p-2 rounded text-[11px] border border-gray-200/60"><strong class="font-mono text-blue-600">${escapeHtml(node.author || 'User')}:</strong> <span class="text-gray-700">${escapeHtml(node.text)}</span></div>`;
-                });
-                container.querySelector('.comments-list-container').innerHTML = collection;
-            }
+                <p class="text-gray-800 text-xs md:text-sm break-words leading-relaxed">${escapeHtml(post.text)}</p>`;
             return container;
         }
 
-        document.getElementById('btn-save-profile').addEventListener('click', () => {
-            const val = document.getElementById('profile-display-name-input').value.trim();
-            if (val) { 
-                activeUserName = val; 
-                showMessage("Local profile reference configuration active."); 
-            }
-        });
-
-        // Tab View Switching Controller
+        // Tab View Controls
         const tabs = document.querySelectorAll('.nav-btn');
         const layouts = document.querySelectorAll('.content-view');
         tabs.forEach(element => {
