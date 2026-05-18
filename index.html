@@ -15,11 +15,11 @@
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Reference</label>
-                    <input type="email" id="auth-email" placeholder="name@company.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
+                    <input type="email" id="auth-email" placeholder="admincarter@gmail.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Security Password</label>
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Account Password</label>
                     <input type="password" id="auth-password" placeholder="••••••••" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
                 
@@ -122,14 +122,15 @@
             <div id="view-accounts" class="content-view hidden max-w-5xl mx-auto w-full">
                 <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-200">
                     <h2 class="text-md md:text-lg font-bold text-gray-900 mb-1 tracking-tight">Workspace Credentials Monitor</h2>
-                    <p class="text-xs text-gray-500 mb-4">Active operational states across the cloud matrix nodes.</p>
+                    <p class="text-xs text-gray-500 mb-4">View localized records and access points loaded within active context.</p>
                     <div class="hidden sm:block overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-gray-200 bg-gray-50 text-[10px] font-bold uppercase text-gray-500 tracking-wider font-mono">
                                     <th class="p-3">Reference Account</th>
                                     <th class="p-3">Permission Vector</th>
-                                    <th class="p-3">Status</th>
+                                    <th class="p-3">Tunnel Port</th>
+                                    <th class="p-3">Operational State</th>
                                 </tr>
                             </thead>
                             <tbody class="text-xs font-mono divide-y divide-gray-100 text-gray-700" id="accounts-table-body-desktop"></tbody>
@@ -179,12 +180,10 @@
             return String(text).replace(/[&<>"']/g, m => map[m]);
         }
 
-        // --- AUTH TRACKING WATCHER ---
+        // --- AUTH OBSERVER ---
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUserId = user.uid;
-                
-                // Get or set profile details inside RTDB node safely
                 const userRef = ref(db, `users/${user.uid}`);
                 const snapshot = await get(userRef);
                 
@@ -195,7 +194,8 @@
                     await set(userRef, {
                         username: activeUserName,
                         email: user.email,
-                        permission: "Operator Access",
+                        permission: user.email.includes('admin') ? "Master Core Access" : "Operator Access",
+                        tunnel: user.email.includes('admin') ? "443 -> SSL" : "8080 -> Bypass",
                         status: "active",
                         timestamp: serverTimestamp()
                     });
@@ -216,13 +216,13 @@
             }
         });
 
-        // --- ACCOUNT SIGN UP ACTION ---
+        // --- SIGN UP ---
         document.getElementById('btn-signup').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
 
             if (!email || !password) {
-                alert('Please enter both an Email and Password.');
+                alert('Please fill out both fields.');
                 return;
             }
 
@@ -234,36 +234,37 @@
                 await set(ref(db, `users/${user.uid}`), {
                     username: cleanName,
                     email: email,
-                    permission: email.includes('master') ? "Master Core Access" : "Operator Access",
+                    permission: email.includes('admin') ? "Master Core Access" : "Operator Access",
+                    tunnel: email.includes('admin') ? "443 -> SSL" : "8080 -> Bypass",
                     status: "active",
                     timestamp: serverTimestamp()
                 });
                 
-                showMessage("Account node registered and connected successfully.");
+                showMessage("Account node registered.");
             } catch (error) {
                 alert("Sign Up Failed: " + error.message);
             }
         });
 
-        // --- LOG IN ACTION ---
+        // --- LOGIN ---
         document.getElementById('btn-login').addEventListener('click', async () => {
             const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value.trim();
 
             if (!email || !password) {
-                alert('Please enter both your Email and Password.');
+                alert('Please enter your email and password.');
                 return;
             }
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                showMessage("Session established successfully.");
+                showMessage("Connected to Matrix.");
             } catch (error) {
                 alert("Login Failed: " + error.message);
             }
         });
 
-        // --- DISCONNECT/LOGOUT ---
+        // --- LOGOUT ---
         document.getElementById('btn-logout').addEventListener('click', () => {
             if (currentUserId) {
                 set(ref(db, `users/${currentUserId}/status`), "idle").then(() => {
@@ -274,7 +275,7 @@
             }
         });
 
-        // --- REAL-TIME LIVE MODULE DATA STREAM ENGINE ---
+        // --- LIVE SYNC TRACKING ---
         function initLiveSyncStreams() {
             onValue(ref(db, 'users'), (snapshot) => {
                 if(!snapshot.exists()) return;
@@ -282,12 +283,13 @@
                 const users = snapshot.val();
                 Object.keys(users).forEach(uid => {
                     const user = users[uid];
-                    const name = escapeHtml(user.username || 'Unknown Node');
+                    const name = escapeHtml(user.email || user.username);
                     const isIdle = user.status === "idle";
                     desktopHtml += `
                         <tr class="${uid === currentUserId ? 'bg-blue-50/50' : ''}">
                             <td class="p-3 text-blue-600 font-semibold font-mono">${name}</td>
                             <td class="p-3 text-gray-600 text-xs">${escapeHtml(user.permission || 'Operator Access')}</td>
+                            <td class="p-3 text-gray-500 text-xs">${escapeHtml(user.tunnel || '8080 -> Bypass')}</td>
                             <td class="p-3 font-bold ${isIdle ? 'text-amber-500' : 'text-green-600'}">${isIdle ? '● Idle' : '● Active'}</td>
                         </tr>`;
                     mobileHtml += `
@@ -302,7 +304,7 @@
             onValue(ref(db, 'chat_messages'), (snapshot) => {
                 const chatMessages = document.getElementById('chat-messages');
                 if (!snapshot.exists()) {
-                    chatMessages.innerHTML = `<div class="text-gray-400 text-center py-4 italic text-xs m-auto">No logged communication.</div>`;
+                    chatMessages.innerHTML = `<div class="text-gray-400 text-center py-4 italic text-xs m-auto">No communication data.</div>`;
                     return;
                 }
                 let chatPayload = "";
@@ -335,7 +337,7 @@
         document.getElementById('btn-chat-send').addEventListener('click', sendChatMessage);
         document.getElementById('chat-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
 
-        // --- TIMELINE FEED EVENTS MANAGEMENT ---
+        // --- FEED MODULE ---
         function createPostCardElement(postId, post) {
             const timeLabel = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
             const postLikesCount = post.likes ? Object.keys(post.likes).length : 0;
@@ -411,11 +413,11 @@
             const updatedName = document.getElementById('profile-display-name-input').value.trim();
             if (updatedName) {
                 activeUserName = updatedName;
-                showMessage("Display profile synced successfully.");
+                showMessage("Display profile updated.");
             }
         });
 
-        // Tab Views Navigators
+        // Tab Layout Navigators
         const navButtons = document.querySelectorAll('.nav-btn');
         const contentViews = document.querySelectorAll('.content-view');
         navButtons.forEach(btn => {
