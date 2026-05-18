@@ -230,6 +230,11 @@
               <span class="emoji-select" style="cursor:pointer; font-size:18px; margin: 2px;">🎉</span>
             </div>
 
+            <div id="replyReferenceContainer" style="display: none; background: #E5E9F2; padding: 6px 12px; font-size: 12px; border-left: 3px solid var(--bit-blue-primary); justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <div id="replyReferenceText" style="color: var(--bit-text-them); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></div>
+              <span id="btnCancelReply" style="cursor: pointer; color: var(--bit-danger); font-weight: bold; margin-left: 10px;">✕</span>
+            </div>
+
             <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
               <button type="button" id="btnEmojiToggle" style="background: none; border: none; font-size: 20px; cursor: pointer;">😀</button>
               <input type="text" id="chatTextInput" class="chat-input" placeholder="Type a message..." style="flex: 1;">
@@ -333,6 +338,19 @@
     const database = getDatabase(app);
     const chatMessagesBox = document.getElementById('chatMessagesBox');
 
+    // Reply Global State Configuration
+    let activeReplyTarget = null;
+    const containerReply = document.getElementById('replyReferenceContainer');
+    const textReply = document.getElementById('replyReferenceText');
+    const btnCancelReply = document.getElementById('btnCancelReply');
+
+    if (btnCancelReply) {
+      btnCancelReply.addEventListener('click', () => {
+        activeReplyTarget = null;
+        containerReply.style.display = 'none';
+      });
+    }
+
     // Send Messages Routing Engine
     function triggerSendMessage() {
       const textInput = document.getElementById('chatTextInput');
@@ -343,12 +361,23 @@
       const chatRef = ref(database, 'messages');
       const newMessageRef = push(chatRef);
 
-      set(newMessageRef, {
+      const messagePayload = {
         sender: currentUser,
         text: text,
         timestamp: new Date().toISOString()
-      }).then(() => {
+      };
+
+      if (activeReplyTarget) {
+        messagePayload.replyTo = {
+          user: activeReplyTarget.sender,
+          quote: activeReplyTarget.text
+        };
+      }
+
+      set(newMessageRef, messagePayload).then(() => {
         textInput.value = '';
+        activeReplyTarget = null;
+        if (containerReply) containerReply.style.display = 'none';
       }).catch(err => showToast("Message Fail: " + err.message, "error"));
     }
 
@@ -379,9 +408,23 @@
         const textColor = isMe ? '#FFFFFF' : 'var(--bit-text-them, #1F2D3D)';
         const alignSide = isMe ? 'flex-end' : 'flex-start';
 
+        // Context Setup for Actions
+        const deleteBtn = isMe ? `<span class="delete-msg" style="color:var(--bit-danger);" data-key="${key}">Delete</span>` : '';
+        const escapedText = msg.text.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+        const replyBtn = `<span class="reply-trigger" style="color:var(--bit-blue-primary);" data-key="${key}" data-sender="${msg.sender}" data-text="${escapedText}">Reply</span>`;
+
         const msgRow = document.createElement('div');
         msgRow.className = 'msg-row';
         msgRow.style.alignItems = alignSide;
+
+        // Build Reply HTML block safely if it exists inside payload 
+        let replyContextHTML = "";
+        if (msg.replyTo) {
+          replyContextHTML = `
+            <div style="background: rgba(0,0,0,0.05); border-left: 3px solid var(--bit-blue-primary); padding: 4px 8px; font-size: 11px; margin-bottom: 4px; border-radius: 4px; color: ${isMe ? '#EEE' : '#555'}">
+              <strong>@${msg.replyTo.user}</strong>: ${msg.replyTo.quote}
+            </div>`;
+        }
 
         let audioHtml = '';
         if (msg.audio) {
@@ -392,10 +435,14 @@
           <div style="font-size: 11px; color: var(--bit-text-light); margin-bottom: 2px;">${msg.sender}</div>
           <div class="msg-container" style="flex-direction: ${isMe ? 'row-reverse' : 'row'};">
             <div class="msg-bubble" style="background: ${bubbleBg}; color: ${textColor};">
+              ${replyContextHTML}
               <div>${msg.text}</div>
               ${audioHtml}
             </div>
-            <span class="delete-msg" style="color:var(--bit-danger);" data-key="${key}">Delete</span>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              ${replyBtn}
+              ${deleteBtn}
+            </div>
           </div>
         `;
         chatMessagesBox.appendChild(msgRow);
@@ -403,13 +450,25 @@
       chatMessagesBox.scrollTop = chatMessagesBox.scrollHeight;
     });
 
-    // Message Eviction Action Router
+    // Event Delegation for Action Triggers (Delete / Reply)
     chatMessagesBox.addEventListener('click', (e) => {
       if (e.target.classList.contains('delete-msg')) {
         const key = e.target.getAttribute('data-key');
         remove(ref(database, 'messages/' + key))
           .then(() => showToast("Message dropped successfully.", "success"))
           .catch(err => showToast("Eviction error: " + err.message, "error"));
+      }
+
+      if (e.target.classList.contains('reply-trigger')) {
+        const sender = e.target.getAttribute('data-sender');
+        const text = e.target.getAttribute('data-text');
+        
+        activeReplyTarget = { sender, text };
+        if (containerReply && textReply) {
+          textReply.innerText = `Replying to @${sender}: "${text}"`;
+          containerReply.style.display = 'flex';
+        }
+        document.getElementById('chatTextInput').focus();
       }
     });
 
