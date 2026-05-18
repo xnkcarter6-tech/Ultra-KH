@@ -15,11 +15,11 @@
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Address</label>
-                    <input type="email" id="auth-email" placeholder="admincarter@gmail.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Email Reference</label>
+                    <input type="email" id="auth-email" placeholder="admin1carter@gmail.com" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Account Password</label>
+                    <label class="block text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Security Password</label>
                     <input type="password" id="auth-password" placeholder="••••••••" class="w-full p-2.5 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
                 </div>
                 
@@ -44,8 +44,8 @@
                     <span id="session-badge" class="text-[10px] bg-blue-700 px-2 py-1 rounded font-mono">Active Session</span>
                 </div>
                 <nav class="grid grid-cols-2 gap-1 md:flex md:flex-col md:space-y-1" id="main-nav">
-                    <button data-target="view-home" class="nav-btn text-left block px-3 md:px-4 py-2 rounded bg-blue-700 text-xs md:text-sm font-semibold shadow-inner transition">🏠 Home Feed</button>
-                    <button data-target="view-chat" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">💬 Chat Hub</button>
+                    <button data-target="view-home" class="nav-btn text-left block px-3 md:px-4 py-2 rounded bg-blue-700 text-xs md:text-sm font-semibold shadow-inner transition">🏠 Home</button>
+                    <button data-target="view-chat" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">💬 Chat</button>
                     <button data-target="view-profile" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">👤 Profile</button>
                     <button data-target="view-accounts" class="nav-btn text-left block px-3 md:px-4 py-2 rounded hover:bg-blue-700/50 text-xs md:text-sm transition">🔑 Accounts</button>
                 </nav>
@@ -227,10 +227,12 @@
             }
 
             try {
+                // First register the user entry inside the Authentication module
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 const cleanName = email.split('@')[0];
                 
+                // Write profile using safe authenticated UID context node path
                 await set(ref(db, `users/${user.uid}`), {
                     username: cleanName,
                     email: email,
