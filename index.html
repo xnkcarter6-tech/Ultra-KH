@@ -149,7 +149,7 @@
 
     <script type="module">                
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";                
-        import { getDatabase, ref, push, onValue, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onValue, onChildAdded, onChildChanged, onChildRemoved, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {                                    
             apiKey: "AIzaSyC7L_QlM3o7BkUDZSACRsxzJuSqXdXb2c8",                                    
@@ -196,6 +196,7 @@
             </button>
         `;
 
+        // CHAT SYNC STREAM
         function initChatEngineStream() {
             onValue(ref(db, 'chat_messages'), (snapshot) => {
                 if (!snapshot.exists()) {
@@ -238,81 +239,111 @@
         btnChatSend.addEventListener('click', sendChatMessage);
         chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
 
-        // DYNAMIC SOCIAL FEED SYNCHRONIZATION LOOP
-        onValue(ref(db, 'social_feed'), (snapshot) => {
-            if(!snapshot.exists()) {
-                feedContainer.innerHTML = `<div class="text-xs text-gray-400 text-center py-12 border border-dashed rounded-xl bg-gray-50">No updates posted yet.</div>`;
-                return;
-            }
-            let feedHtml = "";
-            const posts = snapshot.val();
+        // CREATE SINGLE BROADCAST CARD NODE (Safe HTML Structure)
+        function createPostCardElement(postId, post) {
+            const timeLabel = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
+            const postLikesCount = post.likes ? Object.keys(post.likes).length : 0;
             
-            Object.keys(posts).reverse().forEach(postId => {
-                const post = posts[postId];
-                const timeLabel = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'Recent';
-                const postLikesCount = post.likes ? Object.keys(post.likes).length : 0;
-                
-                let commentsHtml = "";
-                if(post.comments) {
-                    Object.keys(post.comments).forEach(cId => {
-                        const comment = post.comments[cId];
-                        commentsHtml += `
-                            <div class="bg-gray-100 p-2.5 rounded-lg text-xs border border-gray-200/60 mb-1.5">
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="font-bold font-mono text-blue-600">${escapeHtml(comment.author)}</span>
-                                </div>
-                                <p class="text-gray-700 font-normal">${escapeHtml(comment.text)}</p>
-                            </div>`;
-                    });
-                }
-                
-                feedHtml += `
-                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-3 block text-left">
-                        <div class="flex justify-between items-center w-full border-b border-gray-100 pb-2">
-                            <span class="font-bold text-sm text-blue-600 font-mono">${escapeHtml(post.authorName)}</span>
-                            <span class="text-[11px] text-gray-400 font-mono">${timeLabel}</span>
+            const card = document.createElement('div');
+            card.id = `post-${postId}`;
+            card.className = "bg-white p-5 rounded-xl border border-gray-200 shadow-sm space-y-3 block text-left";
+            card.innerHTML = `
+                <div class="flex justify-between items-center w-full border-b border-gray-100 pb-2">
+                    <span class="font-bold text-sm text-blue-600 font-mono">${escapeHtml(post.authorName)}</span>
+                    <span class="text-[11px] text-gray-400 font-mono">${timeLabel}</span>
+                </div>
+                <div class="py-1">
+                    <p class="text-gray-800 text-sm font-normal break-words whitespace-pre-wrap leading-relaxed">${escapeHtml(post.text)}</p>
+                </div>
+                <div class="flex gap-4 items-center pt-2 border-t border-gray-100 text-xs">
+                    <button class="btn-like-toggle px-3 py-1 rounded-md bg-gray-100 font-bold hover:bg-red-50 hover:text-red-600 transition">👍 Like (<span class="like-count">${postLikesCount}</span>)</button>
+                </div>
+                <div class="space-y-2 pt-3 bg-gray-50 p-4 rounded-xl border border-gray-200/70">
+                    <div class="comments-list-container space-y-1.5"></div>
+                    <div class="flex gap-2 mt-2 pt-2 border-t border-gray-100/40">
+                        <input type="text" placeholder="Write a comment..." class="comment-input-field flex-1 p-2 border border-gray-200 bg-white rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500">
+                        <button class="btn-submit-comment px-4 py-2 bg-gray-800 text-white font-bold rounded-lg text-[11px] hover:bg-gray-900 transition shadow-sm">Comment</button>
+                    </div>
+                </div>`;
+
+            // Interaction logic attached natively to current DOM object instance
+            card.querySelector('.btn-like-toggle').addEventListener('click', () => {
+                runTransaction(ref(db, `social_feed/${postId}/likes/${currentUserId}`), (currentValue) => {
+                    return currentValue ? null : true;
+                });
+            });
+
+            card.querySelector('.btn-submit-comment').addEventListener('click', async () => {
+                const input = card.querySelector('.comment-input-field');
+                if(!input.value.trim()) return;
+                await push(ref(db, `social_feed/${postId}/comments`), {
+                    text: input.value.trim(),
+                    author: activeUserName,
+                    authorUid: currentUserId
+                });
+                input.value = "";
+            });
+
+            // Hydrate initial inner comment objects
+            if (post.comments) {
+                updateCommentsUIContainer(card.querySelector('.comments-list-container'), post.comments);
+            }
+
+            return card;
+        }
+
+        // RE-RENDER INTERNAL COMMENTS BLOCK ONLY (Does not interrupt input fields)
+        function updateCommentsUIContainer(containerElement, commentsObj) {
+            let html = "";
+            Object.keys(commentsObj).forEach(cId => {
+                const comment = commentsObj[cId];
+                html += `
+                    <div class="bg-gray-100 p-2.5 rounded-lg text-xs border border-gray-200/60">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold font-mono text-blue-600">${escapeHtml(comment.author)}</span>
                         </div>
-                        <div class="py-1">
-                            <p class="text-gray-800 text-sm font-normal break-words whitespace-pre-wrap leading-relaxed">${escapeHtml(post.text)}</p>
-                        </div>
-                        <div class="flex gap-4 items-center pt-2 border-t border-gray-100 text-xs">
-                            <button data-postid="${postId}" class="btn-like-toggle px-3 py-1 rounded-md bg-gray-100 font-bold hover:bg-red-50 hover:text-red-600 transition">👍 Like (${postLikesCount})</button>
-                        </div>
-                        <div class="space-y-2 pt-3 bg-gray-50 p-4 rounded-xl border border-gray-200/70">
-                            <div class="space-y-1.5">${commentsHtml}</div>
-                            <div class="flex gap-2 mt-2 pt-2 border-t border-gray-200/40">
-                                <input type="text" placeholder="Write a comment..." data-postid="${postId}" class="comment-input-field flex-1 p-2 border border-gray-200 bg-white rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500">
-                                <button data-postid="${postId}" class="btn-submit-comment px-4 py-2 bg-gray-800 text-white font-bold rounded-lg text-[11px] hover:bg-gray-900 transition shadow-sm">Comment</button>
-                            </div>
-                        </div>
+                        <p class="text-gray-700 font-normal">${escapeHtml(comment.text)}</p>
                     </div>`;
             });
-            feedContainer.innerHTML = feedHtml;
+            containerElement.innerHTML = html;
+        }
 
-            document.querySelectorAll('.btn-like-toggle').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const pId = btn.getAttribute('data-postid');
-                    runTransaction(ref(db, `social_feed/${pId}/likes/${currentUserId}`), (currentValue) => {
-                        return currentValue ? null : true;
-                    });
-                });
-            });
+        // NON-DESTRUCTIVE GRANULAR FIREBASE CHILD EVENT LISTENERS
+        const socialFeedRef = ref(db, 'social_feed');
+        
+        onChildAdded(socialFeedRef, (snapshot) => {
+            const placeholder = feedContainer.querySelector('.border-dashed');
+            if (placeholder) placeholder.remove();
 
-            document.querySelectorAll('.btn-submit-comment').forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    const pId = btn.getAttribute('data-postid');
-                    const input = document.querySelector(`.comment-input-field[data-postid="${pId}"]`);
-                    if(!input.value.trim()) return;
-                    await push(ref(db, `social_feed/${pId}/comments`), {
-                        text: input.value.trim(),
-                        author: activeUserName,
-                        authorUid: currentUserId
-                    });
-                    input.value = "";
-                });
-            });
+            const card = createPostCardElement(snapshot.key, snapshot.val());
+            feedContainer.insertBefore(card, feedContainer.firstChild); // Keep newer posts on top
         });
 
+        onChildChanged(socialFeedRef, (snapshot) => {
+            const targetCard = document.getElementById(`post-${snapshot.key}`);
+            if (targetCard) {
+                const postData = snapshot.val();
+                
+                // 1. Update Likes without redrawing elements
+                const postLikesCount = postData.likes ? Object.keys(postData.likes).length : 0;
+                targetCard.querySelector('.like-count').textContent = postLikesCount;
+                
+                // 2. Refresh Comments safely without altering text inputs
+                const commentsContainer = targetCard.querySelector('.comments-list-container');
+                if (postData.comments) {
+                    updateCommentsUIContainer(commentsContainer, postData.comments);
+                } else {
+                    commentsContainer.innerHTML = "";
+                }
+            }
+        });
+
+        onChildRemoved(socialFeedRef, (snapshot) => {
+            const targetCard = document.getElementById(`post-${snapshot.key}`);
+            if (targetCard) targetCard.remove();
+        });
+
+        // Broadcast Button Click Action Handler
         btnPublish.addEventListener('click', async () => {
             const val = updateTextArea.value.trim();
             if(!val) return;
@@ -330,6 +361,7 @@
             setTimeout(() => { alertBanner.style.display = "none"; }, 3000);
         });
 
+        // Navigation Tab Logic Switcher
         const navButtons = document.querySelectorAll('.nav-btn');
         const contentViews = document.querySelectorAll('.content-view');
         navButtons.forEach(btn => {
