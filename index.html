@@ -4,255 +4,261 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ultra KH - Khmer Supported</title>
+<title>Ultra KH Social Workspace</title>
 
-<!-- Khmer Font -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-    --bit-blue-primary: #1E50FF;
-    --bit-blue-hover: #0033E6;
-    --bit-blue-active: #0026B3;
-    --bit-text-menu: #FFFFFF;
-    --bit-bg-main: #EDF1F7;
-    --bit-bg-card: #FFFFFF;
-    --bit-border-light: #E0E0E0;
-    --bit-text-dark: #1F2D3D;
-    --bit-text-light: #606266;
-    --chat-bubble-me: #1E50FF;
-    --chat-bubble-them: #F1F3F5;
-    --chat-text-them: #1F2D3D;
+
+:root{
+    --primary:#1E50FF;
+    --primary-hover:#0033E6;
+    --bg:#EDF1F7;
+    --card:#FFFFFF;
+    --text:#1F2D3D;
+    --light:#606266;
+    --border:#E0E0E0;
+    --success:#52C41A;
+    --danger:#FF4D4F;
 }
 
-body.dark-mode {
-    --bit-bg-main: #141E30;
-    --bit-bg-card: #1F2A44;
-    --bit-border-light: #2D3D5A;
-    --bit-text-dark: #FFFFFF;
-    --bit-text-light: #A0AABF;
-    --chat-bubble-them: #2D3D5A;
-    --chat-text-them: #FFFFFF;
+body.dark-mode{
+    --bg:#141E30;
+    --card:#1F2A44;
+    --text:#FFFFFF;
+    --light:#A0AABF;
+    --border:#2D3D5A;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 
     font-family:
-        "Noto Sans Khmer",
-        "Khmer OS Battambang",
-        "Khmer OS Siemreap",
-        "Hanuman",
-        "Segoe UI",
-        sans-serif;
+    "Noto Sans Khmer",
+    "Khmer OS Battambang",
+    "Segoe UI",
+    sans-serif;
 }
 
-body {
-    background: var(--bit-bg-main);
-    color: var(--bit-text-dark);
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-    line-height: 1.8;
-    text-rendering: optimizeLegibility;
+body{
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    height:100vh;
+    overflow:hidden;
+    line-height:1.7;
 }
 
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    background: var(--bit-blue-primary);
-    color: white;
-    display: flex;
-    flex-direction: column;
+/* SIDEBAR */
+
+.sidebar{
+    width:250px;
+    background:var(--primary);
+    color:white;
+    display:flex;
+    flex-direction:column;
 }
 
-.sidebar-brand {
-    padding: 24px;
-    font-size: 24px;
-    font-weight: 800;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+.sidebar-brand{
+    padding:25px;
+    font-size:24px;
+    font-weight:800;
+    border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
-.sidebar-menu {
-    list-style: none;
+.sidebar-menu{
+    list-style:none;
 }
 
-.sidebar-item a {
-    display: flex;
-    align-items: center;
-    padding: 15px 22px;
-    color: white;
-    text-decoration: none;
-    transition: 0.2s;
-    font-weight: 600;
+.sidebar-item a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 22px;
+    color:white;
+    text-decoration:none;
+    transition:0.2s;
+    font-weight:600;
 }
 
-.sidebar-item a:hover {
-    background: var(--bit-blue-hover);
+.sidebar-item:hover{
+    background:var(--primary-hover);
 }
 
-.sidebar-item.active {
-    background: var(--bit-blue-active);
+.sidebar-item.active{
+    background:#0026B3;
 }
 
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+/* MAIN */
+
+.main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
 }
 
-.top-bar {
-    background: var(--bit-bg-card);
-    border-bottom: 1px solid var(--bit-border-light);
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 25px;
+.topbar{
+    height:60px;
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
 }
 
-.top-bar-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
-.lang-select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--bit-border-light);
-    background: white;
-    cursor: pointer;
+.lang-select{
+    padding:6px 10px;
+    border-radius:6px;
+    border:1px solid var(--border);
 }
 
-.container {
-    padding: 25px;
-    overflow-y: auto;
-    flex: 1;
+.container{
+    flex:1;
+    overflow-y:auto;
+    padding:25px;
 }
 
-.card {
-    background: var(--bit-bg-card);
-    border-radius: 10px;
-    padding: 25px;
-    border: 1px solid var(--bit-border-light);
+.layout{
+    display:flex;
+    gap:20px;
 }
 
-.home-layout {
-    display: flex;
-    gap: 20px;
+.left{
+    flex:1;
 }
 
-.home-main-feed {
-    flex: 1;
+.right{
+    width:320px;
 }
 
-.home-side-metrics {
-    width: 320px;
+/* CARD */
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
 }
 
-.form-group {
-    margin-bottom: 15px;
+/* FORM */
+
+.form-group{
+    margin-bottom:15px;
 }
 
 .form-input,
-.form-textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid var(--bit-border-light);
-    outline: none;
-    font-size: 14px;
+.form-textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:12px;
+    background:var(--card);
+    color:var(--text);
 }
 
-.form-textarea {
-    height: 90px;
-    resize: none;
+.form-textarea{
+    resize:none;
+    height:90px;
 }
 
-.btn-submit,
-.btn-send {
-    background: var(--bit-blue-primary);
-    color: white;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
+.btn{
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:10px 20px;
+    cursor:pointer;
+    font-weight:600;
 }
 
-.feed-container {
-    margin-top: 20px;
+.btn:hover{
+    background:var(--primary-hover);
 }
 
-.post-card {
-    margin-bottom: 20px;
+/* POSTS */
+
+.post{
+    margin-bottom:15px;
 }
 
-.post-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.post-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
 }
 
-.post-author {
-    font-weight: 700;
+.post-author{
+    font-weight:700;
 }
 
-.post-time {
-    font-size: 12px;
-    color: var(--bit-text-light);
+.post-time{
+    color:var(--light);
+    font-size:12px;
 }
 
-.tag-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    background: rgba(30,80,255,0.1);
-    border-radius: 4px;
-    font-size: 11px;
-    margin-right: 5px;
+/* TOAST */
+
+.toast-container{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:9999;
 }
 
-.file-attach-label {
-    cursor: pointer;
-    font-size: 13px;
+.toast{
+    background:white;
+    color:black;
+    padding:14px 18px;
+    border-radius:8px;
+    margin-bottom:10px;
+    min-width:220px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    animation:slide 0.3s ease;
 }
 
-.toast-container {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-}
-
-.toast-card {
-    background: white;
-    padding: 14px 20px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-@media(max-width: 768px) {
-    body {
-        flex-direction: column;
+@keyframes slide{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
     }
-
-    .sidebar {
-        width: 100%;
-    }
-
-    .home-layout {
-        flex-direction: column;
-    }
-
-    .home-side-metrics {
-        width: 100%;
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
 }
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+    }
+
+    .layout{
+        flex-direction:column;
+    }
+
+    .right{
+        width:100%;
+    }
+
+}
+
 </style>
 </head>
 
@@ -260,141 +266,145 @@ body {
 
 <div class="toast-container" id="toastHub"></div>
 
-<!-- Sidebar -->
+<!-- SIDEBAR -->
+
 <aside class="sidebar">
 
-    <div class="sidebar-brand">
-        Ultra KH
-    </div>
+<div class="sidebar-brand">
+Ultra KH
+</div>
 
-    <ul class="sidebar-menu">
+<ul class="sidebar-menu">
 
-        <li class="sidebar-item active">
-            <a href="#">
-                🏠 <span style="margin-left:10px;" id="nav-home-text">Home</span>
-            </a>
-        </li>
+<li class="sidebar-item active">
+<a href="#">
+🏠 <span id="nav-home">Home</span>
+</a>
+</li>
 
-        <li class="sidebar-item">
-            <a href="#">
-                💬 <span style="margin-left:10px;" id="nav-chat-text">Chat</span>
-            </a>
-        </li>
+<li class="sidebar-item">
+<a href="#">
+💬 <span id="nav-chat">Chat</span>
+</a>
+</li>
 
-        <li class="sidebar-item">
-            <a href="#">
-                🔔 <span style="margin-left:10px;" id="nav-notif-text">Notifications</span>
-            </a>
-        </li>
+<li class="sidebar-item">
+<a href="#">
+🔔 <span id="nav-notif">Notifications</span>
+</a>
+</li>
 
-        <li class="sidebar-item">
-            <a href="#">
-                👤 <span style="margin-left:10px;" id="nav-profile-text">Profile</span>
-            </a>
-        </li>
+<li class="sidebar-item">
+<a href="#">
+👤 <span id="nav-profile">Profile</span>
+</a>
+</li>
 
-        <li class="sidebar-item">
-            <a href="#">
-                🔐 <span style="margin-left:10px;" id="nav-account-text">Accounts</span>
-            </a>
-        </li>
+<li class="sidebar-item">
+<a href="#">
+🔐 <span id="nav-account">Accounts</span>
+</a>
+</li>
 
-        <li class="sidebar-item">
-            <a href="#" onclick="signOut()">
-                🚪 <span style="margin-left:10px;" id="nav-signout-text">Sign Out</span>
-            </a>
-        </li>
+<li class="sidebar-item">
+<a href="#" onclick="signOut()">
+🚪 <span id="nav-signout">Sign Out</span>
+</a>
+</li>
 
-    </ul>
+</ul>
 
 </aside>
 
-<!-- Main -->
-<main class="main-content">
+<!-- MAIN -->
 
-<header class="top-bar">
+<div class="main">
 
-    <div id="breadcrumb">
-        Dashboard / Home
-    </div>
+<!-- TOPBAR -->
 
-    <div class="top-bar-right">
+<div class="topbar">
 
-        <select class="lang-select" id="languageSwitcher">
-            <option value="en">English</option>
-            <option value="kh">ភាសាខ្មែរ</option>
-        </select>
-
-        <div>
-            👤 Admin
-        </div>
-
-    </div>
-
-</header>
-
-<div class="container">
-
-<div class="home-layout">
-
-<!-- Left -->
-<div class="home-main-feed">
-
-<div class="card">
-
-<h3 id="publish-title">
-    Publish an Update
-</h3>
-
-<br>
-
-<form id="homePublishForm">
-
-<div class="form-group">
-<textarea
-class="form-textarea"
-id="postText"
-placeholder="What is happening within your workspace channels?"
-></textarea>
+<div>
+Dashboard / Home
 </div>
 
-<div class="form-group">
-<input
-type="text"
-class="form-input"
-placeholder="e.g. general, urgent"
->
-</div>
+<div class="topbar-right">
 
-<div style="display:flex; justify-content:space-between; align-items:center;">
+<select class="lang-select" id="languageSwitcher">
+<option value="en">English</option>
+<option value="kh">ភាសាខ្មែរ</option>
+</select>
 
-<label class="file-attach-label">
-📎 <span id="attach-text">Add Image / File</span>
-<input type="file" hidden>
-</label>
-
-<button type="submit" class="btn-submit" id="publish-btn">
-Publish Post
+<button class="btn" onclick="toggleDarkMode()">
+🌙
 </button>
 
 </div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="container">
+
+<div class="layout">
+
+<!-- LEFT -->
+
+<div class="left">
+
+<div class="card">
+
+<h2 id="publish-title">
+Publish an Update
+</h2>
+
+<br>
+
+<form id="postForm">
+
+<div class="form-group">
+
+<textarea
+id="postText"
+class="form-textarea"
+placeholder="What is happening within your workspace channels?"
+required
+></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>
+📎 <span id="attach-label">Add Image / File</span>
+</label>
+
+<input type="file" id="fileInput" class="form-input">
+
+</div>
+
+<button class="btn" type="submit" id="publish-btn">
+Publish Post
+</button>
 
 </form>
 
 </div>
 
-<div class="feed-container" id="feedContainer"></div>
+<div id="feedContainer"></div>
 
 </div>
 
-<!-- Right -->
-<div class="home-side-metrics">
+<!-- RIGHT -->
+
+<div class="right">
 
 <div class="card">
 
-<h3 id="welcome-title">
+<h2 id="welcome-title">
 Welcome to Ultra KH 🚀
-</h3>
+</h2>
 
 <br>
 
@@ -404,25 +414,25 @@ We are excited to launch our official social media platform dedicated to sharing
 
 <br>
 
-<h4 id="purpose-title">
+<h3 id="purpose-title">
 Our Purpose:
-</h4>
+</h3>
 
 <ul style="padding-left:20px; margin-top:10px;">
 
-<li id="purpose1">
-Stay updated with the latest news and content
+<li id="p1">
+Stay updated with latest news and content
 </li>
 
-<li id="purpose2">
+<li id="p2">
 Learn and grow together
 </li>
 
-<li id="purpose3">
+<li id="p3">
 Share ideas and experiences
 </li>
 
-<li id="purpose4">
+<li id="p4">
 Connect with the Ultra KH community
 </li>
 
@@ -436,186 +446,370 @@ Connect with the Ultra KH community
 
 </div>
 
-</main>
+</div>
 
 <script>
 
+/* =========================
+LANGUAGE
+========================= */
+
+let currentLanguage = "en";
+
 const translations = {
 
-    en: {
+en:{
+    home:"Home",
+    chat:"Chat",
+    notif:"Notifications",
+    profile:"Profile",
+    account:"Accounts",
+    signout:"Sign Out",
 
-        home: "Home",
-        chat: "Chat",
-        notif: "Notifications",
-        profile: "Profile",
-        account: "Accounts",
-        signout: "Sign Out",
+    publish:"Publish an Update",
+    publishBtn:"Publish Post",
+    attach:"Add Image / File",
 
-        publish: "Publish an Update",
-        publishBtn: "Publish Post",
+    placeholder:"What is happening within your workspace channels?",
 
-        attach: "Add Image / File",
+    welcome:"Welcome to Ultra KH 🚀",
 
-        placeholder: "What is happening within your workspace channels?",
+    welcomeText:
+    "We are excited to launch our official social media platform dedicated to sharing updates, knowledge, trends, entertainment, and community engagement.",
 
-        welcome: "Welcome to Ultra KH 🚀",
+    purpose:"Our Purpose:",
 
-        welcomeText:
-        "We are excited to launch our official social media platform dedicated to sharing updates, knowledge, trends, entertainment, and community engagement.",
+    pp1:"Stay updated with latest news and content",
+    pp2:"Learn and grow together",
+    pp3:"Share ideas and experiences",
+    pp4:"Connect with the Ultra KH community",
 
-        purpose: "Our Purpose:",
+    success:"Post published successfully",
+    logout:"Signed out successfully",
 
-        p1: "Stay updated with the latest news and content",
-        p2: "Learn and grow together",
-        p3: "Share ideas and experiences",
-        p4: "Connect with the Ultra KH community"
+    dark:"Dark mode enabled",
+    light:"Light mode enabled"
+},
 
-    },
+kh:{
+    home:"ទំព័រដើម",
+    chat:"ការជជែក",
+    notif:"ការជូនដំណឹង",
+    profile:"ប្រវត្តិរូប",
+    account:"គណនី",
+    signout:"ចាកចេញ",
 
-    kh: {
+    publish:"បង្ហោះព័ត៌មានថ្មី",
+    publishBtn:"បង្ហោះ",
+    attach:"បន្ថែមរូបភាព / ឯកសារ",
 
-        home: "ទំព័រដើម",
-        chat: "ការជជែក",
-        notif: "ការជូនដំណឹង",
-        profile: "ប្រវត្តិរូប",
-        account: "គណនី",
-        signout: "ចាកចេញ",
+    placeholder:"តើមានអ្វីកើតឡើងនៅក្នុងក្រុមការងាររបស់អ្នក?",
 
-        publish: "បង្ហោះព័ត៌មានថ្មី",
-        publishBtn: "បង្ហោះ",
+    welcome:"សូមស្វាគមន៍មកកាន់ Ultra KH 🚀",
 
-        attach: "បន្ថែមរូបភាព / ឯកសារ",
+    welcomeText:
+    "យើងមានសេចក្តីរីករាយក្នុងការបើកដំណើរការវេទិកាបណ្ដាញសង្គមផ្លូវការរបស់យើង។",
 
-        placeholder: "តើមានអ្វីកើតឡើងនៅក្នុងក្រុមការងាររបស់អ្នក?",
+    purpose:"គោលបំណងរបស់យើង៖",
 
-        welcome: "សូមស្វាគមន៍មកកាន់ Ultra KH 🚀",
+    pp1:"ទទួលព័ត៌មានថ្មីៗ",
+    pp2:"រៀន និងអភិវឌ្ឍជាមួយគ្នា",
+    pp3:"ចែករំលែកបទពិសោធន៍",
+    pp4:"ភ្ជាប់ជាមួយសហគមន៍ Ultra KH",
 
-        welcomeText:
-        "យើងមានសេចក្តីរីករាយក្នុងការបើកដំណើរការវេទិកាបណ្តាញសង្គមផ្លូវការរបស់យើងសម្រាប់ចែករំលែកព័ត៌មាន ចំណេះដឹង និន្នាការ ការកម្សាន្ត និងការចូលរួមសហគមន៍។",
+    success:"បង្ហោះព័ត៌មានដោយជោគជ័យ",
+    logout:"បានចាកចេញដោយជោគជ័យ",
 
-        purpose: "គោលបំណងរបស់យើង៖",
-
-        p1: "ទទួលព័ត៌មាន និងមាតិកាថ្មីៗ",
-        p2: "រៀន និងអភិវឌ្ឍជាមួយគ្នា",
-        p3: "ចែករំលែកគំនិត និងបទពិសោធន៍",
-        p4: "ភ្ជាប់ទំនាក់ទំនងជាមួយសហគមន៍ Ultra KH"
-
-    }
+    dark:"បានបើក Dark Mode",
+    light:"បានប្ដូរទៅ Light Mode"
+}
 
 };
 
+/* =========================
+INITIALIZE
+========================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+setupLanguage();
+setupPosts();
+setupSidebar();
+loadPosts();
+setupFileUpload();
+
+});
+
+/* =========================
+LANGUAGE SWITCH
+========================= */
+
+function setupLanguage(){
+
 document.getElementById("languageSwitcher")
-.addEventListener("change", function() {
+.addEventListener("change",function(){
 
-    const lang = this.value;
+currentLanguage = this.value;
 
-    document.getElementById("nav-home-text").innerText =
-        translations[lang].home;
-
-    document.getElementById("nav-chat-text").innerText =
-        translations[lang].chat;
-
-    document.getElementById("nav-notif-text").innerText =
-        translations[lang].notif;
-
-    document.getElementById("nav-profile-text").innerText =
-        translations[lang].profile;
-
-    document.getElementById("nav-account-text").innerText =
-        translations[lang].account;
-
-    document.getElementById("nav-signout-text").innerText =
-        translations[lang].signout;
-
-    document.getElementById("publish-title").innerText =
-        translations[lang].publish;
-
-    document.getElementById("publish-btn").innerText =
-        translations[lang].publishBtn;
-
-    document.getElementById("attach-text").innerText =
-        translations[lang].attach;
-
-    document.getElementById("postText").placeholder =
-        translations[lang].placeholder;
-
-    document.getElementById("welcome-title").innerText =
-        translations[lang].welcome;
-
-    document.getElementById("welcome-text").innerText =
-        translations[lang].welcomeText;
-
-    document.getElementById("purpose-title").innerText =
-        translations[lang].purpose;
-
-    document.getElementById("purpose1").innerText =
-        translations[lang].p1;
-
-    document.getElementById("purpose2").innerText =
-        translations[lang].p2;
-
-    document.getElementById("purpose3").innerText =
-        translations[lang].p3;
-
-    document.getElementById("purpose4").innerText =
-        translations[lang].p4;
+applyLanguage(currentLanguage);
 
 });
 
-function signOut() {
-    showToast("Session Signed Out");
 }
 
-function showToast(message) {
+function applyLanguage(lang){
 
-    const hub = document.getElementById("toastHub");
+const t = translations[lang];
 
-    const card = document.createElement("div");
+document.getElementById("nav-home").innerText = t.home;
+document.getElementById("nav-chat").innerText = t.chat;
+document.getElementById("nav-notif").innerText = t.notif;
+document.getElementById("nav-profile").innerText = t.profile;
+document.getElementById("nav-account").innerText = t.account;
+document.getElementById("nav-signout").innerText = t.signout;
 
-    card.className = "toast-card";
+document.getElementById("publish-title").innerText = t.publish;
+document.getElementById("publish-btn").innerText = t.publishBtn;
+document.getElementById("attach-label").innerText = t.attach;
 
-    card.innerHTML = message;
+document.getElementById("postText").placeholder = t.placeholder;
 
-    hub.appendChild(card);
+document.getElementById("welcome-title").innerText = t.welcome;
+document.getElementById("welcome-text").innerText = t.welcomeText;
+document.getElementById("purpose-title").innerText = t.purpose;
 
-    setTimeout(() => {
-        card.remove();
-    }, 3000);
+document.getElementById("p1").innerText = t.pp1;
+document.getElementById("p2").innerText = t.pp2;
+document.getElementById("p3").innerText = t.pp3;
+document.getElementById("p4").innerText = t.pp4;
+
 }
 
-document.getElementById("homePublishForm")
-.addEventListener("submit", function(e){
+/* =========================
+POST SYSTEM
+========================= */
 
-    e.preventDefault();
+function setupPosts(){
 
-    const text = document.getElementById("postText").value;
+document.getElementById("postForm")
+.addEventListener("submit",function(e){
 
-    if(!text.trim()) return;
+e.preventDefault();
 
-    const feed = document.getElementById("feedContainer");
+const input = document.getElementById("postText");
 
-    const div = document.createElement("div");
+const text = input.value.trim();
 
-    div.className = "card post-card";
+if(!text) return;
 
-    div.innerHTML = `
-        <div class="post-header">
-            <div class="post-author">Admin</div>
-            <div class="post-time">Just now</div>
-        </div>
+createPost(text);
 
-        <div>
-            ${text}
-        </div>
-    `;
+savePosts();
 
-    feed.prepend(div);
+input.value = "";
 
-    this.reset();
-
-    showToast("Post Published Successfully");
+showToast(
+translations[currentLanguage].success,
+"success"
+);
 
 });
+
+}
+
+function createPost(text){
+
+const feed = document.getElementById("feedContainer");
+
+const div = document.createElement("div");
+
+div.className = "card post";
+
+const time = new Date().toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit'
+});
+
+div.innerHTML = `
+
+<div class="post-header">
+
+<div class="post-author">
+Admin
+</div>
+
+<div class="post-time">
+${time}
+</div>
+
+</div>
+
+<div>
+${text}
+</div>
+
+`;
+
+feed.prepend(div);
+
+}
+
+/* =========================
+LOCAL STORAGE
+========================= */
+
+function savePosts(){
+
+const posts = [];
+
+document.querySelectorAll(".post").forEach(post=>{
+
+posts.push(
+post.querySelector("div:last-child").innerText
+);
+
+});
+
+localStorage.setItem(
+"ultrakh_posts",
+JSON.stringify(posts)
+);
+
+}
+
+function loadPosts(){
+
+const saved =
+localStorage.getItem("ultrakh_posts");
+
+if(!saved) return;
+
+const posts = JSON.parse(saved);
+
+posts.reverse().forEach(post=>{
+
+createPost(post);
+
+});
+
+}
+
+/* =========================
+FILE UPLOAD
+========================= */
+
+function setupFileUpload(){
+
+document.getElementById("fileInput")
+.addEventListener("change",function(e){
+
+const file = e.target.files[0];
+
+if(file){
+
+showToast(
+"📎 " + file.name,
+"success"
+);
+
+}
+
+});
+
+}
+
+/* =========================
+DARK MODE
+========================= */
+
+function toggleDarkMode(){
+
+document.body.classList.toggle("dark-mode");
+
+if(document.body.classList.contains("dark-mode")){
+
+showToast(
+translations[currentLanguage].dark,
+"success"
+);
+
+}else{
+
+showToast(
+translations[currentLanguage].light,
+"success"
+);
+
+}
+
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+function setupSidebar(){
+
+document.querySelectorAll(".sidebar-item")
+.forEach(item=>{
+
+item.addEventListener("click",function(){
+
+document.querySelectorAll(".sidebar-item")
+.forEach(i=>i.classList.remove("active"));
+
+this.classList.add("active");
+
+});
+
+});
+
+}
+
+/* =========================
+SIGN OUT
+========================= */
+
+function signOut(){
+
+showToast(
+translations[currentLanguage].logout,
+"error"
+);
+
+}
+
+/* =========================
+TOAST
+========================= */
+
+function showToast(message,type="info"){
+
+const hub = document.getElementById("toastHub");
+
+const toast = document.createElement("div");
+
+toast.className = "toast";
+
+if(type==="success"){
+toast.style.borderLeft = "5px solid #52C41A";
+}
+
+if(type==="error"){
+toast.style.borderLeft = "5px solid #FF4D4F";
+}
+
+toast.innerHTML = message;
+
+hub.appendChild(toast);
+
+setTimeout(()=>{
+
+toast.remove();
+
+},3000);
+
+}
 
 </script>
 
