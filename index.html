@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +22,15 @@
             --bit-success: #52C41A;
             --bit-warning: #FAAD14;
             --bg-pattern: none;
+            --input-bg: #FFFFFF;
+            --input-text: #1F2D3D;
+            --btn-text: #FFFFFF;
         }
         
         body.theme-dark {
+            --bit-blue-primary: #2D3D5A;
+            --bit-blue-hover: #3D5275;
+            --bit-blue-active: #1F2A44;
             --bit-bg-main: #141E30;
             --bit-bg-card: #1F2A44;
             --bit-border-light: #2D3D5A;
@@ -34,6 +39,9 @@
             --chat-bubble-them: #2D3D5A;
             --chat-text-them: #FFFFFF;
             --bg-pattern: none;
+            --input-bg: #141E30;
+            --input-text: #FFFFFF;
+            --btn-text: #FFFFFF;
         }
         body.theme-grid {
             --bit-bg-main: #F4F7FC;
@@ -43,8 +51,14 @@
             --bit-text-light: #5C6E84;
             --bg-pattern: linear-gradient(90deg, rgba(30,80,255,0.03) 1px, transparent 1px), linear-gradient(rgba(30,80,255,0.03) 1px, transparent 1px);
             background-size: 20px 20px;
+            --input-bg: #FFFFFF;
+            --input-text: #0F1B2A;
+            --btn-text: #FFFFFF;
         }
         body.theme-sepia {
+            --bit-blue-primary: #8C6A42;
+            --bit-blue-hover: #735635;
+            --bit-blue-active: #5C442A;
             --bit-bg-main: #F4EFE6;
             --bit-bg-card: #FCF9F2;
             --bit-border-light: #E4DCCF;
@@ -54,6 +68,73 @@
             --chat-bubble-them: #EDE4D3;
             --chat-text-them: #433422;
             --bg-pattern: none;
+            --input-bg: #FCF9F2;
+            --input-text: #433422;
+            --btn-text: #FFFFFF;
+        }
+        body.theme-cyberpunk {
+            --bit-blue-primary: #FF007F;
+            --bit-blue-hover: #D4006A;
+            --bit-blue-active: #A3004F;
+            --bit-bg-main: #0B0B12;
+            --bit-bg-card: #121220;
+            --bit-border-light: #393953;
+            --bit-text-dark: #00FF9D;
+            --bit-text-light: #8A8AA3;
+            --chat-bubble-them: #1C1C30;
+            --chat-text-them: #00FF9D;
+            --bg-pattern: none;
+            --input-bg: #1C1C30;
+            --input-text: #00FF9D;
+            --btn-text: #FFFFFF;
+        }
+        body.theme-forest {
+            --bit-blue-primary: #2D5A27;
+            --bit-blue-hover: #1E3F1A;
+            --bit-blue-active: #152C12;
+            --bit-bg-main: #EAF2E8;
+            --bit-bg-card: #FFFFFF;
+            --bit-border-light: #C2D4BF;
+            --bit-text-dark: #1C3518;
+            --bit-text-light: #5B7556;
+            --chat-bubble-them: #E2EFE0;
+            --chat-text-them: #1C3518;
+            --bg-pattern: none;
+            --input-bg: #FFFFFF;
+            --input-text: #1C3518;
+            --btn-text: #FFFFFF;
+        }
+        body.theme-oled {
+            --bit-blue-primary: #222222;
+            --bit-blue-hover: #333333;
+            --bit-blue-active: #111111;
+            --bit-bg-main: #000000;
+            --bit-bg-card: #000000;
+            --bit-border-light: #333333;
+            --bit-text-dark: #FFFFFF;
+            --bit-text-light: #888888;
+            --chat-bubble-them: #111111;
+            --chat-text-them: #FFFFFF;
+            --bg-pattern: none;
+            --input-bg: #111111;
+            --input-text: #FFFFFF;
+            --btn-text: #FFFFFF;
+        }
+        body.theme-crimson {
+            --bit-blue-primary: #9B111E;
+            --bit-blue-hover: #720D16;
+            --bit-blue-active: #530910;
+            --bit-bg-main: #F9F2F3;
+            --bit-bg-card: #FFFFFF;
+            --bit-border-light: #E8D3D5;
+            --bit-text-dark: #4A060D;
+            --bit-text-light: #8A6D70;
+            --chat-bubble-them: #F3DFE1;
+            --chat-text-them: #4A060D;
+            --bg-pattern: none;
+            --input-bg: #FFFFFF;
+            --input-text: #4A060D;
+            --btn-text: #FFFFFF;
         }
 
         * {
@@ -80,9 +161,9 @@
             flex-direction: column;
             flex-shrink: 0;
             z-index: 100;
+            transition: background-color 0.2s;
         }
         .sidebar-brand {
-            background-color: var(--bit-blue-primary);
             padding: 24px 20px;
             font-size: 22px;
             font-weight: 800; 
@@ -128,90 +209,87 @@
         }
         .top-bar-right { display: flex; align-items: center; gap: 15px; color: var(--bit-text-light); }
         .top-bar-profile-wrap { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-        .container { padding: 25px; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
-        .card { background: var(--bit-bg-card); border-radius: 8px; border: 1px solid var(--bit-border-light); padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .page-view { display: none; height: 100%; }
-        .page-view.active { display: block; }
-        .split-view-layout { display: flex; gap: 25px; height: 100%; align-items: flex-start; }
-        .left-form-panel { width: 350px; flex-shrink: 0; }
-        .right-display-panel { flex-grow: 1; }
-        .form-group { margin-bottom: 18px; }
-        .form-label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--bit-text-dark); }
-        .form-input, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }
-        .form-select { width: 100%; padding: 10px 12px; border: 1px solid var(--bit-border-light); border-radius: 6px; background: var(--bit-bg-card); color: var(--bit-text-dark); font-size: 13px; outline: none; cursor: pointer; }
-        .form-textarea { resize: none; height: 70px; }    
-        .btn-submit { width: 100%; background: var(--bit-blue-primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
-        .btn-submit:hover { background: var(--bit-blue-hover); }
         
-        .bg-preset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
-        .bg-option-card { border: 2px solid var(--bit-border-light); border-radius: 6px; padding: 12px; cursor: pointer; text-align: center; transition: all 0.2s ease; }
-        .bg-option-card:hover { border-color: var(--bit-blue-primary); }
-        .bg-option-card.selected { border-color: var(--bit-blue-primary); background: rgba(30, 80, 255, 0.05); }
-        .bg-preview-swatch { height: 35px; border-radius: 4px; margin-bottom: 8px; border: 1px solid rgba(0,0,0,0.08); }
-
+        .container { padding: 25px; overflow-y: auto; flex-grow: 1; display: block; }
+        .page-view { display: none; width: 100%; }
+        .page-view.active { display: block; }
+        
         .home-layout { display: flex; gap: 25px; align-items: flex-start; }
         .home-main-feed { flex-grow: 1; display: flex; flex-direction: column; gap: 20px; width: 100%; }
         .home-side-metrics { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
         .feed-container { display: flex; flex-direction: column; gap: 20px; margin-top: 10px; }    
-        .post-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; }
+        
+        .post-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; margin-bottom: 15px; }
         .post-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .post-author { font-weight: 700; color: var(--bit-text-dark); }
         .post-content-text { color: var(--bit-text-dark); font-size: 14px; line-height: 1.5; margin-bottom: 12px; }
-        .post-actions { display: flex; align-items: center; border-top: 1px solid var(--bit-border-light); border-bottom: 1px solid var(--bit-border-light); padding: 10px 0; margin-bottom: 12px; gap: 15px; }
-        .action-trigger-btn { background: transparent; border: none; color: var(--bit-text-light); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; }
-        .action-trigger-btn:hover { color: var(--bit-blue-primary); }
-        .action-trigger-btn.purge:hover { color: var(--bit-danger); }
         
-        /* Nested Commments & Replies UI Architecture */
-        .post-comments-section { background: rgba(0,0,0,0.01); border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-        .comment-item-box { border-left: 2px solid var(--bit-border-light); padding-left: 10px; margin-bottom: 6px; font-size: 13px; }
-        .comment-meta-hdr { font-weight: 700; color: var(--bit-text-dark); margin-bottom: 2px; font-size: 12px; }
-        .comment-body-txt { color: var(--bit-text-dark); line-height: 1.4; margin-bottom: 4px; }
-        .comment-action-bar { display: flex; gap: 12px; font-size: 11px; color: var(--bit-text-light); }
-        .comment-action-inline-btn { background: none; border: none; cursor: pointer; color: var(--bit-text-light); font-weight: 600; font-size: 11px; }
-        .comment-action-inline-btn:hover { color: var(--bit-blue-primary); }
-        .comment-input-inline-wrap { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+        .post-media-attachment { margin-top: 12px; border-radius: 8px; overflow: hidden; border: 1px solid var(--bit-border-light); max-width: 100%; background: #0f172a; display: block; }
+        .post-media-attachment img { width: 100%; height: auto; display: block; max-height: 450px; object-fit: contain; }
+        .post-media-attachment video { width: 100%; max-height: 450px; display: block; outline: none; }
+        .post-media-attachment iframe { width: 100%; height: 500px; border: none; background: #ffffff; }
+        .post-media-attachment audio { width: 100%; padding: 10px; display: block; background: var(--chat-bubble-them); border: none; outline: none; }
 
-        .chat-layout { display: flex; background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; height: 100%; overflow: hidden; min-height: 450px; }
-        .chat-sidebar { width: 280px; border-right: 1px solid var(--bit-border-light); display: flex; flex-direction: column; }
-        .chat-sidebar-header { padding: 15px 20px; font-weight: 700; border-bottom: 1px solid var(--bit-border-light); background: rgba(0,0,0,0.01); letter-spacing: 0.3px; text-transform: uppercase; font-size: 11px; color: var(--bit-text-light); }
-        .friends-list { list-style: none; overflow-y: auto; flex-grow: 1; }
-        .friend-item { padding: 15px 20px; border-bottom: 1px solid var(--bit-border-light); cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .friend-item.active { background: rgba(30, 80, 255, 0.08); }
-        .friend-name { font-weight: 600; color: var(--bit-text-dark); font-size: 13px; }
-        .chat-window { flex-grow: 1; display: flex; flex-direction: column; background: var(--bit-bg-card); position: relative; min-width: 0; }
-        .chat-window-header { height: 50px; padding: 0 20px; border-bottom: 1px solid var(--bit-border-light); display: flex; align-items: center; font-weight: 600; font-size: 13px; }
-        .chat-messages-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: rgba(0, 0, 0, 0.01); }    
-        .msg-row { display: flex; flex-direction: column; width: 100%; position: relative; }
-        .msg-row.msg-me { align-items: flex-end; }
-        .msg-row.msg-them { align-items: flex-start; }
-        .msg-meta-container { font-size: 11px; color: var(--bit-text-light); margin-bottom: 3px; display: flex; gap: 10px; }    
-        .bubble-wrapper { display: flex; align-items: center; gap: 8px; max-width: 85%; position: relative; }
-        .bubble { padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.5; word-wrap: break-word; position: relative; }
-        .msg-me .bubble { background: var(--chat-bubble-me); color: #FFFFFF; }
-        .msg-them .bubble { background: var(--chat-bubble-them); color: var(--chat-text-them); border: 1px solid var(--bit-border-light); }    
-        .msg-interact-bar { display: flex; gap: 12px; font-size: 11px; margin-top: 4px; color: var(--bit-text-light); align-items: center; }
-        .msg-interact-btn { cursor: pointer; background: none; border: none; color: var(--bit-text-light); font-size: 11px; font-weight: 600; }
-        .msg-interact-btn:hover { color: var(--bit-blue-primary); }
-        .msg-interact-btn.msg-del:hover { color: var(--bit-danger); }
-        .chat-input-container { border-top: 1px solid var(--bit-border-light); background: var(--bit-bg-card); display: flex; flex-direction: column; padding: 10px 20px; }
-        .chat-controls-row { display: flex; gap: 15px; margin-bottom: 8px; align-items: center; }
-        .chat-control-icon-btn { background: none; border: none; color: var(--bit-text-light); font-weight: 600; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
-        .chat-control-icon-btn:hover { color: var(--bit-blue-primary); }
-        .chat-input-area { display: flex; gap: 10px; align-items: center; }
-        .chat-input { flex-grow: 1; padding: 10px 15px; border: 1px solid var(--bit-border-light); border-radius: 6px; outline: none; font-size: 13px; background: var(--bit-bg-card); color: var(--bit-text-dark); }    
-        .btn-send { background: var(--bit-blue-primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-        .metrics-grid-vertical { display: flex; flex-direction: column; gap: 15px; }
-        .metric-widget-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius: 8px; padding: 20px; min-height: 100px; }
-        .metric-widget-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--bit-text-light); letter-spacing: 0.5px; margin-bottom: 8px; }
-        .metric-widget-value { font-size: 28px; font-weight: 800; color: var(--bit-blue-primary); }
+        .post-actions-toolbar { display: flex; align-items: center; justify-content: space-between; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--bit-border-light); }
+        .reaction-cluster { display: flex; gap: 8px; }
+        .btn-react-node { background: rgba(0,0,0,0.03); border: 1px solid var(--bit-border-light); padding: 5px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; color: var(--bit-text-dark); transition: transform 0.1s ease; }
+        .btn-react-node:active { transform: scale(0.95); }
+        .btn-react-node:hover { background: rgba(30, 80, 255, 0.08); border-color: var(--bit-blue-primary); }
+        .btn-delete-node { background: transparent; border: none; color: var(--bit-danger); cursor: pointer; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 4px; }
+        .btn-delete-node:hover { background: rgba(255, 77, 79, 0.08); }
+
+        .card { background: var(--bit-bg-card); border-radius: 8px; border: 1px solid var(--bit-border-light); padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--bit-text-dark); }
+        
+        /* FIXED: Enforced strict design tokens to prevent dark mode/cyberpunk text-blinding bugs */
+        .form-input, .form-textarea, .form-select, .comment-field-input { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid var(--bit-border-light); 
+            border-radius: 6px; 
+            outline: none; 
+            font-size: 13px; 
+            background-color: var(--input-bg) !important; 
+            color: var(--input-text) !important; 
+        }
+        
+        .form-textarea { resize: none; height: 70px; }    
+        
+        /* FIXED: Added clean button typography defaults to stay highly legible */
+        .btn-submit, .btn-comment-submit { 
+            background: var(--bit-blue-primary); 
+            color: var(--btn-text) !important; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 6px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            font-size: 14px; 
+            transition: background-color 0.2s; 
+        }
+        .btn-submit:hover, .btn-comment-submit:hover { background: var(--bit-blue-hover); }
+
+        .toolbar-btn { background: rgba(0,0,0,0.04); padding: 8px 14px; border-radius: 4px; font-weight: 600; color: var(--bit-text-dark); display: inline-flex; align-items: center; border: 1px solid var(--bit-border-light); cursor: pointer; font-size: 13px; gap: 6px; transition: background 0.2s; }
+        .toolbar-btn:hover { background: rgba(0,0,0,0.08); }
+        .toolbar-btn.recording { background: var(--bit-danger); color: white; border-color: var(--bit-danger); animation: pulseRecord 1.5s infinite; }
+        @keyframes pulseRecord { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        .comments-section-wrapper { margin-top: 15px; background: rgba(0,0,0,0.01); border-radius: 6px; padding: 12px; border: 1px solid var(--bit-border-light); }
+        .comment-stream-node { font-size: 12.5px; border-bottom: 1px dashed var(--bit-border-light); padding: 6px 0; color: var(--bit-text-dark); }
+        .comment-stream-node:last-child { border-bottom: none; }
+        .comment-meta-author { font-weight: 700; margin-right: 5px; color: var(--bit-blue-primary); }
+        .comment-input-row { display: flex; gap: 8px; margin-top: 10px; }
+        .comment-field-input { flex-grow: 1; padding: 6px 10px; border-radius: 4px; }
+
         .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 420px; pointer-events: none; }
         .toast-card { background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); padding: 14px 20px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); display: flex; align-items: center; gap: 12px; pointer-events: auto; border-left: 5px solid var(--bit-blue-primary); animation: toastSlideIn 0.3s forwards; }
         .toast-card.success { border-left-color: var(--bit-success); }
+        .toast-card.error { border-left-color: var(--bit-danger); }
         .toast-message { font-size: 13.5px; font-weight: 600; color: var(--bit-text-dark); flex-grow: 1; }
         .toast-close { background: transparent; border: none; cursor: pointer; color: var(--bit-text-light); font-weight: bold; }    
-        .reply-preview-bar { background: rgba(0,0,0,0.03); border-left: 3px solid var(--bit-blue-primary); padding: 6px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; font-size: 12px; }
         @keyframes toastSlideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; height: auto; flex-direction: row; }
@@ -220,14 +298,10 @@
             .sidebar-item a { padding: 15px 15px; font-size: 12px; flex-direction: column; }
             .sidebar-item a span { display: none; }
             .sidebar-item.active::before { left: 0; right: 0; bottom: 0; top: auto; width: auto; height: 3px; }
-            .home-layout, .split-view-layout, .chat-layout { flex-direction: column; height: auto; gap: 15px; }
-            .home-side-metrics, .left-form-panel, .chat-sidebar { width: 100%; }
-            .chat-layout { height: calc(100vh - 120px); }
-            .chat-sidebar { max-height: 120px; }
-            .chat-window { height: 350px; }
+            .home-layout { flex-direction: column; height: auto; gap: 15px; }
+            .home-side-metrics { width: 100%; }
         }
     </style>
-    <!-- GOOGLE FIREBASE SDK INITIALIZATION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -255,7 +329,6 @@
         <div class="sidebar-brand"><span class="brand-text-space">Ultra</span><span>kh</span></div>
         <ul class="sidebar-menu">
             <li class="sidebar-item active" data-target="home" id="nav-home"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div><span>Home</span></a></li>
-            <li class="sidebar-item" data-target="message" id="nav-message"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><span>Chat</span></a></li>
             <li class="sidebar-item" data-target="profile" id="nav-profile"><a href="javascript:void(0)"><div class="sidebar-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span>Preferences</span></a></li>
         </ul>
     </aside>
@@ -270,22 +343,32 @@
             </div>
         </header>
         <div class="container" id="mainContainer">
-            <!-- PAGE HOME -->
             <div class="page-view active" id="page-home">
                 <div class="home-layout">
                     <div class="home-main-feed">
                         <div class="card" style="padding: 20px;">
                             <form id="homePublishForm" onsubmit="handlePostPublish(event)">
                                 <div class="form-group" style="margin-bottom: 12px;">
-                                    <textarea class="form-textarea" id="postText" placeholder="Write a post..."></textarea>
+                                    <textarea class="form-textarea" id="postText" placeholder="Write a post or record a status update..."></textarea>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <label class="file-attach-label" for="homePostFileInput" style="cursor: pointer; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 4px; font-weight: 600; color: var(--bit-text-light);">
-                                            📎 Upload File
-                                            <input type="file" id="homePostFileInput" style="display:none;" onchange="handleHomePostFileSelected(this)">
+                                
+                                <div id="publisherAudioPreviewContainer" style="margin-bottom: 15px; display: none; background: rgba(0,0,0,0.02); border: 1px dashed var(--bit-border-light); padding: 10px; border-radius: 6px; align-items: center; justify-content: space-between;">
+                                    <audio id="publisherAudioPlayer" controls style="flex-grow: 1; max-height: 36px;"></audio>
+                                    <button type="button" onclick="cancelRecordedVoiceData()" style="background:transparent; border:none; color:var(--bit-danger); margin-left: 10px; font-weight:700; cursor:pointer; font-size:16px;">×</button>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                        <label class="toolbar-btn" for="homePostFileInput">
+                                            📎 Attach File
+                                            <input type="file" id="homePostFileInput" accept="image/*,video/*,application/pdf" style="display:none;" onchange="handleHomePostFileSelected(this)">
                                         </label>
-                                        <span id="homeFilePreviewText" style="font-size:12px; margin-left:8px; color:var(--bit-text-light);"></span>
+                                        
+                                        <button type="button" class="toolbar-btn" id="btnVoiceRecordTrigger" onclick="toggleVoiceRecordingState()">
+                                            🎙️ Record Voice Note
+                                        </button>
+
+                                        <span id="homeFilePreviewText" style="font-size:12px; color:var(--bit-text-light); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
                                     </div>
                                     <button type="submit" class="btn-submit" style="width: auto; padding: 8px 24px;">Post</button>
                                 </div>
@@ -295,107 +378,68 @@
                     </div>
                     <div class="home-side-metrics">
                         <div class="metrics-grid-vertical">
-                            <div class="metric-widget-card"><div class="metric-widget-title">Registered</div><div class="metric-widget-value" id="metUserCount">1</div></div>
+                            <div class="metric-widget-card" style="background: var(--bit-bg-card); border: 1px solid var(--bit-border-light); border-radius:8px; padding:20px;">
+                                <div class="metric-widget-title" style="color:var(--bit-text-light); font-size:12px; font-weight:700; text-transform:uppercase; margin-bottom:8px;">Registered</div>
+                                <div class="metric-widget-value" id="metUserCount" style="font-size:28px; font-weight:800; color:var(--bit-blue-primary);">11</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- PAGE PROFILE -->
+
             <div class="page-view" id="page-profile">
-                <div class="split-view-layout">
-                    <div class="card left-form-panel">
-                        <h3 style="margin-bottom: 15px; text-align: center; font-size: 14px; text-transform: uppercase;">User Signature</h3>
-                        <form id="profileUpdateForm" onsubmit="handleProfileUpdate(event)">
-                            <div class="form-group">
-                                <label class="form-label">Active Handle Name</label>
-                                <input type="text" class="form-input" id="profUserHandle" required>
-                            </div>
-                            <button type="submit" class="btn-submit">Update Signature</button>
-                        </form>
+                <div class="card" style="max-width: 600px; margin-bottom: 30px;">
+                    <h2 style="margin-bottom: 6px;">Preferences Configuration</h2>
+                    <p style="color: var(--bit-text-light); margin-bottom: 25px;">Adjust workspace identity contexts and global presentation skins here.</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">User Identity Handle</label>
+                        <input type="text" class="form-input" id="prefsUsernameInput" value="Admin" placeholder="Enter session username...">
                     </div>
-                    <div class="card right-display-panel">
-                        <h3 style="margin-bottom: 5px; font-size: 14px; text-transform: uppercase;">Interface Environment</h3>
-                        <div style="font-size: 12px; color: var(--bit-text-light); margin-bottom: 15px;">Select a display palette layout framework for your workstation.</div>
-                        <div class="bg-preset-grid">
-                            <div class="bg-option-card selected" id="preset-default" onclick="setWorkspaceTheme('default')">
-                                <div class="bg-preview-swatch" style="background: #EDF1F7;"></div>
-                                <div style="font-weight:700; font-size:12px;">Standard Clear</div>
-                            </div>
-                            <div class="bg-option-card" id="preset-grid" onclick="setWorkspaceTheme('grid')">
-                                <div class="bg-preview-swatch" style="background: #F4F7FC; background-image: linear-gradient(90deg, rgba(30,80,255,0.1) 1px, transparent 1px), linear-gradient(rgba(30,80,255,0.1) 1px, transparent 1px); background-size: 8px 8px;"></div>
-                                <div style="font-weight:700; font-size:12px;">Grid Blue</div>
-                            </div>
-                            <div class="bg-option-card" id="preset-dark" onclick="setWorkspaceTheme('dark')">
-                                <div class="bg-preview-swatch" style="background: #141E30;"></div>
-                                <div style="font-weight:700; font-size:12px;">Console Slate</div>
-                            </div>
-                            <div class="bg-option-card" id="preset-sepia" onclick="setWorkspaceTheme('sepia')">
-                                <div class="bg-preview-swatch" style="background: #F4EFE6;"></div>
-                                <div style="font-weight:700; font-size:12px;">Warm Sepia</div>
-                            </div>
-                        </div>
+                    
+                    <div class="form-group" style="margin-bottom: 25px;">
+                        <label class="form-label">Workspace Theme Skin</label>
+                        <select class="form-select" id="prefsThemeSelect">
+                            <option value="default">Corporate Light (Default)</option>
+                            <option value="dark">High Contrast Dark</option>
+                            <option value="grid">Operations Matrix Grid</option>
+                            <option value="sepia">Warm Sepia Tone</option>
+                            <option value="cyberpunk">Cyberpunk Neon Terminal</option>
+                            <option value="forest">Forest Timber Moss</option>
+                            <option value="oled">Midnight OLED Stealth</option>
+                            <option value="crimson">Crimson Velvet Corporate</option>
+                        </select>
                     </div>
-                </div>
-            </div>
-            <!-- PAGE MESSAGE -->
-            <div class="page-view" id="page-message">
-                <div class="chat-layout">
-                    <div class="chat-sidebar">
-                        <div class="chat-sidebar-header">Direct Chats</div>
-                        <ul class="friends-list" id="chatFriendsContainer"></ul>
-                    </div>
-                    <div class="chat-window">
-                        <div class="chat-window-header" id="activeChatUser">Demo</div>
-                        <div class="chat-messages-box" id="chatMsgContainer"></div>
-                        <div class="chat-input-container">
-                            <div id="chatReplyPreviewContext" class="reply-preview-bar" style="display: none;">
-                                <span id="replyPreviewText">Replying to message...</span>
-                                <button onclick="cancelReplyContext()" style="background:none; border:none; cursor:pointer; font-weight:bold; color:var(--bit-text-light);">×</button>
-                            </div>                                                                                                            
-                            <div class="chat-controls-row">
-                                <label class="chat-control-icon-btn" for="chatFileInputField">
-                                    📎 file
-                                    <input type="file" id="chatFileInputField" style="display:none;" onchange="handleChatFileSelection(this)">
-                                </label>
-                                <button class="chat-control-icon-btn" id="voiceRecordControlBtn" onclick="toggleVoiceRecording()">
-                                    🎙️ voice record
-                                </button>
-                                <span id="chatControlStatusAppendText" style="font-size:12px; color:var(--bit-text-light);"></span>
-                            </div>
-                            <div class="chat-input-area">
-                                <input type="text" class="chat-input" id="chatInputField" placeholder="Type a message..." onkeydown="if(event.key === 'Enter') submitChatMessage()">
-                                <button class="btn-send" onclick="submitChatMessage()">send</button>
-                            </div>
-                        </div>
-                    </div>
+
+                    <button type="button" class="btn-submit" onclick="saveSystemPreferences()">Apply Parameters</button>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        let currentSessionUser = "Admin"; 
-        let selectedActiveChatPartner = "Demo";
-                
-        let userDatabase = { "Admin": "123456", "Demo": "654321" };
+        let currentSessionUser = localStorage.getItem("workspaceUserHandle") || "Admin"; 
+        let userDatabase = { "Admin": "123456" };
         let appPosts = [];
-        let chatMessages = [];
                         
-        let activeSelectedFileBase64 = null;
-        let activeSelectedVoiceBase64 = null;
-        let activeHomePostFileBase64 = null;
-        let activeReplyTargetId = null;
+        let targetFileBlob = null;
+        let activeHomePostFileName = "";
+        let activeHomePostFileType = "";
+        let localCreatedUrls = [];
 
-        // Voice Recorder Properties
         let mediaRecorderRef = null;
-        let audioChunksList = [];
-        let isCurrentlyRecordingVoice = false;
+        let audioChunks = [];
+        let isRecordingAudio = false;
+        let recordedVoiceBase64Payload = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             initNavigation();
             initThemeEngine();
             switchPage('home'); 
             syncUIContext();
+
+            const userField = document.getElementById("prefsUsernameInput");
+            if(userField) userField.value = currentSessionUser;
 
             const checkFirebaseTimer = setInterval(() => {
                 if (window.dbReferences) {
@@ -410,14 +454,30 @@
                         }
                     });
 
-                    onValue(ref(db, 'appPosts'), (snapshot) => {
-                        appPosts = snapshot.exists() ? snapshot.val() : [];
+                    onValue(ref(db), (snapshot) => {
+                        if (snapshot.exists()) {
+                            const data = snapshot.val();
+                            if (data.appPosts) {
+                                appPosts = data.appPosts;
+                            } else if (data.posts) {
+                                appPosts = data.posts;
+                            } else if (data.feed) {
+                                appPosts = data.feed;
+                            } else {
+                                appPosts = [];
+                            }
+                            
+                            if (appPosts && !Array.isArray(appPosts)) {
+                                appPosts = Object.keys(appPosts).map(key => {
+                                    let item = appPosts[key];
+                                    if(!item.id) item.id = key;
+                                    return item;
+                                });
+                            }
+                        } else {
+                            appPosts = [];
+                        }
                         renderFeed();
-                    });
-
-                    onValue(ref(db, 'chatMessages'), (snapshot) => {
-                        chatMessages = snapshot.exists() ? snapshot.val() : [];
-                        renderChatHistory();
                     });
                 }
             }, 200);
@@ -427,6 +487,7 @@
             if (window.dbReferences) {
                 const { db, ref, set } = window.dbReferences;
                 set(ref(db, nodePath), dataValue);
+                set(ref(db, 'posts'), dataValue);
             }
         }
 
@@ -442,45 +503,44 @@
         function switchPage(pageId) {
             document.querySelectorAll(".page-view").forEach(p => p.classList.remove("active"));
             document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("active"));
-
+            
             const targetPage = document.getElementById(`page-${pageId}`);
-            const targetNav = document.getElementById(`nav-${pageId}`);
-                                                
+            const targetNavItem = document.getElementById(`nav-${pageId}`);
+            
             if(targetPage) targetPage.classList.add("active");
-            if(targetNav) targetNav.classList.add("active");
-
-            const breadcrumb = document.getElementById("breadcrumb");
-            if(breadcrumb) {
-                breadcrumb.innerText = pageId === 'home' ? 'Home' : pageId === 'message' ? 'Chat' : 'Preferences';
-            }
-            if(pageId === 'message') {
-                setTimeout(() => {
-                    const box = document.getElementById("chatMsgContainer");
-                    if(box) box.scrollTop = box.scrollHeight;
-                }, 50);
-            }
+            if(targetNavItem) targetNavItem.classList.add("active");
+            
+            const bCrumb = document.getElementById("breadcrumb");
+            if(bCrumb) bCrumb.innerText = pageId.charAt(0).toUpperCase() + pageId.slice(1);
         }
 
         function initThemeEngine() {
             const savedTheme = localStorage.getItem("workspaceThemePreset") || "default";
-            setWorkspaceTheme(savedTheme, false);
+            document.body.className = savedTheme !== 'default' ? `theme-${savedTheme}` : "";
+            
+            const selectEl = document.getElementById("prefsThemeSelect");
+            if(selectEl) selectEl.value = savedTheme;
         }
 
-        function setWorkspaceTheme(themeName, triggerToast = true) {
-            document.body.className = ""; 
-            if (themeName !== 'default') {
-                document.body.classList.add(`theme-${themeName}`);
+        window.saveSystemPreferences = function() {
+            const userField = document.getElementById("prefsUsernameInput");
+            const selectEl = document.getElementById("prefsThemeSelect");
+
+            if (userField && userField.value.trim()) {
+                currentSessionUser = userField.value.trim();
+                localStorage.setItem("workspaceUserHandle", currentSessionUser);
             }
-            localStorage.setItem("workspaceThemePreset", themeName);
-                        
-            document.querySelectorAll(".bg-option-card").forEach(card => card.classList.remove("selected"));
-            const activeCard = document.getElementById(`preset-${themeName}`);
-            if (activeCard) activeCard.classList.add("selected");
-                        
-            if (triggerToast) {
-                showToast(`Switched workspace palette layout to ${themeName}.`, "success");
+
+            if (selectEl) {
+                const chosenTheme = selectEl.value;
+                localStorage.setItem("workspaceThemePreset", chosenTheme);
+                document.body.className = chosenTheme !== 'default' ? `theme-${chosenTheme}` : "";
             }
-        }
+
+            syncUIContext();
+            showToast("System configurations applied successfully.", "success");
+            switchPage('home');
+        };
 
         function showToast(msg, type = 'info') {
             const hub = document.getElementById("toastHub");
@@ -493,327 +553,307 @@
         }
 
         function syncUIContext() {
-            document.getElementById("topBarUserHandle").innerText = currentSessionUser;
-            const profInput = document.getElementById("profUserHandle");
-            if(profInput) profInput.value = currentSessionUser;
+            const userHandleEl = document.getElementById("topBarUserHandle");
+            if(userHandleEl) userHandleEl.innerText = currentSessionUser;
             renderFeed();
+        }
+
+        window.toggleVoiceRecordingState = async function() {
+            const recordBtn = document.getElementById("btnVoiceRecordTrigger");
             
-            const friendsCont = document.getElementById("chatFriendsContainer");
-            if (friendsCont) friendsCont.innerHTML = `<li class="friend-item active"><span class="friend-name">Demo</span></li>`;
-            renderChatHistory();
-        }
-
-        function handleProfileUpdate(e) {
-            e.preventDefault();
-            const val = document.getElementById("profUserHandle").value.trim();
-            if(!val) return;
-            delete userDatabase[currentSessionUser];
-            currentSessionUser = val;
-            userDatabase[val] = "123456";
-            cloudPush('users', userDatabase);
-            syncUIContext();
-            showToast("Signature configurations saved globally.", "success");
-        }
-
-        function handleHomePostFileSelected(input) {
-            const file = input.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                activeHomePostFileBase64 = { name: file.name, data: e.target.result };
-                document.getElementById("homeFilePreviewText").innerText = `Ready: ${file.name}`;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function handlePostPublish(e) {
-            e.preventDefault();
-            const text = document.getElementById("postText").value.trim();
-            if(!text && !activeHomePostFileBase64) return;
-
-            const newPost = {
-                id: Date.now(),
-                author: currentSessionUser,
-                text: text,
-                likes: 0,
-                shares: 0,
-                file: activeHomePostFileBase64 || null,
-                comments: []
-            };
-
-            appPosts.unshift(newPost);
-            cloudPush('appPosts', appPosts);
-            document.getElementById("homePublishForm").reset();
-            activeHomePostFileBase64 = null;
-            document.getElementById("homeFilePreviewText").innerText = "";
-        }
-
-        /* DYNAMIC FEED ENGINE: WITH REPLY, COMMENT, LIKE, SHARE & FILE ATTACHMENTS */
-        function renderFeed() {
-            const stream = document.getElementById("homeFeedStream");
-            if(!stream) return;
-            stream.innerHTML = "";
-            if (!appPosts || appPosts.length === 0) return;
-
-            appPosts.forEach(post => {
-                const card = document.createElement("div");
-                card.className = "post-card";
-                let fileMarkup = post.file ? `<div style="margin: 12px 0; padding:10px; background:rgba(0,0,0,0.03); border-radius:6px;"><a href="${post.file.data}" download="${post.file.name}" style="color:var(--bit-blue-primary); text-decoration:none; font-weight:600;">💾 Download: ${post.file.name}</a></div>` : "";
-
-                // Build Comments Node Hierarchy
-                let commentsMarkup = "";
-                if(post.comments && post.comments.length > 0) {
-                    commentsMarkup += `<div class="post-comments-section">`;
-                    post.comments.forEach(c => {
-                        commentsMarkup += `
-                            <div class="comment-item-box">
-                                <div class="comment-meta-hdr">@${c.author}</div>
-                                <div class="comment-body-txt">${c.text}</div>
-                                <div class="comment-action-bar">
-                                    <button class="comment-action-inline-btn" onclick="toggleCommentInlineReplyForm(${post.id}, ${c.id}, '${c.author}')">↳ Reply</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    commentsMarkup += `</div>`;
-                }
-
-                card.innerHTML = `
-                    <div class="post-header"><span class="post-author">@${post.author}</span></div>
-                    <div class="post-content-text">${post.text}</div>
-                    ${fileMarkup}
-                    <div class="post-actions">
-                        <button class="action-trigger-btn" onclick="likePost(${post.id})">👍 Like (${post.likes || 0})</button>
-                        <button class="action-trigger-btn" onclick="toggleMainCommentForm(${post.id})">💬 Comment (${post.comments ? post.comments.length : 0})</button>
-                        <button class="action-trigger-btn" onclick="sharePost(${post.id})">🔗 Share (${post.shares || 0})</button>
-                        <button class="action-trigger-btn purge" onclick="deletePost(${post.id})">🗑️ Delete</button>
-                    </div>
-                    
-                    <!-- Dynamic Dynamic Target Inputs Container -->
-                    <div id="commentInputSection-${post.id}" style="display:none; margin-top:12px; margin-bottom:12px;">
-                        <div class="comment-input-inline-wrap">
-                            <input type="text" class="form-input" id="newCommentText-${post.id}" placeholder="Write your comment or reply here...">
-                            <button class="btn-submit" style="width:auto; padding:8px 16px;" onclick="submitPostComment(${post.id})">Submit</button>
-                        </div>
-                    </div>
-
-                    ${commentsMarkup}
-                `;
-                stream.appendChild(card);
-            });
-        }
-
-        function likePost(id) {
-            appPosts = appPosts.map(p => p.id === id ? {...p, likes: (p.likes||0)+1} : p);
-            cloudPush('appPosts', appPosts);
-        }
-
-        function sharePost(id) {
-            appPosts = appPosts.map(p => p.id === id ? {...p, shares: (p.shares||0)+1} : p);
-            cloudPush('appPosts', appPosts);
-            showToast("Post link generated and shared.", "success");
-        }
-
-        function deletePost(id) {
-            appPosts = appPosts.filter(p => p.id !== id);
-            cloudPush('appPosts', appPosts);
-        }
-
-        function toggleMainCommentForm(postId) {
-            const el = document.getElementById(`commentInputSection-${postId}`);
-            const input = document.getElementById(`newCommentText-${postId}`);
-            if(el) {
-                el.style.display = el.style.display === "none" ? "block" : "none";
-                if(el.style.display === "block" && input) {
-                    input.value = "";
-                    input.placeholder = "Write a comment...";
-                    input.focus();
-                }
-            }
-        }
-
-        function toggleCommentInlineReplyForm(postId, targetCommentId, targetAuthor) {
-            const el = document.getElementById(`commentInputSection-${postId}`);
-            const input = document.getElementById(`newCommentText-${postId}`);
-            if(el) {
-                el.style.display = "block";
-                if(input) {
-                    input.value = `@${targetAuthor} `;
-                    input.focus();
-                }
-            }
-        }
-
-        function submitPostComment(postId) {
-            const txtInput = document.getElementById(`newCommentText-${postId}`);
-            if(!txtInput || !txtInput.value.trim()) return;
-
-            appPosts = appPosts.map(p => {
-                if(p.id === postId) {
-                    const commentsArr = p.comments ? [...p.comments] : [];
-                    commentsArr.push({
-                        id: Date.now(),
-                        author: currentSessionUser,
-                        text: txtInput.value.trim()
-                    });
-                    return { ...p, comments: commentsArr };
-                }
-                return p;
-            });
-
-            cloudPush('appPosts', appPosts);
-            txtInput.value = "";
-            const el = document.getElementById(`commentInputSection-${postId}`);
-            if(el) el.style.display = "none";
-        }
-
-        /* LIVE CHAT INTERACTION ENGINE */
-        function submitChatMessage() {
-            const inputField = document.getElementById("chatInputField");
-            const txt = inputField.value.trim();
-            if(!txt && !activeSelectedFileBase64 && !activeSelectedVoiceBase64) return;
-
-            const msg = {
-                id: Date.now(),
-                sender: currentSessionUser,
-                text: txt,
-                file: activeSelectedFileBase64 || null,
-                voice: activeSelectedVoiceBase64 || null,
-                replyToId: activeReplyTargetId || null,
-                likes: 0,
-                timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-            };
-
-            chatMessages.push(msg);
-            cloudPush('chatMessages', chatMessages);
-            
-            inputField.value = "";
-            cancelReplyContext();
-        }
-
-        function renderChatHistory() {
-            const box = document.getElementById("chatMsgContainer");
-            if(!box) return;
-            box.innerHTML = "";
-            if(!chatMessages) return;
-            
-            chatMessages.forEach(m => {
-                const isMe = m.sender === currentSessionUser;
-                const row = document.createElement("div");
-                row.className = `msg-row ${isMe ? 'msg-me' : 'msg-them'}`;
-                
-                let parentMessageMarkup = "";
-                if (m.replyToId) {
-                    const match = chatMessages.find(p => p.id === m.replyToId);
-                    if (match) {
-                        parentMessageMarkup = `<div style="font-size:11px; background:rgba(0,0,0,0.05); padding:4px 8px; border-radius:4px; margin-bottom:4px; color:var(--bit-text-light);">↳ Reply to @${match.sender}: ${match.text || "[Media/Voice]"}</div>`;
-                    }
-                }
-
-                let fileSnippet = m.file ? `<div style="margin-top:5px; font-size:12px;"><a href="${m.file.data}" download="${m.file.name}" style="color:${isMe ? '#FFF':'var(--bit-blue-primary)'}; font-weight:bold; text-decoration:underline;">📎 File: ${m.file.name}</a></div>` : "";
-                let voiceSnippet = m.voice ? `<div style="margin-top:5px;"><audio src="${m.voice}" controls style="max-width:200px; height:30px;"></audio></div>` : "";
-                
-                row.innerHTML = `
-                    <div class="msg-meta-container"><span>${m.sender}</span> <span>${m.timestamp}</span></div>
-                    <div class="bubble-wrapper">
-                        <div class="bubble">
-                            ${parentMessageMarkup}
-                            <div>${m.text}</div>
-                            ${fileSnippet}
-                            ${voiceSnippet}
-                        </div>
-                    </div>
-                    <div class="msg-interact-bar">
-                        <button class="msg-interact-btn" onclick="initiateReplyContext(${m.id}, '${m.sender}')">↳ Reply</button>
-                        <button class="msg-interact-btn" onclick="likeChatMessage(${m.id})">👍 (${m.likes || 0})</button>
-                        <button class="msg-interact-btn msg-del" onclick="deleteChatMessage(${m.id})">🗑️ Delete</button>
-                    </div>
-                `;
-                box.appendChild(row);
-            });
-            box.scrollTop = box.scrollHeight;
-        }
-
-        function likeChatMessage(id) {
-            chatMessages = chatMessages.map(m => m.id === id ? {...m, likes: (m.likes || 0) + 1} : m);
-            cloudPush('chatMessages', chatMessages);
-        }
-
-        function deleteChatMessage(id) {
-            chatMessages = chatMessages.filter(m => m.id !== id);
-            cloudPush('chatMessages', chatMessages);
-        }
-
-        function initiateReplyContext(id, user) {
-            activeReplyTargetId = id;
-            const bar = document.getElementById("chatReplyPreviewContext");
-            const txt = document.getElementById("replyPreviewText");
-            if (bar && txt) {
-                txt.innerText = `Replying to @${user}`;
-                bar.style.display = "flex";
-            }
-        }
-
-        function handleChatFileSelection(input) {
-            const file = input.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                activeSelectedFileBase64 = { name: file.name, data: e.target.result };
-                document.getElementById("chatControlStatusAppendText").innerText = `📎 ${file.name} linked`;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function toggleVoiceRecording() {
-            const btn = document.getElementById("voiceRecordControlBtn");
-            const statusText = document.getElementById("chatControlStatusAppendText");
-
-            if (!isCurrentlyRecordingVoice) {
-                navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            if (!isRecordingAudio) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioChunks = [];
                     mediaRecorderRef = new MediaRecorder(stream);
-                    audioChunksList = [];
                     
-                    mediaRecorderRef.ondataavailable = e => { audioChunksList.push(e.data); };
+                    mediaRecorderRef.ondataavailable = (e) => {
+                        if (e.data.size > 0) audioChunks.push(e.data);
+                    };
+
                     mediaRecorderRef.onstop = () => {
-                        const blob = new Blob(audioChunksList, { type: 'audio/mp3' });
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        localCreatedUrls.push(audioUrl);
+                        
+                        const player = document.getElementById("publisherAudioPlayer");
+                        const container = document.getElementById("publisherAudioPreviewContainer");
+                        if(player) player.src = audioUrl;
+                        if(container) container.style.display = "flex";
+
                         const reader = new FileReader();
                         reader.onloadend = () => {
-                            activeSelectedVoiceBase64 = reader.result;
-                            if (statusText) statusText.innerText = "🎙️ Voice ready to send";
+                            recordedVoiceBase64Payload = reader.result;
                         };
-                        reader.readAsDataURL(blob);
+                        reader.readAsDataURL(audioBlob);
+
+                        stream.getTracks().forEach(track => track.stop());
                     };
 
                     mediaRecorderRef.start();
-                    isCurrentlyRecordingVoice = true;
-                    if (btn) btn.innerText = "🛑 stop recording";
-                    if (statusText) statusText.innerText = "🎙️ Recording live audio...";
-                }).catch(err => {
-                    showToast("Microphone access denied.", "info");
-                });
+                    isRecordingAudio = true;
+                    if(recordBtn) {
+                        recordBtn.classList.add("recording");
+                        recordBtn.innerText = "🛑 Stop Recording";
+                    }
+                    showToast("Microphone connected. Recording...", "info");
+                } catch (err) {
+                    showToast("Failed to lock recording session permissions.", "error");
+                    console.error(err);
+                }
             } else {
                 if (mediaRecorderRef && mediaRecorderRef.state !== "inactive") {
                     mediaRecorderRef.stop();
                 }
-                isCurrentlyRecordingVoice = false;
-                if (btn) btn.innerText = "🎙️ voice record";
+                isRecordingAudio = false;
+                if(recordBtn) {
+                    recordBtn.classList.remove("recording");
+                    recordBtn.innerText = "🎙️ Record Voice Note";
+                }
             }
-        }
+        };
 
-        function cancelReplyContext() {
-            activeSelectedFileBase64 = null;
-            activeSelectedVoiceBase64 = null;
-            activeReplyTargetId = null;
+        window.cancelRecordedVoiceData = function() {
+            recordedVoiceBase64Payload = null;
+            const container = document.getElementById("publisherAudioPreviewContainer");
+            const player = document.getElementById("publisherAudioPlayer");
+            if(container) container.style.display = "none";
+            if(player) player.src = "";
+            showToast("Voice sample removed.", "info");
+        };
+
+        window.handleHomePostFileSelected = function(inputElement) {
+            const file = inputElement.files[0];
+            const previewText = document.getElementById("homeFilePreviewText");
+            if(!file) return;
+
+            if (file.size > 12 * 1024 * 1024) {
+                showToast("File size exceeds mobile parameters (Max 12MB).", "error");
+                inputElement.value = "";
+                return;
+            }
+
+            targetFileBlob = file;
+            activeHomePostFileName = file.name;
+            activeHomePostFileType = file.type;
+            if(previewText) previewText.innerText = file.name;
+        };
+
+        window.handlePostPublish = function(e) {
+            e.preventDefault();
+            const txtArea = document.getElementById("postText");
+            const textValue = txtArea ? txtArea.value.trim() : "";
             
-            const bar = document.getElementById("chatReplyPreviewContext");
-            if (bar) bar.style.display = "none";
+            if(!textValue && !targetFileBlob && !recordedVoiceBase64Payload) {
+                showToast("Cannot publish empty updates.", "info");
+                return;
+            }
+
+            const cleanPostsArray = Array.isArray(appPosts) ? appPosts : [];
+
+            const proceedWithPublish = (fileBase64Payload = null) => {
+                const updatedPosts = [
+                    {
+                        id: "post_" + Date.now(),
+                        author: currentSessionUser,
+                        text: textValue,
+                        fileData: fileBase64Payload,
+                        fileName: activeHomePostFileName,
+                        fileType: activeHomePostFileType,
+                        voiceData: recordedVoiceBase64Payload, 
+                        timestamp: new Date().toLocaleString(),
+                        reactions: { thumbsUp: 0, heart: 0, clap: 0 },
+                        comments: []
+                    },
+                    ...cleanPostsArray
+                ];
+
+                cloudPush('appPosts', updatedPosts);
+
+                if(txtArea) txtArea.value = "";
+                document.getElementById("homePostFileInput").value = "";
+                document.getElementById("homeFilePreviewText").innerText = "";
+                cancelRecordedVoiceData(); 
+                targetFileBlob = null;
+                activeHomePostFileName = "";
+                activeHomePostFileType = "";
+
+                showToast("Logs shared successfully.", "success");
+            };
+
+            if (targetFileBlob) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    proceedWithPublish(event.target.result);
+                };
+                reader.readAsDataURL(targetFileBlob);
+            } else {
+                proceedWithPublish(null);
+            }
+        };
+
+        window.reactToPost = function(postId, reactionType) {
+            const updatedPosts = appPosts.map(post => {
+                if (post && post.id === postId) {
+                    if (!post.reactions) post.reactions = { thumbsUp: 0, heart: 0, clap: 0 };
+                    post.reactions[reactionType] = (post.reactions[reactionType] || 0) + 1;
+                }
+                return post;
+            });
+            cloudPush('appPosts', updatedPosts);
+        };
+
+        window.submitComment = function(postId) {
+            const inputField = document.getElementById(`commentInput-${postId}`);
+            if (!inputField || !inputField.value.trim()) return;
+
+            const text = inputField.value.trim();
+
+            const updatedPosts = appPosts.map(post => {
+                if (post && post.id === postId) {
+                    if (!post.comments) post.comments = [];
+                    post.comments.push({
+                        author: currentSessionUser,
+                        text: text,
+                        timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                    });
+                }
+                return post;
+            });
+
+            cloudPush('appPosts', updatedPosts);
+            inputField.value = "";
+            showToast("Comment added.", "success");
+        };
+
+        window.deletePost = function(postId) {
+            if (!confirm("Are you sure you want to delete this log entry permanently?")) return;
+            const updatedPosts = appPosts.filter(post => post && post.id !== postId);
+            cloudPush('appPosts', updatedPosts);
+            showToast("Entry removed.", "info");
+        };
+
+        function renderFeed() {
+            const feed = document.getElementById("homeFeedStream");
+            if(!feed) return;
             
-            const indicatorText = document.getElementById("chatControlStatusAppendText");
-            if (indicatorText) indicatorText.innerText = "";
+            localCreatedUrls.forEach(url => URL.revokeObjectURL(url));
+            localCreatedUrls = [];
+            feed.innerHTML = "";
             
-            const fileInput = document.getElementById("chatFileInputField");
-            if (fileInput) fileInput.value = "";
+            const targetArray = Array.isArray(appPosts) ? appPosts : [];
+            if(targetArray.length === 0) {
+                feed.innerHTML = `<div style="text-align:center; padding:30px; color:var(--bit-text-light);">No operational updates discovered.</div>`;
+                return;
+            }
+
+            targetArray.forEach(post => {
+                if(!post) return;
+                const card = document.createElement("div");
+                card.className = "post-card";
+                
+                let mediaAttachmentHTML = "";
+                
+                if (post.fileData) {
+                    try {
+                        let displayUrl = post.fileData;
+                        
+                        if (typeof post.fileData === 'string' && post.fileData.startsWith("data:")) {
+                            const parts = post.fileData.split(',');
+                            if(parts.length > 1) {
+                                const byteString = atob(parts[1]);
+                                const mimeString = parts[0].split(':')[1].split(';')[0];
+                                const ab = new ArrayBuffer(byteString.length);
+                                const ia = new Uint8Array(ab);
+                                for (let i = 0; i < byteString.length; i++) {
+                                    ia[i] = byteString.charCodeAt(i);
+                                }
+                                const blob = new Blob([ab], {type: mimeString});
+                                displayUrl = URL.createObjectURL(blob);
+                                localCreatedUrls.push(displayUrl);
+                            }
+                        }
+
+                        if (post.fileType && post.fileType.startsWith("image/")) {
+                            mediaAttachmentHTML = `<div class="post-media-attachment"><img src="${displayUrl}" alt="Media Element"></div>`;
+                        } else if (post.fileType && post.fileType.startsWith("video/")) {
+                            mediaAttachmentHTML = `<div class="post-media-attachment"><video src="${displayUrl}" controls playsinline preload="metadata"></video></div>`;
+                        } else if (post.fileType && post.fileType === "application/pdf") {
+                            mediaAttachmentHTML = `<div class="post-media-attachment"><iframe src="${displayUrl}"></iframe></div>`;
+                        }
+                    } catch (e) {
+                        mediaAttachmentHTML = `<div style="margin-top:12px; font-size:12px; color:var(--bit-danger); background:rgba(255,77,79,0.05); padding:8px; border-radius:4px;">⚠️ Inline element size conflict bypassed.</div>`;
+                    }
+                }
+
+                let voiceAttachmentHTML = "";
+                if (post.voiceData) {
+                    try {
+                        let audioUrl = post.voiceData;
+                        if (typeof post.voiceData === 'string' && post.voiceData.startsWith("data:")) {
+                            const parts = post.voiceData.split(',');
+                            if(parts.length > 1) {
+                                const byteString = atob(parts[1]);
+                                const ab = new ArrayBuffer(byteString.length);
+                                const ia = new Uint8Array(ab);
+                                for (let i = 0; i < byteString.length; i++) {
+                                    ia[i] = byteString.charCodeAt(i);
+                                }
+                                const blob = new Blob([ab], {type: 'audio/mp3'});
+                                audioUrl = URL.createObjectURL(blob);
+                                localCreatedUrls.push(audioUrl);
+                            }
+                        }
+                        voiceAttachmentHTML = `
+                            <div class="post-media-attachment" style="background: transparent; border: none; padding: 0; margin-top: 10px;">
+                                <audio src="${audioUrl}" controls style="width:100%; border-radius: 4px; border: 1px solid var(--bit-border-light);"></audio>
+                            </div>`;
+                    } catch (err) {
+                        console.error("Audio block render fault bypass", err);
+                    }
+                }
+
+                const rx = post.reactions || { thumbsUp: 0, heart: 0, clap: 0 };
+                
+                let commentsHTML = "";
+                const postComments = post.comments || [];
+                postComments.forEach(c => {
+                    commentsHTML += `
+                        <div class="comment-stream-node">
+                            <span class="comment-meta-author">${c.author}:</span>
+                            <span>${c.text}</span>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="post-header">
+                        <span class="post-author">${post.author || "Anonymous"}</span>
+                        <span style="font-size:11px; color:var(--bit-text-light);">${post.timestamp || ""}</span>
+                    </div>
+                    <div class="post-content-text">${post.text || ""}</div>
+                    ${voiceAttachmentHTML}
+                    ${mediaAttachmentHTML}
+                    
+                    <div class="post-actions-toolbar">
+                        <div class="reaction-cluster">
+                            <button class="btn-react-node" onclick="reactToPost('${post.id}', 'thumbsUp')">👍 <span>${rx.thumbsUp || 0}</span></button>
+                            <button class="btn-react-node" onclick="reactToPost('${post.id}', 'heart')">❤️ <span>${rx.heart || 0}</span></button>
+                            <button class="btn-react-node" onclick="reactToPost('${post.id}', 'clap')">👏 <span>${rx.clap || 0}</span></button>
+                        </div>
+                        <button class="btn-delete-node" onclick="deletePost('${post.id}')">Delete</button>
+                    </div>
+
+                    <div class="comments-section-wrapper">
+                        <div id="commentContainer-${post.id}">${commentsHTML || '<div style="color:var(--bit-text-light); font-size:11px;">No comments yet.</div>'}</div>
+                        <div class="comment-input-row">
+                            <input type="text" class="comment-field-input" id="commentInput-${post.id}" placeholder="Write a comment...">
+                            <button class="btn-comment-submit" onclick="submitComment('${post.id}')">Reply</button>
+                        </div>
+                    </div>
+                `;
+                feed.appendChild(card);
+            });
         }
     </script>
 </body>
